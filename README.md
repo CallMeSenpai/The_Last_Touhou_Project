@@ -1,4 +1,4 @@
 The_Last_Touhou_Project
 =======================
 
-For MKS65C. {{ Tears }}
+Final project for MKS65C. **{{ Tears }}**
