@@ -4,8 +4,11 @@
 #include <fcntl.h>
 #include "structs.h"
 
+#include <time.h>
+//timed movements are important
+
 int main(){
-
-
+  
+  
   return 0; 
 }

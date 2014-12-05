@@ -22,6 +22,5 @@ var obj={
 	
     }
     var bullet = {
-    
     }
 }
