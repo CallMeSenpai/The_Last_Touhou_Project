@@ -11,7 +11,23 @@ Final project for MKS65C. **{{ Tears }}**
 **Download SDL.**
 ::Figure out how to use SDL lmao <br>
 ::sketchy on if SDL includes the frame/container that java has <br>
-::key inputs aren't part of SDL? or maybe used in c 
+::key inputs aren't part of SDL? or maybe used in c <br>
 **Sound libraries!!!???**
 
 **Design code flow (see .js file because i like the json layout)**
+
+###storyline:
+	<u>aim</u>: to include all current cs dept. teachers 
+	<i>that give us consent</i> to take their photos and 
+	use them. 
+	   disclaimer: we may or may not use bashing for 
+	   satirical purposes ( stuybash is no more :( )
+	
+	each game level represents a year of cs a student takes
+	     introCS: brooks, konstans, holmes, griffith
+	     APCS: konstans, DW, zman,
+	     softdev: zman
+	     systems: dw
+	     
+
+//!! lib32sdl? install pls

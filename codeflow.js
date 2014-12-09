@@ -1,3 +1,17 @@
+/* implementations of code algorithms
+   --from eric's last year's osu final project lessons:
+   ----> vector graphics: spellcards implement y=x^3 movement
+   ------>bullets implement different functions
+   ---------1)sin/cos
+   ---------2)homing-tracking
+   ---------3)bezier curves?
+   ---------4)circular paths deviating from a point
+   ------------>(incrementing normal and angular acceleration
+
+   ---->data structures: lookup tables again ( for bezier )
+   ---->
+
+*/
 //all objs that can be drawn in the GUI
 var obj={
     hp:depends,
