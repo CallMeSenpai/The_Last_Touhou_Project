@@ -19,7 +19,8 @@
    ------> if lag significantly, abandon/fix/comment out immediately/think of workaround
    ----------> DO NOT USE ELLIPSE EQUATIONS TO CALCULATE UNIT COLLISION
    ----> Timed commands for bullets
-   ----> Fix keyboard input
+   ----> Fix keyboard input: stray input cannot be tolerated
+
 */
 //all objs that can be drawn in the GUI
 var obj={
