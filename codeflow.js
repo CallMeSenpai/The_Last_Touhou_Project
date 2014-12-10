@@ -11,6 +11,10 @@
    ---->data structures: lookup tables again ( for bezier )
    ---->
 
+   --from Barak's experience:
+   ----> Screw up memory/object management, screw up life
+   ------> Make everything flexible
+   ------> Use states
 */
 //all objs that can be drawn in the GUI
 var obj={
