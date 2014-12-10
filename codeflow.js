@@ -14,7 +14,12 @@
    --from Barak's experience:
    ----> Screw up memory/object management, screw up life
    ------> Make everything flexible
-   ------> Use states
+   ------> Use states (game state, state of vars, etc.)
+   ----> Fix timer before anything else; check for significant lag and stability
+   ------> if lag significantly, abandon/fix/comment out immediately/think of workaround
+   ----------> DO NOT USE ELLIPSE EQUATIONS TO CALCULATE UNIT COLLISION
+   ----> Timed commands for bullets
+   ----> Fix keyboard input
 */
 //all objs that can be drawn in the GUI
 var obj={
