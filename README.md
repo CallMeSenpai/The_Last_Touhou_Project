@@ -4,7 +4,7 @@ The_Last_Touhou_Project
 Final project for MKS65C. **{{ Tears }}**<br>
 Libraries needed:<br>
 This is a linux systems class so lol<br>
-<code>sudo apt-get install libsdl1.2-dev libsdl1.2debian</code>
+<code>sudo apt-get install libsdl1.2-dev libsdl1.2debian<code/>
 
 #To do:
 
@@ -14,6 +14,7 @@ This is a linux systems class so lol<br>
 **Design code flow (see .js file because i like the json layout)**
 
 ###storyline:
+	<html>
 	<u>aim</u>: to include all current cs dept. teachers
 	<i>that give us consent</i> to take their photos and
 	use them.
@@ -25,7 +26,7 @@ This is a linux systems class so lol<br>
 	     APCS: konstans, DW, zman, brown
 	     softdev: zman
 	     systems: dw
-
+	</html>
 ###debrief on each year (consists on topics learned):
 
 -intro-cs
