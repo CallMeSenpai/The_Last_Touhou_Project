@@ -9,7 +9,7 @@ This is a linux systems class so lol<br>
 #To do:
 
 ###Make plot line. (cs dept themed! fite teachers for grades?!!?!?)
-
+###Utilize (local) multiplayer as a systems aspect. ( Perhaps make it host on outer server? )
 
 **Design code flow (see .js file because i like the json layout)**
 
