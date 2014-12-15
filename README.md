@@ -1,8 +1,8 @@
 The_Last_Touhou_Project
 =======================
 
-Final project for MKS65C. **{{ Tears }}**
-Libraries needed:
+Final project for MKS65C. **{{ Tears }}**<br>
+Libraries needed:<br>
 This is a linux systems class so lol<br>
 <code>sudo apt-get install libsdl1.2-dev libsdl1.2debian</code>
 
