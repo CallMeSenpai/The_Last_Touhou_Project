@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
 #include "structs.h"
@@ -13,7 +12,6 @@ which is why we're including a local library
 rather than an the one installed via apt-get
 */
 #include "include/SDL.h"
-
 
 #include <time.h>
 //timed movements are important

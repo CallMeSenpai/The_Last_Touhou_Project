@@ -18,9 +18,9 @@ Install the actual package pls
 
 ###storyline:
 	<html>
-	<u>aim</u>: to include all current cs dept. teachers
-	<i>that give us consent</i> to take their photos and
-	use them.
+	<u>aim</u>: dw has given us permission to us photos of
+	   other teachers.
+	   "It's easier to ask for forgiveness than ask for permission" - D.W. 2014
 	   disclaimer: we may or may not use bashing for 
 	   satirical purposes ( stuybash is no more :( )
 	
@@ -39,7 +39,7 @@ Install the actual package pls
 
 -apcs
 - data structures: tree(each bullet forks off 2 more?), linkedlist
-- 
+- java syntax and etc?
 -
 
 -softdev
