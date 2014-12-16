@@ -28,6 +28,7 @@
  */
 
 /* This shouldn't be nested -- included it around code only. */
+/* useless line for commit */
 #ifdef _begin_code_h
 #error Nested inclusion of begin_code.h
 #endif
