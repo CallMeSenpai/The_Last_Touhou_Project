@@ -1,4 +1,8 @@
-all: main.o
-	gcc -o a main.o #other dependent files, etc
-main.o : structs.h
-	gcc -c main.c
+all:
+	gcc main.c `sdl2-config --cflags --libs`
+	#first priority to fix error
+	#replace include/platform.h
+	##last and final hope before we switch to
+	#another graphics library
+	# ; , or ( lib
+	# " before type " error

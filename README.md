@@ -4,7 +4,10 @@ The_Last_Touhou_Project
 Final project for MKS65C. **{{ Tears }}**<br>
 Libraries needed:<br>
 This is a linux systems class so lol<br>
-<code>sudo apt-get install libsdl1.2-dev libsdl1.2debian<code/>
+!! the library headers have been included in the local file.
+Install the actual package pls
+<code>sudo apt-get install libsdl2<code/>
+
 
 #To do:
 
