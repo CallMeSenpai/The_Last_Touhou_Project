@@ -1,0 +1,6 @@
+#config file will be parsed by program directly lmoa
+width=800
+height=600
+
+#0 for false 1 for true
+fullscreen=0  
