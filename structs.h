@@ -1,7 +1,8 @@
 typedef struct character{
-  int hp,lives,bombs,x,y;
+  int lives,bombs,x,y;
   double speed;
-} character;
+  int left,right,up,down;
+} character; //check stack tracels
 
 struct mob{
   int hp,x,y;

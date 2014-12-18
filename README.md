@@ -6,7 +6,8 @@ Libraries needed:<br>
 This is a linux systems class so lol<br>
 !! the library headers have been included in the local file.
 Install the actual package pls
-<code>sudo apt-get install libsdl2<code/>
+<code>sudo apt-get install libsdl2
+sudo apt-get install libsdl2-image-dev??<code/>
 
 
 #To do:
@@ -51,6 +52,4 @@ Install the actual package pls
 - segfault again, (game crashes on purpose?) or fake it
 
 
-thoughts on spellcard
-
-//!! lib32sdl? install pls
+thoughts on spellcard (barak pls)
