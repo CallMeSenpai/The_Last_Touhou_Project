@@ -25,10 +25,10 @@ deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 
 ###storyline:
 <u>aim</u>: dw has given us permission to us photos of
-   other teachers.
-   "It's easier to ask for forgiveness than ask for permission" - D.W. 2014
-   disclaimer: we may or may not use bashing for 
-   satirical purposes ( stuybash is no more :( )	
+   other teachers.<br>
+   "It's easier to ask for forgiveness than ask for permission" - D.W. 2014<br>
+   disclaimer: we may or may not use bashing for
+   satirical purposes ( stuybash is no more :( )<br>	
    each game level represents a year of cs a student takes
      introCS: brooks, konstans, holmes, griffith
      APCS: konstans, DW, zman, brown
