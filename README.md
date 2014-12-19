@@ -11,9 +11,9 @@ Libraries needed:<br>
 <br><code>sudo apt-get install libsdl2
 <br>sudo apt-get install libsdl2-image-dev??</code>
 <br>if libsdl2-image-dev doesn't work add universe to your sources
-<br>open /etc/apt/sources.list and add:
+<br>open /etc/apt/sources.list and add:<br>
 <code>
-<br>deb http://us.archive.ubuntu.com/ubuntu saucy main universe
+deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 </code>
 <br>
 #To do:
