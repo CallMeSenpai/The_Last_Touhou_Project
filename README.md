@@ -9,7 +9,7 @@ Libraries needed:<br>
 <br>(later.)
 <br>for Ubuntu:
 <br><code>sudo apt-get install libsdl2
-<br>sudo apt-get install libsdl2-image-dev??<code/>
+<br>sudo apt-get install libsdl2-image-dev??</code>
 <br>if libsdl2-image-dev doesn't work add universe to your sources
 <br>open /etc/apt/sources.list and add:
 <code>
