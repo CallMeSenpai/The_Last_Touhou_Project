@@ -3,13 +3,18 @@ The_Last_Touhou_Project
 
 Final project for MKS65C. **{{ Tears }}**<br>
 Libraries needed:<br>
-This is a linux systems class so lol<br>
 !! the library headers have been included in the local file.
 Install the actual package pls
+(I will update the list with windows and mac/other linux distros)
+(later.)
+for Ubuntu:
 <code>sudo apt-get install libsdl2
 sudo apt-get install libsdl2-image-dev??<code/>
-
-
+if libsdl2-image-dev doesn't work add universe to your sources
+open /etc/apt/sources.list and add:
+<code>
+deb http://us.archive.ubuntu.com/ubuntu saucy main universe
+</code>
 #To do:
 
 ###Make plot line. (cs dept themed! fite teachers for grades?!!?!?)

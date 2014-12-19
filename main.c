@@ -5,14 +5,25 @@
 #include "structs.h"
 /* we are using a local edited lib */
 #include "include/SDL.h"
+#include "include/SDL_image.h"
 #include "character.h"
+//#include "projectile.h"
+//#include "mob.h"
 //timed movements are important
 #include <time.h>
 
 //we should be able to access these variables
 //from any scope
 int window_height,window_width,full;
-
+void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
+  //Setup the destination rectangle to be at the position we want
+  SDL_Rect dst;
+  dst.x = x;
+  dst.y = y;
+  dst.w = w;
+  dst.h = h;
+  SDL_RenderCopy(ren, tex, NULL, &dst );
+}
 int main(){  
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   SDL_Window* window;
@@ -52,48 +63,50 @@ int main(){
     window=SDL_CreateWindow("Touhou- stuy version",0,0,
 			    window_width,window_height,
 			    full*SDL_WINDOW_FULLSCREEN_DESKTOP);
+    //printf("window is %d by %d\n",window_width,window_height);
   }
   if (! window){
     printf("Unable to create window.\n%s\n",SDL_GetError());
     exit(-1);
   }
-
+  
   SDL_Renderer* renderer;
   renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-  SDL_Texture *bitmapTex;
-  SDL_Surface *bitmapSurface;
+  SDL_Texture* bitmapTex;
+  SDL_Surface* bitmapSurface;
   bitmapSurface = SDL_LoadBMP("bg.bmp");
   bitmapTex = SDL_CreateTextureFromSurface(renderer, bitmapSurface);
   SDL_FreeSurface(bitmapSurface);
- 
+  SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
+  
   //game stuff
-  character c;
-  set_default_values(c,window_width,window_height);
-  while (1) {
+  character c;  
+  set_default_values(&c,window_width,window_height);
+  while (1){
     SDL_Event e;
+    //add escape and enter keys lmao
     if (SDL_PollEvent(&e)){
       switch (e.type){
-	//put cases here and call functions to modify in
-	//character.c
       case SDL_QUIT:
 	goto end;
       case SDL_KEYDOWN:
-	key_down(c,e);
+	key_down(&c,e);
 	break;
       case SDL_KEYUP:
-	key_up(c,e);
+	key_up(&c,e);
 	break;
       }
-      //character_event(c,e);
-      //    case SDL_KeyDown:
     }
+    handle_input(&c);
     SDL_RenderClear(renderer);
+    
     SDL_RenderCopy(renderer, bitmapTex, 0, 0);
+    renderTexture(dw,renderer,c.x,c.y,32,32);
+
     SDL_RenderPresent(renderer);
-    SDL_Delay(25);//40 FPS
+    SDL_Delay(16);//approx 60 FPS
   }
  end:
-  //SDL_Delay(3000);
   SDL_DestroyTexture(bitmapTex);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);

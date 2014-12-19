@@ -4,3 +4,5 @@ height=600
 
 #0 for false 1 for true
 fullscreen=0
+#include volume control on menu screen?
+#in the options selection
