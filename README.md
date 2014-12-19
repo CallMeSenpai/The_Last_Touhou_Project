@@ -3,7 +3,7 @@ The_Last_Touhou_Project
 
 Final project for MKS65C. **{{ Tears }}**<br>
 Libraries needed:<br>
-!! the library headers have been included in the local file.
+!! Library headers have been included in the local file.
 <br>Install the actual package pls
 <br>(I will update the list with windows and mac/other linux distros)
 <br>(later.)
@@ -47,14 +47,14 @@ deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 -apcs
 - data structures: tree(each bullet forks off 2 more?), linkedlist
 - java syntax and etc?
--
+-???
 
 -softdev
-- 
+-??? 
 
 -systems
 - SEGMENTATION FAULT
-- 
+- ???
 - segfault again, (game crashes on purpose?) or fake it
 
 
