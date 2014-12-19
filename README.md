@@ -24,19 +24,16 @@ deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 **Design code flow (see .js file because i like the json layout)**
 
 ###storyline:
-	<html>
-	<u>aim</u>: dw has given us permission to us photos of
-	   other teachers.
-	   "It's easier to ask for forgiveness than ask for permission" - D.W. 2014
-	   disclaimer: we may or may not use bashing for 
-	   satirical purposes ( stuybash is no more :( )
-	
-	each game level represents a year of cs a student takes
-	     introCS: brooks, konstans, holmes, griffith
-	     APCS: konstans, DW, zman, brown
-	     softdev: zman
-	     systems: dw
-	</html>
+<u>aim</u>: dw has given us permission to us photos of
+   other teachers.
+   "It's easier to ask for forgiveness than ask for permission" - D.W. 2014
+   disclaimer: we may or may not use bashing for 
+   satirical purposes ( stuybash is no more :( )	
+   each game level represents a year of cs a student takes
+     introCS: brooks, konstans, holmes, griffith
+     APCS: konstans, DW, zman, brown
+     softdev: zman
+     systems: dw
 ###debrief on each year (consists on topics learned):
 
 -intro-cs
