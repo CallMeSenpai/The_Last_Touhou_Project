@@ -2,29 +2,31 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include "structs.h"
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
-#include "character.h"
-//#include "projectile.h"
-//#include "mob.h"
-//timed movements are important
+#include "structs.h"
 #include <time.h>
+int c_height=32;
+int c_width=32;
 
-//we should be able to access these variables
-//from any scope
+#include "character.h"
+#include "projectile.h"
+//#include "mob.h"
+
 int window_height,window_width,full;
+
+
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
-  //Setup the destination rectangle to be at the position we want
   SDL_Rect dst;
   dst.x = x;
   dst.y = y;
   dst.w = w;
   dst.h = h;
-  SDL_RenderCopy(ren, tex, NULL, &dst );
+  SDL_RenderCopy(ren, tex, 0, &dst );
 }
 int main(){  
+  /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   SDL_Window* window;
   FILE* f=NULL;
@@ -63,30 +65,34 @@ int main(){
     window=SDL_CreateWindow("Touhou- stuy version",0,0,
 			    window_width,window_height,
 			    full*SDL_WINDOW_FULLSCREEN_DESKTOP);
-    //printf("window is %d by %d\n",window_width,window_height);
   }
   if (! window){
     printf("Unable to create window.\n%s\n",SDL_GetError());
     exit(-1);
   }
-  
+
+  /***** INIT ALL IMAGES *****/
   SDL_Renderer* renderer;
   renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-  SDL_Texture* bitmapTex;
-  SDL_Surface* bitmapSurface;
-  bitmapSurface = SDL_LoadBMP("bg.bmp");
-  bitmapTex = SDL_CreateTextureFromSurface(renderer, bitmapSurface);
-  SDL_FreeSurface(bitmapSurface);
+  SDL_Surface* bg_surface;
+  SDL_Texture* bg_texture;
+  SDL_RWops* rwop=SDL_RWFromFile("background.png", "rb");
+  bg_surface=IMG_LoadPNG_RW(rwop);
+  bg_texture=SDL_CreateTextureFromSurface(renderer, bg_surface);
+  //edit bg to not have blank space in the upper black region
+  //white region in the middle
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
-  
-  //game stuff
-  character c;  
-  set_default_values(&c,window_width,window_height);
+
+  /***** INIT GAME VARIABLES *****/
+  character c;
+  projectile* projectiles = calloc(100,sizeof(projectile));
+  //having trouble with extern
+  setup_variables(window_width,window_height);
+  set_default_values_c(&c);
   while (1){
     SDL_Event e;
-    //add escape and enter keys lmao
     if (SDL_PollEvent(&e)){
-      switch (e.type){
+      switch (e.type){//add escape and enter keys lmao
       case SDL_QUIT:
 	goto end;
       case SDL_KEYDOWN:
@@ -99,15 +105,14 @@ int main(){
     }
     handle_input(&c);
     SDL_RenderClear(renderer);
-    
-    SDL_RenderCopy(renderer, bitmapTex, 0, 0);
-    renderTexture(dw,renderer,c.x,c.y,32,32);
-
+    renderTexture(dw,renderer,c.x-16,c.y-16,32,32);
+    SDL_RenderCopy(renderer, bg_texture, 0, 0);
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
   }
  end:
-  SDL_DestroyTexture(bitmapTex);
+  printf("lol c_height: %d\n",c_height);
+  SDL_DestroyTexture(bg_texture);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();  
