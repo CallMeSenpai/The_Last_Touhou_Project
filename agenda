@@ -1,0 +1,31 @@
+TODO::
+
+movement bounds
+object projection
+projection removal ( beyond the bounds )
+
+
+GIF/sprite framing
+
+figure out how to put (patterned) enemies into a file and read it
+--> making own interpreter for enemies/boss/bullet patterns
+
+format? TBD:
+[BULLET1]
+speed:5
+@@@@
+hang:10 { keep moving 10 seconds }
+action:
+dist:10 { keep moving until 10 distance units }
+action:
+move-to:300,300
+[MOB1]
+move-to:300,300
+hang:10
+attack-1:30 { attack-1 for 30 seconds }
+
+levels, level-switching
+title-screen
+game-levels
+chat-boxing?
+IMAGE SEARcH
