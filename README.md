@@ -56,3 +56,11 @@ deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 
 
 thoughts on spellcard (barak pls)
+
+###barak delivers thoughts
+
+-Raw ideas
+- turtles
+- standard bullet fire patterns
+- recursion: bullets split and eventually come back to starting point
+- more ideas to come...
