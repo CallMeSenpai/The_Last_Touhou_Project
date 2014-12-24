@@ -14,9 +14,14 @@ int c_width=32;
 #include "projectile.h"
 //#include "mob.h"
 
-int window_height,window_width,full;
-
-
+int c_height;
+int c_width;
+int w_width;
+int w_height;
+projectile* projectiles;
+mob* mobs;
+int full;
+character* c;
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
   dst.x = x;
@@ -36,8 +41,8 @@ int main(){
     window=SDL_CreateWindow(": ^ )",0,0,0,0,
 			    SDL_WINDOW_FULLSCREEN_DESKTOP|
 			    SDL_WINDOW_SHOWN);
-    SDL_GetWindowSize(window,&window_width,&window_height);
-    printf("Window is %d by %d\n",window_width,window_height);
+    SDL_GetWindowSize(window,&w_width,&w_height);
+    printf("Window is %d by %d\n",w_width,w_height);
   }else{
     char* settings = calloc(1,256);
     char* setting;
@@ -53,9 +58,9 @@ int main(){
 	  setting_buffer=strsep(&setting,"=");
 	  dimension=strsep(&setting,"=");
 	  if (! strcmp("width",setting_buffer)){
-	    window_width=atoi(dimension);
+	    w_width=atoi(dimension);
 	  }else if(! strcmp("height",setting_buffer)){
-	    window_height=atoi(dimension);
+	    w_height=atoi(dimension);
 	  }else if(! strcmp("fullscreen",setting_buffer)){
 	    full=atoi(dimension);
 	  }
@@ -63,7 +68,7 @@ int main(){
     }
     free(settings);
     window=SDL_CreateWindow("Touhou- stuy version",0,0,
-			    window_width,window_height,
+			    w_width,w_height,
 			    full*SDL_WINDOW_FULLSCREEN_DESKTOP);
   }
   if (! window){
@@ -82,13 +87,11 @@ int main(){
   //edit bg to not have blank space in the upper black region
   //white region in the middle
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
-
+  SDL_Texture* projectile = IMG_LoadTexture(renderer,"star.png");
   /***** INIT GAME VARIABLES *****/
-  character c;
-  projectile* projectiles = calloc(100,sizeof(projectile));
-  //having trouble with extern
-  setup_variables(window_width,window_height);
-  set_default_values_c(&c);
+  c = calloc(1,sizeof(character));
+  //call projectls and mobs by extern variable 
+  set_default_values_c(c);
   while (1){
     SDL_Event e;
     if (SDL_PollEvent(&e)){
@@ -96,22 +99,21 @@ int main(){
       case SDL_QUIT:
 	goto end;
       case SDL_KEYDOWN:
-	key_down(&c,e);
+	key_down(c,e);
 	break;
       case SDL_KEYUP:
-	key_up(&c,e);
+	key_up(c,e);
 	break;
       }
     }
-    handle_input(&c);
-    SDL_RenderClear(renderer);
-    renderTexture(dw,renderer,c.x-16,c.y-16,32,32);
+    handle_input(c);
+    SDL_RenderClear(renderer); 
+    renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
   }
  end:
-  printf("lol c_height: %d\n",c_height);
   SDL_DestroyTexture(bg_texture);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
