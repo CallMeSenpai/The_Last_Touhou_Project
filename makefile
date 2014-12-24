@@ -1,4 +1,2 @@
 all:
-	gcc -c main.c
-	gcc -c character.c
-	gcc main.o character.o $(shell sdl2-config --cflags --libs) -lSDL2_image
+	gcc main.c character.c projectile.c $(shell sdl2-config --cflags --libs) -lSDL2_image -lm

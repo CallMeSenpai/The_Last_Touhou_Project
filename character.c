@@ -2,19 +2,11 @@
 #include <stdlib.h>
 #include "structs.h"
 #include "character.h"
+/* we need this lib for shooting */
+#include "projectile.h"
 /* we are using a local edited lib */
 #include "include/SDL.h"
-int w_width;
-int w_height;
-//int game_window_buffers ( the sides of the gamescreen )
 
-/* void setup other crap
-   
- */
-void setup_variables(int w, int h){
-  w_width=w;
-  w_height=h;
-}
 /* accepts the width / height & initializes */
 void set_default_values_c(character* c){
   c->lives=3;
@@ -106,8 +98,22 @@ void handle_input(character* c){
   if(c->y < w_height - c_height && c->down)
     c->y+=c->speed;
   if(c->shoot){
-    
-    //cooldown
+    if(projectiles){
+      projectile* p = projectiles;
+      int index=0;
+      while(p->next){
+	p=p->next;
+	index++;
+      }
+      printf("there are %d projectiles\n",index);
+      projectile* new = calloc(1,sizeof(projectile));
+      set_default_values_p(new);
+      new->prev=p;
+      p->next=new;
+    }else{
+      projectiles = calloc(1,sizeof(projectile));
+      set_default_values_p(projectiles);
+    }
+    //cooldown?
   }
-  /* if whatever, pass an array of projectiles, add it*/
 }
