@@ -24,6 +24,10 @@ move-to:300,300
 hang:10
 attack-1:30 { attack-1 for 30 seconds }
 
+--> interpreter:
+    each move will have a separate corresponding function
+    and each mob/bullet will have an array of
+    function pointers that will work in order
 
 title-screen
 pausing, figuring out time-paused

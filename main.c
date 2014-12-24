@@ -89,6 +89,8 @@ int main(){
   //edit bg to not have blank space in the upper black region
   //white region in the middle
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
+  //we will need sprites rather than
+  //dependencies on a gif.
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
@@ -116,7 +118,7 @@ int main(){
       renderTexture(p_tex,renderer,
 		    p_buffer->x-16,p_buffer->y-16,32,32);
       do_action_p(p_buffer);
-    p_buffer=p_buffer->next;
+      p_buffer=p_buffer->next;
     }
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
     SDL_RenderPresent(renderer);
