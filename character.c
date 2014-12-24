@@ -105,7 +105,6 @@ void handle_input(character* c){
 	p=p->next;
 	index++;
       }
-      printf("there are %d projectiles\n",index);
       projectile* new = calloc(1,sizeof(projectile));
       set_default_values_p(new);
       new->prev=p;

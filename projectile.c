@@ -10,7 +10,7 @@
 void set_default_values_p(projectile* p){
   p->x=c->x;
   p->y=c->y;
-  p->speed = 3.5;
+  p->speed = 20;//we base the speed of the height/width
   p->homing = 0;
   p->angle = 90;
 }
@@ -23,12 +23,10 @@ void set_values_p(projectile* p,int x, int y, double speed, short angle, char ho
   p->homing=homing;
   
 }
-void do_action(projectile* p){
-  while(p){
-    p->x += p->speed*cos(p->angle/180*PI);
-    p->y -= p->speed*sin(p->angle/180*PI);
-
-  }
+void do_action_p(projectile* p){
+  p->x += p->speed*cos((double)p->angle/180.0*PI);
+  p->y -= p->speed*sin((double)p->angle/180.0*PI);
+  p=p->next;
 }
 
 /*void manage_projectiles(projectile** proj_ptrs,int size){

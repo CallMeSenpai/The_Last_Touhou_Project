@@ -10,6 +10,8 @@
 int c_height=32;
 int c_width=32;
 
+//consider using the chrono library for getting
+//milliseconds to manipulate time
 #include "character.h"
 #include "projectile.h"
 //#include "mob.h"
@@ -87,7 +89,7 @@ int main(){
   //edit bg to not have blank space in the upper black region
   //white region in the middle
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
-  SDL_Texture* projectile = IMG_LoadTexture(renderer,"star.png");
+  SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   //call projectls and mobs by extern variable 
@@ -109,6 +111,13 @@ int main(){
     handle_input(c);
     SDL_RenderClear(renderer); 
     renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
+    projectile* p_buffer = projectiles;
+    while(p_buffer){
+      renderTexture(p_tex,renderer,
+		    p_buffer->x-16,p_buffer->y-16,32,32);
+      do_action_p(p_buffer);
+    p_buffer=p_buffer->next;
+    }
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
