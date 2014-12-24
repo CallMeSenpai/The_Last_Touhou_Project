@@ -24,8 +24,10 @@ move-to:300,300
 hang:10
 attack-1:30 { attack-1 for 30 seconds }
 
-levels, level-switching
+
 title-screen
-game-levels
+pausing, figuring out time-paused
+game-stages (and transition b/t stage)
+game difficulties
 chat-boxing?
 IMAGE SEARcH
