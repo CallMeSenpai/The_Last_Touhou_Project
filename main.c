@@ -110,12 +110,15 @@ int main(){
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   /***** animation test part 2 *****/
+  init_reimu_test(&c->sprite, renderer);
+  /*
   c->sprite.frames = 4;
   c->sprite.clip = calloc(4, sizeof(SDL_Rect));
   c->sprite.current_frame = 0;
   c->sprite.texture = IMG_LoadTexture(renderer,"reimu_test_sheet.png");
-
+  */
   //inaccurate, testing
+  /*
   c->sprite.clip[0].x = 0;
   c->sprite.clip[0].y = 0;
   c->sprite.clip[0].w = 31;
@@ -135,7 +138,7 @@ int main(){
   c->sprite.clip[3].y = 0;
   c->sprite.clip[3].w = 31;
   c->sprite.clip[3].h = 42;
-  
+  */
   //call projectls and mobs by extern variable 
   set_default_values_c(c);
   while (1){
@@ -157,6 +160,7 @@ int main(){
     //renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
     //animate v
     //renderClip(reimu_sheet,renderer,c->x-16,c->y-21,31,42,&clip[current_frame]);
+
     renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
     c->sprite.current_frame += 1;
     c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
