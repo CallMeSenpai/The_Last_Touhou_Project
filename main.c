@@ -14,6 +14,7 @@ int c_width=32;
 //milliseconds to manipulate time
 #include "character.h"
 #include "projectile.h"
+#include "sprite.h"
 //#include "mob.h"
 
 int c_height;
@@ -34,6 +35,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
 }
 
 //Made for animation.
+/** this has been moved to sprite.c, awaiting deletion
 void renderClip(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h, SDL_Rect* clip){
   SDL_Rect dst;
   dst.x = x;
@@ -42,6 +44,7 @@ void renderClip(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h,
   dst.h = h;
   SDL_RenderCopy(ren, tex, clip, &dst );
 }
+**/
 
 int main(){  
   /***** INIT SDL AND WINDOW *****/
@@ -104,37 +107,35 @@ int main(){
   //dependencies on a gif.
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
 
-  /******* I'm going to try to animate using Reimu's sprites to test with *******/
-  //I think it would be a good idea to put all of these in a struct, then put that struct in all of the unit structs.
-  int frames = 4;
-  SDL_Rect clip[frames]; //4 sprites, cut 4 rectangles from the sheet
-  //I KNOW THAT THE MEASUREMENTS ARE WAY OFF. THIS IS JUST A TEST.
-  clip[0].x = 0;
-  clip[0].y = 0;
-  clip[0].w = 31;
-  clip[0].h = 42;
-
-  clip[1].x = 31;
-  clip[1].y = 0;
-  clip[1].w = 31;
-  clip[1].h = 42;
-
-  clip[2].x = 62;
-  clip[2].y = 0;
-  clip[2].w = 31;
-  clip[2].h = 42;
-
-  clip[3].x = 93;
-  clip[3].y = 0;
-  clip[3].w = 31;
-  clip[3].h = 42;
-
-  SDL_Texture* reimu_sheet = IMG_LoadTexture(renderer,"reimu_test_sheet.png");
-  int current_frame = 0;
-  /******* ^ANIMATION^ *******/
-
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
+  /***** animation test part 2 *****/
+  c->sprite.frames = 4;
+  c->sprite.clip = calloc(4, sizeof(SDL_Rect));
+  c->sprite.current_frame = 0;
+  c->sprite.texture = IMG_LoadTexture(renderer,"reimu_test_sheet.png");
+
+  //inaccurate, testing
+  c->sprite.clip[0].x = 0;
+  c->sprite.clip[0].y = 0;
+  c->sprite.clip[0].w = 31;
+  c->sprite.clip[0].h = 42;
+
+  c->sprite.clip[1].x = 31;
+  c->sprite.clip[1].y = 0;
+  c->sprite.clip[1].w = 31;
+  c->sprite.clip[1].h = 42;
+
+  c->sprite.clip[2].x = 62;
+  c->sprite.clip[2].y = 0;
+  c->sprite.clip[2].w = 31;
+  c->sprite.clip[2].h = 42;
+
+  c->sprite.clip[3].x = 93;
+  c->sprite.clip[3].y = 0;
+  c->sprite.clip[3].w = 31;
+  c->sprite.clip[3].h = 42;
+  
   //call projectls and mobs by extern variable 
   set_default_values_c(c);
   while (1){
@@ -155,10 +156,12 @@ int main(){
     SDL_RenderClear(renderer); 
     //renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
     //animate v
-    renderClip(reimu_sheet,renderer,c->x-16,c->y-21,31,42,&clip[current_frame]);
-    printf("Current_frame: %d\n", current_frame);
-    current_frame += 1;
-    current_frame = current_frame % 4;
+    //renderClip(reimu_sheet,renderer,c->x-16,c->y-21,31,42,&clip[current_frame]);
+    renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
+    c->sprite.current_frame += 1;
+    c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
+    //current_frame += 1;
+    //current_frame = current_frame % 4;
     //animate ^
 
     projectile* p_buffer = projectiles;

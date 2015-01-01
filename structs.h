@@ -1,10 +1,23 @@
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
 #include <stdio.h>
 #include <stdlib.h>
+/* we are using a local edited lib */
+#include "include/SDL.h"
+#include "include/SDL_image.h"
 
 extern int c_height;
 extern int c_width;//character dimensions
 extern int w_height;
 extern int w_width;//window dimensions
+
+typedef struct sprite{
+  int frames;
+  int current_frame;
+  SDL_Rect* clip;
+  SDL_Texture* texture;
+} sprite;
 
 typedef struct character{
   char lives,bombs;
@@ -13,6 +26,7 @@ typedef struct character{
   //booleans
   char left,right,up,down;
   char shoot,focus,bomb;
+  sprite sprite;
 } character; 
 extern character* c;
 
@@ -33,3 +47,5 @@ typedef struct mob{
   double speed;
 } mob;
 extern mob* mobs;
+
+#endif
