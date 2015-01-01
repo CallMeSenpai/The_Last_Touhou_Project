@@ -32,6 +32,17 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
   dst.h = h;
   SDL_RenderCopy(ren, tex, 0, &dst );
 }
+
+//Made for animation.
+void renderClip(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h, SDL_Rect* clip){
+  SDL_Rect dst;
+  dst.x = x;
+  dst.y = y;
+  dst.w = w;
+  dst.h = h;
+  SDL_RenderCopy(ren, tex, clip, &dst );
+}
+
 int main(){  
   /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
@@ -92,6 +103,36 @@ int main(){
   //we will need sprites rather than
   //dependencies on a gif.
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
+
+  /******* I'm going to try to animate using Reimu's sprites to test with *******/
+  //I think it would be a good idea to put all of these in a struct, then put that struct in all of the unit structs.
+  int frames = 4;
+  SDL_Rect clip[frames]; //4 sprites, cut 4 rectangles from the sheet
+  //I KNOW THAT THE MEASUREMENTS ARE WAY OFF. THIS IS JUST A TEST.
+  clip[0].x = 0;
+  clip[0].y = 0;
+  clip[0].w = 31;
+  clip[0].h = 42;
+
+  clip[1].x = 31;
+  clip[1].y = 0;
+  clip[1].w = 31;
+  clip[1].h = 42;
+
+  clip[2].x = 62;
+  clip[2].y = 0;
+  clip[2].w = 31;
+  clip[2].h = 42;
+
+  clip[3].x = 93;
+  clip[3].y = 0;
+  clip[3].w = 31;
+  clip[3].h = 42;
+
+  SDL_Texture* reimu_sheet = IMG_LoadTexture(renderer,"reimu_test_sheet.png");
+  int current_frame = 0;
+  /******* ^ANIMATION^ *******/
+
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   //call projectls and mobs by extern variable 
@@ -112,7 +153,14 @@ int main(){
     }
     handle_input(c);
     SDL_RenderClear(renderer); 
-    renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
+    //renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
+    //animate v
+    renderClip(reimu_sheet,renderer,c->x-16,c->y-21,31,42,&clip[current_frame]);
+    printf("Current_frame: %d\n", current_frame);
+    current_frame += 1;
+    current_frame = current_frame % 4;
+    //animate ^
+
     projectile* p_buffer = projectiles;
     while(p_buffer){
       renderTexture(p_tex,renderer,
