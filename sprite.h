@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "structs.h"
+#include "main.h"
 #include "character.h"
 /* we need this lib for shooting */
 #include "projectile.h"

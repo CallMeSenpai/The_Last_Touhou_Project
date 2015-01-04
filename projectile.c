@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "structs.h"
+#include "main.h"
 #include "projectile.h"
 #include <math.h>
 /* we are using a local edited lib */
