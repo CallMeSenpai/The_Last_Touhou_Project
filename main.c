@@ -5,7 +5,7 @@
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
-#include "structs.h"
+#include "main.h"
 #include <time.h>
 int c_height=32;
 int c_width=32;
