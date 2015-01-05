@@ -6,19 +6,13 @@
 #include "include/SDL.h"
 #include "include/SDL_image.h"
 #include "main.h"
-//#include <time.h>
-int c_height=32;
-int c_width=32;
-
-//consider using the chrono library for getting
-//milliseconds to manipulate time
 #include "character.h"
 #include "projectile.h"
 #include "sprite.h"
-//#include "mob.h"
+#include "mob.h"
 
-int c_height;
-int c_width;
+int c_height=32;
+int c_width=32;
 int w_width;
 int w_height;
 projectile* projectiles;
@@ -27,6 +21,10 @@ int full;
 character* c;
 unsigned long time;//time in degrees or 1/60th of a second.
 
+SDL_Window* window;
+SDL_Renderer* renderer;
+FILE* f;
+  
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
   dst.x = x;
@@ -35,25 +33,7 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
   dst.h = h;
   SDL_RenderCopy(ren, tex, 0, &dst );
 }
-
-//Made for animation.
-/** this has been moved to sprite.c, awaiting deletion
-void renderClip(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h, SDL_Rect* clip){
-  SDL_Rect dst;
-  dst.x = x;
-  dst.y = y;
-  dst.w = w;
-  dst.h = h;
-  SDL_RenderCopy(ren, tex, clip, &dst );
-}
-**/
-
-int main(){
-  time=0;
-  /***** INIT SDL AND WINDOW *****/
-  SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
-  SDL_Window* window;
-  FILE* f=NULL;
+void create_window(){
   f=fopen("config","r");
   if (!f){
     puts("settings not found! using default settings.");
@@ -94,20 +74,24 @@ int main(){
     printf("Unable to create window.\n%s\n",SDL_GetError());
     exit(-1);
   }
+}
 
+int main(){
+  time=0;
+  /***** INIT SDL AND WINDOW *****/
+  SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
+  create_window();
+  
   /***** INIT ALL IMAGES *****/
-  SDL_Renderer* renderer;
-  renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+  //we will put bg/in-game related images in a separate
+  //function later
   SDL_Surface* bg_surface;
   SDL_Texture* bg_texture;
+  renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
   SDL_RWops* rwop=SDL_RWFromFile("background.png", "rb");
   bg_surface=IMG_LoadPNG_RW(rwop);
   bg_texture=SDL_CreateTextureFromSurface(renderer, bg_surface);
-  //edit bg to not have blank space in the upper black region
-  //white region in the middle
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
-  //we will need sprites rather than
-  //dependencies on a gif.
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
 
   /***** INIT GAME VARIABLES *****/
@@ -161,7 +145,7 @@ int main(){
     }
     handle_input(c);
     SDL_RenderClear(renderer); 
-
+    
     renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
     if (time%10==0){
       c->sprite.current_frame++;

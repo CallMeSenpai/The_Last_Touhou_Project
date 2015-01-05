@@ -42,9 +42,11 @@ typedef struct projectile{
 extern projectile* projectiles;
 
 typedef struct mob{
-  char hp;//char might be too low
+  int hp;//char might be too low
   int x,y;
   double speed;
+  struct mob* next;
+  struct mob* prev;
 } mob;
 extern mob* mobs;
 
