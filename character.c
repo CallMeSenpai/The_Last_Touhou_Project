@@ -102,10 +102,8 @@ void handle_input(character* c){
       if(projectiles){
 	puts("already exist");
 	projectile* p = projectiles;
-	int index=0;//don't need?
 	while(p->next){
 	  p=p->next;
-	  index++;
 	}
 	projectile* new = calloc(1,sizeof(projectile));
 	set_default_values_p(new);

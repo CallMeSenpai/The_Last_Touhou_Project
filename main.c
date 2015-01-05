@@ -169,11 +169,9 @@ int main(){
     }
     projectile* p_buffer = projectiles;
     while(p_buffer){
-      //randomly segfaults...
       renderTexture(p_tex,renderer,
 		    p_buffer->x-16,p_buffer->y-16,32,32);      
       do_action_p(p_buffer);
-      /* if bounds, free */
       p_buffer=p_buffer->next;
     }
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
