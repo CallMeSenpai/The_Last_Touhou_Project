@@ -11,7 +11,7 @@ extern int c_height;
 extern int c_width;//character dimensions
 extern int w_height;
 extern int w_width;//window dimensions
-
+extern unsigned long time;
 typedef struct sprite{
   int frames;
   int current_frame;

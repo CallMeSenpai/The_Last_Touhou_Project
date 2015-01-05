@@ -88,31 +88,34 @@ void key_up(character* c, SDL_Event e){
   }/* switch e.key.keysym- up */
 }
 void handle_input(character* c){
-  if(c->x > c_width && c->left)
+  if(c->x > c_width + (w_width/80*3) && c->left)
     c->x-=c->speed;
-  if(c->x < w_width - c_width && c->right)
+  if(c->x < (w_width/8*5) - c_width&& c->right)
     //use window bounds as an extern var
     c->x+=c->speed;
-  if(c->y > c_height && c->up)
+  if(c->y > c_height + (w_height/20)&& c->up)
     c->y-=c->speed;
-  if(c->y < w_height - c_height && c->down)
+  if(c->y < w_height - c_height - (w_height/20) && c->down)
     c->y+=c->speed;
-  if(c->shoot){
-    if(projectiles){
-      projectile* p = projectiles;
-      int index=0;
-      while(p->next){
-	p=p->next;
-	index++;
+  if (time % 6 == 0){
+    if(c->shoot){
+      if(projectiles){
+	puts("already exist");
+	projectile* p = projectiles;
+	int index=0;//don't need?
+	while(p->next){
+	  p=p->next;
+	  index++;
+	}
+	projectile* new = calloc(1,sizeof(projectile));
+	set_default_values_p(new);
+	new->prev=p;
+	p->next=new;
+      }else{
+	projectiles = calloc(1,sizeof(projectile));
+	set_default_values_p(projectiles);
       }
-      projectile* new = calloc(1,sizeof(projectile));
-      set_default_values_p(new);
-      new->prev=p;
-      p->next=new;
-    }else{
-      projectiles = calloc(1,sizeof(projectile));
-      set_default_values_p(projectiles);
+      //cooldown?
     }
-    //cooldown?
   }
 }

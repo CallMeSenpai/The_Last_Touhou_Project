@@ -6,7 +6,7 @@
 #include "include/SDL.h"
 #include "include/SDL_image.h"
 #include "main.h"
-#include <time.h>
+//#include <time.h>
 int c_height=32;
 int c_width=32;
 
@@ -25,6 +25,8 @@ projectile* projectiles;
 mob* mobs;
 int full;
 character* c;
+unsigned long time;//time in degrees or 1/60th of a second.
+
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
   dst.x = x;
@@ -46,7 +48,8 @@ void renderClip(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h,
 }
 **/
 
-int main(){  
+int main(){
+  time=0;
   /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   SDL_Window* window;
@@ -142,6 +145,7 @@ int main(){
   //call projectls and mobs by extern variable 
   set_default_values_c(c);
   while (1){
+    time++;
     SDL_Event e;
     if (SDL_PollEvent(&e)){
       switch (e.type){//add escape and enter keys lmao
@@ -157,22 +161,19 @@ int main(){
     }
     handle_input(c);
     SDL_RenderClear(renderer); 
-    //renderTexture(dw,renderer,c->x-16,c->y-16,32,32);
-    //animate v
-    //renderClip(reimu_sheet,renderer,c->x-16,c->y-21,31,42,&clip[current_frame]);
 
     renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
-    c->sprite.current_frame += 1;
-    c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
-    //current_frame += 1;
-    //current_frame = current_frame % 4;
-    //animate ^
-
+    if (time%10==0){
+      c->sprite.current_frame++;
+      c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
+    }
     projectile* p_buffer = projectiles;
     while(p_buffer){
+      //randomly segfaults...
       renderTexture(p_tex,renderer,
-		    p_buffer->x-16,p_buffer->y-16,32,32);
+		    p_buffer->x-16,p_buffer->y-16,32,32);      
       do_action_p(p_buffer);
+      /* if bounds, free */
       p_buffer=p_buffer->next;
     }
     SDL_RenderCopy(renderer, bg_texture, 0, 0);

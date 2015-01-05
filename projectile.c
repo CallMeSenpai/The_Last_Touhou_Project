@@ -26,16 +26,20 @@ void set_values_p(projectile* p,int x, int y, double speed, short angle, char ho
 void do_action_p(projectile* p){
   p->x += p->speed*cos((double)p->angle/180.0*PI);
   p->y -= p->speed*sin((double)p->angle/180.0*PI);
-  p=p->next;
+  if(p->x < 0 || p->y < 0 ||
+     p->x > w_width || p->y > w_height){
+    if (p == projectiles){//is head
+      projectiles=0;
+      free(p);
+      puts("freed");
+    }else{
+      p->prev->next=p->next;
+      if (p->next)
+	p->next->prev=p->prev;
+      free(p);
+      puts("freed");
+    }
+  }
 }
 
-/*void manage_projectiles(projectile** proj_ptrs,int size){
-  int i=0;
-  projectile* p;
-  while(i<size){
-    p=proj_pts[i];
-    //move the projectiles up p->
-    
-    i++;
-  }
-  }*/
+//__ is a _ programmer who envisions creating _ and wants _ and needs _
