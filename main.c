@@ -93,9 +93,11 @@ int main(){
   bg_texture=SDL_CreateTextureFromSurface(renderer, bg_surface);
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
-
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
+  mob* m =summon();
+  set_default_values_m(m);
+  
   /***** animation test part 2 *****/
   init_reimu_test(&c->sprite, renderer);
   /*
@@ -151,12 +153,19 @@ int main(){
       c->sprite.current_frame++;
       c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
     }
+    /* projectiles */
     projectile* p_buffer = projectiles;
     while(p_buffer){
       renderTexture(p_tex,renderer,
 		    p_buffer->x-16,p_buffer->y-16,32,32);      
       do_action_p(p_buffer);
       p_buffer=p_buffer->next;
+    }
+    /* mobs */
+    mob* m_buffer = mobs;
+    while (m_buffer){
+      renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
+      m_buffer=m_buffer->next;
     }
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
     SDL_RenderPresent(renderer);
