@@ -29,7 +29,7 @@ void do_action_p(projectile* p){
   if(p->x < 0 || p->y < 0 ||
      p->x > w_width || p->y > w_height){//or hp=0
     if (p == projectiles){//is head
-      projectiles=0;
+      projectiles=projectiles->next;
       free(p);
       //puts("freed");
     }else{

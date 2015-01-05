@@ -42,8 +42,10 @@ void key_down(character* c,SDL_Event e){
       c->down=1;
     break;
   case SDLK_LSHIFT:
-    if(!c->focus)
+    if(!c->focus){
       c->focus=1;
+      c->speed=2;
+    }
     break;
   case SDLK_z:
     if(!c->shoot)
@@ -74,8 +76,10 @@ void key_up(character* c, SDL_Event e){
       c->down=0;
     break;
   case SDLK_LSHIFT:
-    if(c->focus)
+    if(c->focus){
       c->focus=0;
+      c->speed=5;
+    }
     break;
   case SDLK_z:
     if(c->shoot)
