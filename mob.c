@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "main.h"
 #include "mob.h"
-
 #include "projectile.h"
 #include <math.h>
 /* we are using a local edited lib */

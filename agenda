@@ -1,10 +1,6 @@
 TODO::
 
-movement bounds
-object projection
-projection removal ( beyond the bounds )
 get images, barak covered sprites already
-pseudo timer using frame delay in "while(1)"
 
 figure out how to put (patterned) enemies into a file and read it
 --> making own interpreter for enemies/boss/bullet patterns
@@ -17,9 +13,9 @@ hang:10 { keep moving 10 seconds }
 action:
 dist:10 { keep moving until 10 distance units }
 action:
-move-to:300,300
+move-to:420,420
 [MOB1]
-move-to:300,300
+move-to:420,720nosc0pee
 hang:10
 attack-1:30 { attack-1 for 30 seconds }
 

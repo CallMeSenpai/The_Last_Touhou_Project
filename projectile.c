@@ -61,7 +61,7 @@ void do_action_p(projectile* p){
 	  free(p);
 	}
 	m_buf->hp--;
-	printf("mob hp decreased to %d\n",m_buf->hp);
+	//printf("mob hp decreased to %d\n",m_buf->hp);
       }
       p_buf=p_buf->next;
     }
