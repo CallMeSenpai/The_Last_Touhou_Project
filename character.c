@@ -104,7 +104,6 @@ void handle_input(character* c){
   if (time % 6 == 0){
     if(c->shoot){
       if(projectiles){
-	puts("already exist");
 	projectile* p = projectiles;
 	while(p->next){
 	  p=p->next;

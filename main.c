@@ -164,6 +164,7 @@ int main(){
     /* mobs */
     mob* m_buffer = mobs;
     while (m_buffer){
+      do_action_m(m_buffer);
       renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
       m_buffer=m_buffer->next;
     }
