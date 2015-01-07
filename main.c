@@ -5,6 +5,7 @@
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
+#include "include/SDL_ttf.h"
 #include "main.h"
 #include "character.h"
 #include "projectile.h"
@@ -134,13 +135,12 @@ int main(){
   
   /***** animation test part 2 *****/
   init_reimu_test(&c->sprite, renderer);
-  //call projectls and mobs by extern variable 
   set_default_values_c(c);
   while (1){
     time++;
     SDL_Event e;
     if (SDL_PollEvent(&e)){
-      switch (e.type){//add escape and enter keys lmao
+      switch (e.type){//add enter key lmao
       case SDL_QUIT:
 	goto end;
       case SDL_KEYDOWN:
@@ -174,6 +174,7 @@ int main(){
       renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
       m_buffer=m_buffer->next;
     }
+    /* background */
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
     
     if (state==3){
@@ -193,7 +194,7 @@ int main(){
     //time ends:
     if (time > 300){//5 sec removal
       clear(0);
-      time=0;
+      time=0;//reset
     }
 
   }

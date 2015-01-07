@@ -18,9 +18,7 @@ deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 <br>
 <code>
 sudo apt-get install libsdl-ttf2.0-0
-//dev libs we'll include ourselves...
-sudo apt-get install libsdl-ttf2.0-0-dev
--lSDL_TTF in makefile too?
+
 </code>
 <br>
 #To do:

@@ -39,7 +39,7 @@ typedef struct projectile{
   int x,y;
   double speed;
   short angle;
-  //boolean: is this bullet a homing/targetting projectile?
+  //we might not need to make homing because it is time consuming
   char homing;
   struct projectile* next;
   struct projectile* prev;
