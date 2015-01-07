@@ -48,11 +48,11 @@ void key_down(character* c,SDL_Event e){
     }
     break;
   case SDLK_z:
-    if(!c->shoot)
+    if(!c->shoot && state==1)
       c->shoot=1;
     break;
   case SDLK_x:
-    if(!c->bomb)
+    if(!c->bomb && state==1)
       c->bomb=1;
     break;
   }/* switch e.key.keysym */
@@ -88,6 +88,15 @@ void key_up(character* c, SDL_Event e){
   case SDLK_x:
     if(c->bomb)
       c->bomb=0;
+    break;
+  case SDLK_ESCAPE:
+    if(state==1){
+      state=3;
+      //if paused then we change the alpha value
+      //of the renderer drawing color
+    }else if (state==3){
+      state=1;
+    }
     break;
   }/* switch e.key.keysym- up */
 }

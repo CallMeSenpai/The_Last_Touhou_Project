@@ -7,11 +7,16 @@
 #include "include/SDL.h"
 #include "include/SDL_image.h"
 
+extern char state,bombs,lives,grazes;
+extern unsigned long score;
 extern int c_height;
 extern int c_width;//character dimensions
 extern int w_height;
 extern int w_width;//window dimensions
 extern unsigned long time;
+
+//add functions from main,c
+
 typedef struct sprite{
   int frames;
   int current_frame;
@@ -48,6 +53,7 @@ typedef struct mob{
   short angle;
   struct mob* next;
   struct mob* prev;
+  unsigned long spawn_time;
 } mob;
 extern mob* mobs;
 

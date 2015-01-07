@@ -11,6 +11,12 @@
 #include "sprite.h"
 #include "mob.h"
 
+int level;
+unsigned long score;
+char bombs,lives,grazes;
+//state: 0=main menu, 1=game, 2=chat?, 3 = paused
+char state;
+
 int c_height=32;
 int c_width=32;
 int w_width;
@@ -24,7 +30,7 @@ unsigned long time;//time in degrees or 1/60th of a second.
 SDL_Window* window;
 SDL_Renderer* renderer;
 FILE* f;
-  
+
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
   dst.x = x;
@@ -75,6 +81,29 @@ void create_window(){
     exit(-1);
   }
 }
+/* clears screen and removes stuff for the next level
+   accepts 0 or 1 depending on removal of the character */
+void clear(char bool){
+  mob* m_buf = mobs;
+  while (m_buf){//switch to while(m_buf=m_buf->next) when safe
+    if (m_buf==mobs)
+      mobs=mobs->next;
+    mob* to_free = m_buf;
+    free(to_free);
+    m_buf=m_buf->next;
+  }
+  projectile* p_buf = projectiles;
+  //we need bullets here
+  while (p_buf){
+    if (p_buf==projectiles)
+      projectiles=projectiles->next;
+    projectile* to_free = p_buf;
+    free(to_free);
+    p_buf=p_buf->next;
+  }
+  if (bool)
+    free(c);
+}
 
 int main(){
   time=0;
@@ -93,41 +122,18 @@ int main(){
   bg_texture=SDL_CreateTextureFromSurface(renderer, bg_surface);
   SDL_Texture* dw = IMG_LoadTexture(renderer,"dw.png");
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"star.gif");
-  /***** INIT GAME VARIABLES *****/
+  SDL_Texture* shade = IMG_LoadTexture(renderer,"transparency.png");
+  
+  /***** INIT GAME VARIABLES
+	 we're testing by starting the game already lol
+   *****/
+  state=1;
   c = calloc(1,sizeof(character));
   mob* m =summon();
   set_default_values_m(m);
   
   /***** animation test part 2 *****/
   init_reimu_test(&c->sprite, renderer);
-  /*
-  c->sprite.frames = 4;
-  c->sprite.clip = calloc(4, sizeof(SDL_Rect));
-  c->sprite.current_frame = 0;
-  c->sprite.texture = IMG_LoadTexture(renderer,"reimu_test_sheet.png");
-  */
-  //inaccurate, testing
-  /*
-  c->sprite.clip[0].x = 0;
-  c->sprite.clip[0].y = 0;
-  c->sprite.clip[0].w = 31;
-  c->sprite.clip[0].h = 42;
-
-  c->sprite.clip[1].x = 31;
-  c->sprite.clip[1].y = 0;
-  c->sprite.clip[1].w = 31;
-  c->sprite.clip[1].h = 42;
-
-  c->sprite.clip[2].x = 62;
-  c->sprite.clip[2].y = 0;
-  c->sprite.clip[2].w = 31;
-  c->sprite.clip[2].h = 42;
-
-  c->sprite.clip[3].x = 93;
-  c->sprite.clip[3].y = 0;
-  c->sprite.clip[3].w = 31;
-  c->sprite.clip[3].h = 42;
-  */
   //call projectls and mobs by extern variable 
   set_default_values_c(c);
   while (1){
@@ -157,7 +163,7 @@ int main(){
     projectile* p_buffer = projectiles;
     while(p_buffer){
       renderTexture(p_tex,renderer,
-		    p_buffer->x-16,p_buffer->y-16,32,32);      
+		    p_buffer->x-16,p_buffer->y-16,32,32);
       do_action_p(p_buffer);
       p_buffer=p_buffer->next;
     }
@@ -169,8 +175,27 @@ int main(){
       m_buffer=m_buffer->next;
     }
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
+    
+    if (state==3){
+      /* 
+	 we are using a pseudo alpha-value transparency-
+	 1) do not let bullets touch the character in state 3
+	 2) do not let the character shoot/bomb in state 3
+      */
+      SDL_RenderCopy(renderer, shade,0,0);
+    }else{
+      
+    }
+    
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
+    
+    //time ends:
+    if (time > 300){//5 sec removal
+      clear(0);
+      time=0;
+    }
+
   }
  end:
   SDL_DestroyTexture(bg_texture);
