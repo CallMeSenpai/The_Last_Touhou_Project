@@ -14,7 +14,7 @@ void init_reimu_test(sprite* sprite, SDL_Renderer* renderer) {
   sprite->frames = 4;
   sprite->current_frame = 0;
   sprite->clip = calloc(4, sizeof(SDL_Rect));
-  sprite->texture = IMG_LoadTexture(renderer, "reimu_test_sheet.png");
+  sprite->texture = IMG_LoadTexture(renderer, "images/reimu_test_sheet.png");
 
   sprite->clip[0].x = 0;
   sprite->clip[0].y = 0;

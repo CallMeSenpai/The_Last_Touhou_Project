@@ -18,7 +18,7 @@ deb http://us.archive.ubuntu.com/ubuntu saucy main universe
 <br>
 <code>
 sudo apt-get install libsdl-ttf2.0-0
-
+sudo apt-get install libsdl-ttf2.0-dev
 </code>
 <br>
 #To do:
