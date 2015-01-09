@@ -29,6 +29,7 @@ mob* mobs;
 int full;
 character* c;
 unsigned long time;//60fps time, 1/60th of a second
+char menu_index,menu_options;
 
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -151,6 +152,29 @@ void key_up(SDL_Event e){
       c->shoot=0;
       state=1;
       break;
+    case SDLK_RETURN:
+      if (menu_index==0){
+        c->up=0;
+	c->down=0;
+	c->right=0;
+	c->left=0;
+	c->shoot=0;
+	state=1;
+	break;
+      }else if (menu_index==1){//restart
+	state=1;
+	score=0;
+	//clear(1);
+	//c=calloc(1,sizeof(character));
+	set_default_values_c(c);
+	break;
+      }
+    case SDLK_DOWN:
+      menu_index=(menu_index+1) %3;
+      break;
+    case SDLK_UP:
+      menu_index=(menu_index+2) %3;
+      break;
     }
   }else if (state==1){
     switch (e.key.keysym.sym){
@@ -180,9 +204,11 @@ void key_up(SDL_Event e){
       break;
     case SDLK_ESCAPE:
       state=3;
+      menu_options=3;
+      menu_index=0;
       break;
     }/* switch e.key.keysym- up */
-  }
+  }/* if state=1 */
 }
 int main(){
   time=0;
@@ -209,6 +235,7 @@ int main(){
   SDL_Texture* start_tex = IMG_LoadTexture(renderer,"images/start.png");
   SDL_Texture* options_tex = IMG_LoadTexture(renderer,"images/options.png");
   SDL_Texture* exit_tex = IMG_LoadTexture(renderer,"images/exit.png");
+  SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
@@ -237,18 +264,7 @@ int main(){
     }
     SDL_RenderClear(renderer); 
     /***** sprites *****/
-    if ( state == 1 ){
-      if ( time%10 == 0 ){
-	c->sprite.current_frame++;
-	c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
-      }
-      handle_input(c);
-    }else if ( state == 3 ){
-      SDL_RenderCopy(renderer,shade,0,0);
-      renderTexture(continue_tex,renderer,w_width/3-w_width/10,w_height/3,w_width/5,w_height/15);
-      renderTexture(restart_tex,renderer,w_width/3-w_width/12,w_height/2,w_width/6,w_height/15);
-      renderTexture(mainmenu_tex,renderer,w_width/3-w_width/10,w_height/3*2,w_width/5,w_height/15);
-    }
+    
     
     /***** character *****/
     renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
@@ -267,6 +283,19 @@ int main(){
       do_action_m(m_buffer);
       renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
       m_buffer=m_buffer->next;
+    }
+    if ( state == 1 ){
+      if ( time%10 == 0 ){
+	c->sprite.current_frame++;
+	c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
+      }
+      handle_input(c);
+    }else if ( state == 3 ){
+      SDL_RenderCopy(renderer,shade,0,0);
+      renderTexture(select_tex,renderer,w_width/3-w_width/8,w_height/2 + (w_height/6*(menu_index-1)),w_width/4,w_height/12);
+      renderTexture(continue_tex,renderer,w_width/3-w_width/10,w_height/3,w_width/5,w_height/15);
+      renderTexture(restart_tex,renderer,w_width/3-w_width/12,w_height/2,w_width/6,w_height/15);
+      renderTexture(mainmenu_tex,renderer,w_width/3-w_width/10,w_height/3*2,w_width/5,w_height/15);
     }
     /***** background *****/
     SDL_RenderCopy(renderer, bg_texture, 0, 0);

@@ -11,8 +11,8 @@
 void set_default_values_c(character* c){
   c->lives=3;
   c->bombs=3;
-  c->x=w_width/2;
-  c->y=w_height/2;
+  c->x=w_width/3;
+  c->y=w_height*7/8;
   c->left=0;
   c->up=0;
   c->down=0;

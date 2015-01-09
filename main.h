@@ -6,8 +6,8 @@
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
-
 extern char state,bombs,lives,grazes;
+extern char menu_options, menu_options;
 extern unsigned long score;
 extern int c_height;
 extern int c_width;//character dimensions

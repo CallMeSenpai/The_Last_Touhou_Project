@@ -18,7 +18,7 @@ char interact(mob* m, projectile* p,int radius){
 void set_default_values_p(projectile* p){
   p->x=c->x;
   p->y=c->y;
-  p->speed = w_height/40;
+  p->speed = w_height/20;
   p->homing = 0;
   p->angle = 90;
 }
