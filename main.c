@@ -17,7 +17,7 @@
 int level;
 unsigned long score;
 char bombs,lives,grazes;
-//state: 0=main menu, 1=game, 2=chat?, 3 = paused
+//state: 0=main menu, 1 = level selection, 2 = game, 3 = paused
 char state;
 SDL_Event e;
 int c_height=32;
@@ -111,7 +111,7 @@ void clear(char bool){
 }
 
 void key_down(SDL_Event e){
-  if (state==1){
+  if (state==2){
     switch (e.key.keysym.sym){
     case SDLK_LEFT:  
       if (!c->left){ c->left=1; }
@@ -138,10 +138,34 @@ void key_down(SDL_Event e){
       if(!c->bomb){ c->bomb=1; }
       break;
     }/* switch e.key.keysym */
-  }/* if state==1 */
+  }/* if state==2 */
 }
 void key_up(SDL_Event e){
-  if (state==3){
+  if (state==0){
+    switch (e.key.keysym.sym){
+    case SDLK_DOWN:
+      menu_index=(menu_index+1)%menu_options;
+      break;
+    case SDLK_UP:
+      menu_index=(menu_index-1+menu_options)%menu_options;
+      break;
+    case SDLK_RETURN:
+      state = 1;
+      break;
+    }
+  }else if ( state == 1 ){
+    switch (e.key.keysym.sym){
+    case SDLK_RETURN:
+      //cases with exit and start,
+      if ( menu_index == 0 ){ start(); }
+      if ( menu_index == 1 ){ puts("options"); }
+      if (menu_index==2){ exit(0); }
+      break;
+    case SDLK_ESCAPE:
+      title();
+      break;
+    }
+  }else if (state==3){
     switch (e.key.keysym.sym){
     case SDLK_ESCAPE:
       c->up=0;
@@ -149,7 +173,7 @@ void key_up(SDL_Event e){
       c->right=0;
       c->left=0;
       c->shoot=0;
-      state=1;
+      state=2;
       break;
     case SDLK_RETURN:
       if (menu_index==0){
@@ -158,25 +182,29 @@ void key_up(SDL_Event e){
 	c->right=0;
 	c->left=0;
 	c->shoot=0;
-	state=1;
+	state=2;
 	break;
       }else if (menu_index==1){//restart
-	state=1;
+	state=2;
 	score=0;
 	//clear(1);
 	set_default_values_c(c);
 	break;
+      }else if (menu_index==2){ 
+	clear(1);
+	title(); 
       }
     case SDLK_DOWN:
-      menu_index=(menu_index+1) %3;
+      menu_index=(menu_index+1) % menu_options;
+      //printf
       break;
     case SDLK_UP:
-      menu_index=(menu_index+2) %3;
+      menu_index=(menu_index-1+menu_options) % menu_options;
       break;
     }
-  }else if (state==1){
+  }else if (state==2){
     switch (e.key.keysym.sym){
-    case SDLK_LEFT:  
+    case SDLK_LEFT: 
       if(c->left){ c->left=0; }
       break;
     case SDLK_RIGHT: 
@@ -206,21 +234,27 @@ void key_up(SDL_Event e){
       menu_index=0;
       break;
     }/* switch e.key.keysym- up */
-  }/* if state=1 */
+  }/* if state=2 */
 }
 /***** begins the game *****/
 void start(){
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
-  state=1;
+  state=2;
   mobs=summon();
   set_default_values_m(mobs);
   init_reimu_test(&c->sprite, renderer);
   time=0;
 }
-int main(){
+void title(){
   time=0;
+  state=0;
+  menu_options=3;
+  menu_index=0;
+  //menu_index is 1?
+}
+int main(){
   /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   create_window();
@@ -248,7 +282,7 @@ int main(){
   SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
   /*----- test -----*/
   //start();
-  
+  title();
   
 
   /*----- end test -----*/
@@ -269,19 +303,23 @@ int main(){
       }
     }
     if (state==0){
-      //set menu_index and menu_options, start options exit
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
-      renderTexture(start_tex,renderer,w_width/4,w_height/3,w_width/10,w_height/15);
-      renderTexture(options_tex,renderer,w_width/4,w_height/2,w_width/10,w_height/15);
-      renderTexture(exit_tex,renderer,w_width/4,w_height/3*2,w_width/10,w_height/15);
-    }else if (state==1 || state==3){
+      renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
+      //printf("printing at %d, %d.\n",w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1));
+      renderTexture(start_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/15);
+      renderTexture(options_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/15);
+      renderTexture(exit_tex,renderer,w_width/4-w_width/24,w_height/3*2,w_width/12,w_height/15);
+    }else if (state == 1){
+      renderTexture(title_tex,renderer,0,0,w_width,w_height);
+      
+    }else if (state==2 || state==3){
       /***** character *****/
       renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
       /***** projectiles *****/
       projectile* p_buffer = projectiles;
       while(p_buffer){
 	renderTexture(p_tex,renderer,p_buffer->x-16,p_buffer->y-16,32,32);
-	if (state==1){
+	if (state==2){
 	  do_action_p(p_buffer);
 	}
 	p_buffer=p_buffer->next; 
@@ -293,7 +331,7 @@ int main(){
 	renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
 	m_buffer=m_buffer->next;
       }
-      if ( state == 1 ){
+      if ( state == 2 ){
 	/***** playing mode *****/
 	/***** sprites *****/
 	if ( time%10 == 0 ){
@@ -311,10 +349,10 @@ int main(){
       }
       /***** background *****/
       renderTexture(bg_texture,renderer, 0, 0,w_width,w_height);
-    }/* if state==3 or state==3 */
+    }/* if state==2 or state==3 */
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
-  }
+  }/* while 1 */
  end:
   SDL_DestroyTexture(bg_texture);
   SDL_DestroyRenderer(renderer);

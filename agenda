@@ -24,7 +24,6 @@ attack-1:30 { attack-1 for 30 seconds }
     and each mob/bullet will have an array of
     function pointers that will work in order
 
-title-screen
+title-screen-> {{ level selection }} -> game
 game-stages (and transition b/t stage)
-game difficulties
-chat-boxing?
+

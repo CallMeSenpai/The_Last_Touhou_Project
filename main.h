@@ -16,7 +16,10 @@ extern int w_width;//window dimensions
 extern unsigned long time;
 
 //add functions from main,c
-
+void key_down(SDL_Event);
+void key_up(SDL_Event);
+void start();
+void title();
 typedef struct sprite{
   int frames;
   int current_frame;
