@@ -19,7 +19,7 @@ unsigned long score;
 char bombs,lives,grazes;
 //state: 0=main menu, 1=game, 2=chat?, 3 = paused
 char state;
-
+SDL_Event e;
 int c_height=32;
 int c_width=32;
 int w_width;
@@ -87,10 +87,9 @@ void create_window(){
     exit(-1);
   }
 }
-/* 
-   clears screen and removes stuff for the next level
-*/
+/***** clears screen *****/
 void clear(char bool){
+  //bool: do we want to remove the character?
   mob* m_buf = mobs;
   while (m_buf){
     if (m_buf==mobs)
@@ -165,7 +164,6 @@ void key_up(SDL_Event e){
 	state=1;
 	score=0;
 	//clear(1);
-	//c=calloc(1,sizeof(character));
 	set_default_values_c(c);
 	break;
       }
@@ -210,6 +208,17 @@ void key_up(SDL_Event e){
     }/* switch e.key.keysym- up */
   }/* if state=1 */
 }
+/***** begins the game *****/
+void start(){
+  /***** INIT GAME VARIABLES *****/
+  c = calloc(1,sizeof(character));
+  set_default_values_c(c);
+  state=1;
+  mobs=summon();
+  set_default_values_m(mobs);
+  init_reimu_test(&c->sprite, renderer);
+  time=0;
+}
 int main(){
   time=0;
   /***** INIT SDL AND WINDOW *****/
@@ -236,20 +245,17 @@ int main(){
   SDL_Texture* options_tex = IMG_LoadTexture(renderer,"images/options.png");
   SDL_Texture* exit_tex = IMG_LoadTexture(renderer,"images/exit.png");
   SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
-  /***** INIT GAME VARIABLES *****/
-  c = calloc(1,sizeof(character));
-  set_default_values_c(c);
-  /** test **/
-  state=1;
-  mob* m =summon();
-  set_default_values_m(m);
-  init_reimu_test(&c->sprite, renderer);
-  /** end test **/
+  SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
+  /*----- test -----*/
+  //start();
+  
+  
 
+  /*----- end test -----*/
   while (1){
-    time++;
-    //printf("state: %d\n",state);
-    SDL_Event e;
+    if (state!=3)
+      time++;
+    SDL_RenderClear(renderer);
     if (SDL_PollEvent(&e)){
       switch (e.type){//add enter key lmao
       case SDL_QUIT:
@@ -262,50 +268,52 @@ int main(){
 	break;
       }
     }
-    SDL_RenderClear(renderer); 
-    /***** sprites *****/
-    
-    
-    /***** character *****/
-    renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
-    /***** projectiles *****/
-    projectile* p_buffer = projectiles;
-    while(p_buffer){
-      renderTexture(p_tex,renderer,p_buffer->x-16,p_buffer->y-16,32,32);
-      if (state==1){
-	do_action_p(p_buffer);
+    if (state==0){
+      //set menu_index and menu_options, start options exit
+      renderTexture(title_tex,renderer,0,0,w_width,w_height);
+      renderTexture(start_tex,renderer,w_width/4,w_height/3,w_width/10,w_height/15);
+      renderTexture(options_tex,renderer,w_width/4,w_height/2,w_width/10,w_height/15);
+      renderTexture(exit_tex,renderer,w_width/4,w_height/3*2,w_width/10,w_height/15);
+    }else if (state==1 || state==3){
+      /***** character *****/
+      renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
+      /***** projectiles *****/
+      projectile* p_buffer = projectiles;
+      while(p_buffer){
+	renderTexture(p_tex,renderer,p_buffer->x-16,p_buffer->y-16,32,32);
+	if (state==1){
+	  do_action_p(p_buffer);
+	}
+	p_buffer=p_buffer->next; 
       }
-      p_buffer=p_buffer->next; 
-    }
-    /***** mobs *****/
-    mob* m_buffer = mobs;
-    while (m_buffer){
-      do_action_m(m_buffer);
-      renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
-      m_buffer=m_buffer->next;
-    }
-    if ( state == 1 ){
-      if ( time%10 == 0 ){
-	c->sprite.current_frame++;
-	c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
+      /***** mobs *****/
+      mob* m_buffer = mobs;
+      while (m_buffer){
+	do_action_m(m_buffer);
+	renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
+	m_buffer=m_buffer->next;
       }
-      handle_input(c);
-    }else if ( state == 3 ){
-      SDL_RenderCopy(renderer,shade,0,0);
-      renderTexture(select_tex,renderer,w_width/3-w_width/8,w_height/2 + (w_height/6*(menu_index-1)),w_width/4,w_height/12);
-      renderTexture(continue_tex,renderer,w_width/3-w_width/10,w_height/3,w_width/5,w_height/15);
-      renderTexture(restart_tex,renderer,w_width/3-w_width/12,w_height/2,w_width/6,w_height/15);
-      renderTexture(mainmenu_tex,renderer,w_width/3-w_width/10,w_height/3*2,w_width/5,w_height/15);
-    }
-    /***** background *****/
-    SDL_RenderCopy(renderer, bg_texture, 0, 0);
+      if ( state == 1 ){
+	/***** playing mode *****/
+	/***** sprites *****/
+	if ( time%10 == 0 ){
+	  c->sprite.current_frame++;
+	  c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
+	}
+	handle_input(c);
+      }else if ( state == 3 ){
+	/***** pause menu *****/
+	renderTexture(shade,renderer,0,0,w_width,w_height);
+	renderTexture(select_tex,renderer,w_width/3-w_width/8,w_height/2 + (w_height/6*(menu_index-1)),w_width/4,w_height/12);
+	renderTexture(continue_tex,renderer,w_width/3-w_width/10,w_height/3,w_width/5,w_height/15);
+	renderTexture(restart_tex,renderer,w_width/3-w_width/12,w_height/2,w_width/6,w_height/15);
+	renderTexture(mainmenu_tex,renderer,w_width/3-w_width/10,w_height/3*2,w_width/5,w_height/15);
+      }
+      /***** background *****/
+      renderTexture(bg_texture,renderer, 0, 0,w_width,w_height);
+    }/* if state==3 or state==3 */
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
-    /*time ends:
-    if (time > 300){//5 sec removal
-      clear(0);
-      time=0;//reset
-      }*/
   }
  end:
   SDL_DestroyTexture(bg_texture);
