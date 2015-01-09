@@ -20,6 +20,7 @@ void key_down(SDL_Event);
 void key_up(SDL_Event);
 void start();
 void title();
+void levels();
 typedef struct sprite{
   int frames;
   int current_frame;
@@ -59,5 +60,15 @@ typedef struct mob{
   unsigned long spawn_time;
 } mob;
 extern mob* mobs;
+typedef struct bullet{
+  int hp, x, y;
+  double speed;
+  short angle;
+  struct bullet* next;
+  struct bullet* prev;
+  char width,height;
+  //might want different size bullets?
+} bullet;
+extern bullet* bullets;
 
 #endif

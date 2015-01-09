@@ -9,6 +9,7 @@
 #define PI 3.14159265
 //!!!!! include mob.c into the compile makefile
 
+
 mob* summon(){
   if (!mobs){
     mobs = calloc(1,sizeof(mob));

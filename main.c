@@ -11,13 +11,14 @@
 #include "projectile.h"
 #include "sprite.h"
 #include "mob.h"
+#include "bullet.h"
 
 #define WHITE (SDL_Color){255,255,255}
 
 int level;
 unsigned long score;
 char bombs,lives,grazes;
-//state: 0=main menu, 1 = level selection, 2 = game, 3 = paused
+//state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue
 char state;
 SDL_Event e;
 int c_height=32;
@@ -141,7 +142,7 @@ void key_down(SDL_Event e){
   }/* if state==2 */
 }
 void key_up(SDL_Event e){
-  if (state==0){
+  if (state==0 || state==1 || state==3){
     switch (e.key.keysym.sym){
     case SDLK_DOWN:
       menu_index=(menu_index+1)%menu_options;
@@ -149,17 +150,21 @@ void key_up(SDL_Event e){
     case SDLK_UP:
       menu_index=(menu_index-1+menu_options)%menu_options;
       break;
+    }
+  }
+  if (state==0){
+    switch (e.key.keysym.sym){
     case SDLK_RETURN:
-      state = 1;
+      levels();
       break;
     }
   }else if ( state == 1 ){
     switch (e.key.keysym.sym){
     case SDLK_RETURN:
       //cases with exit and start,
-      if ( menu_index == 0 ){ start(); }
-      if ( menu_index == 1 ){ puts("options"); }
-      if (menu_index==2){ exit(0); }
+      if ( menu_index == 0 ){ start(); } // start on ez
+      if ( menu_index == 1 ){ start(); }//start on insane
+      if (menu_index==2){ title(); }//back to title?
       break;
     case SDLK_ESCAPE:
       title();
@@ -193,14 +198,8 @@ void key_up(SDL_Event e){
       }else if (menu_index==2){ 
 	clear(1);
 	title(); 
+	//bugs, double free @ game->title
       }
-    case SDLK_DOWN:
-      menu_index=(menu_index+1) % menu_options;
-      //printf
-      break;
-    case SDLK_UP:
-      menu_index=(menu_index-1+menu_options) % menu_options;
-      break;
     }
   }else if (state==2){
     switch (e.key.keysym.sym){
@@ -248,18 +247,35 @@ void start(){
   time=0;
 }
 void title(){
+  clear(1);
   time=0;
   state=0;
   menu_options=3;
   menu_index=0;
-  //menu_index is 1?
+  /*might include another options under start
+    to add extra level.
+    depends on time constraints
+   */
+  //Extra.png?
+  //Entering some CS-dojo type png.
+}
+void levels(){
+  menu_options=3;
+  state=1;
+  menu_index=0;
+  //get images
+  //Easy.png
+  //Insane.png
+  //Back
 }
 int main(){
   /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   create_window();
   TTF_Init();
+  //we need font only for text boxes
   font = TTF_OpenFont("whitrabt.ttf", 20);
+
   /***** INIT ALL IMAGES *****/
   //we will put bg/in-game related images in a separate
   //function later
@@ -281,7 +297,6 @@ int main(){
   SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
   SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
   /*----- test -----*/
-  //start();
   title();
   
 
@@ -305,13 +320,13 @@ int main(){
     if (state==0){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
       renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
-      //printf("printing at %d, %d.\n",w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1));
       renderTexture(start_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/15);
       renderTexture(options_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/15);
       renderTexture(exit_tex,renderer,w_width/4-w_width/24,w_height/3*2,w_width/12,w_height/15);
     }else if (state == 1){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
-      
+      renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
+      printf("menu option %d/%d\n",menu_index,menu_options);
     }else if (state==2 || state==3){
       /***** character *****/
       renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);

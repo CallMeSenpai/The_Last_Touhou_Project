@@ -24,6 +24,10 @@ attack-1:30 { attack-1 for 30 seconds }
     and each mob/bullet will have an array of
     function pointers that will work in order
 
-title-screen-> {{ level selection }} -> game
-game-stages (and transition b/t stage)
+level selection images
+level differences? perhaps cutting out half or 2/3 of bullets
+
+options: select lives/bombs, etc
+
+chat boxing, state of 4
 
