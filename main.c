@@ -88,8 +88,6 @@ void create_window(){
 }
 /* 
    clears screen and removes stuff for the next level
-   accepts 0 or 1 depending on removal of the character 
-   i might change the behavior of the clear-screen funct
 */
 void clear(char bool){
   mob* m_buf = mobs;
@@ -112,18 +110,87 @@ void clear(char bool){
     free(c);
 }
 
+void key_down(SDL_Event e){
+  if (state==1){
+    switch (e.key.keysym.sym){
+    case SDLK_LEFT:  
+      if (!c->left){ c->left=1; }
+      break;
+    case SDLK_RIGHT: 
+      if (!c->right){ c->right=1; }
+      break;
+    case SDLK_UP:    
+      if(!c->up){ c->up=1; }
+      break;
+    case SDLK_DOWN:  
+      if(!c->down){ c->down=1; }
+      break;
+    case SDLK_LSHIFT:
+      if(!c->focus){
+	c->focus=1;
+	c->speed=2;
+      }
+      break;
+    case SDLK_z:
+      if(!c->shoot){ c->shoot=1; }
+      break;
+    case SDLK_x:
+      if(!c->bomb){ c->bomb=1; }
+      break;
+    }/* switch e.key.keysym */
+  }/* if state==1 */
+}
+void key_up(SDL_Event e){
+  if (state==3){
+    switch (e.key.keysym.sym){
+    case SDLK_ESCAPE:
+      c->up=0;
+      c->down=0;
+      c->right=0;
+      c->left=0;
+      c->shoot=0;
+      state=1;
+      break;
+    }
+  }else if (state==1){
+    switch (e.key.keysym.sym){
+    case SDLK_LEFT:  
+      if(c->left){ c->left=0; }
+      break;
+    case SDLK_RIGHT: 
+      if(c->right){ c->right=0; }
+      break;
+    case SDLK_UP:    
+      if(c->up){ c->up=0; }
+      break;
+    case SDLK_DOWN:  
+      if(c->down){ c->down=0; }
+      break;
+    case SDLK_LSHIFT:
+      if(c->focus){
+	c->focus=0;
+	c->speed=5;
+      }
+      break;
+    case SDLK_z:
+      if(c->shoot){ c->shoot=0; }
+      break;
+    case SDLK_x:
+      if(c->bomb){ c->bomb=0; }
+      break;
+    case SDLK_ESCAPE:
+      state=3;
+      break;
+    }/* switch e.key.keysym- up */
+  }
+}
 int main(){
   time=0;
   /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   create_window();
-  if (TTF_Init() < 0)
-    puts("error initializing");
+  TTF_Init();
   font = TTF_OpenFont("whitrabt.ttf", 20);
-  if (font == NULL) {
-    printf("Unable to load font: %s %s \n", "test", TTF_GetError());
-    exit(1);
-  }
   /***** INIT ALL IMAGES *****/
   //we will put bg/in-game related images in a separate
   //function later
@@ -142,9 +209,6 @@ int main(){
   SDL_Texture* start_tex = IMG_LoadTexture(renderer,"images/start.png");
   SDL_Texture* options_tex = IMG_LoadTexture(renderer,"images/options.png");
   SDL_Texture* exit_tex = IMG_LoadTexture(renderer,"images/exit.png");
-  
-  //continue,restart level.
-  
   /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
@@ -173,13 +237,20 @@ int main(){
     }
     SDL_RenderClear(renderer); 
     /***** sprites *****/
-    if (state == 1){
-      if (time%10==0){
+    if ( state == 1 ){
+      if ( time%10 == 0 ){
 	c->sprite.current_frame++;
 	c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
       }
       handle_input(c);
-    }/* if state == 1 */
+    }else if ( state == 3 ){
+      SDL_RenderCopy(renderer,shade,0,0);
+      renderTexture(continue_tex,renderer,w_width/3-w_width/10,w_height/3,w_width/5,w_height/15);
+      renderTexture(restart_tex,renderer,w_width/3-w_width/12,w_height/2,w_width/6,w_height/15);
+      renderTexture(mainmenu_tex,renderer,w_width/3-w_width/10,w_height/3*2,w_width/5,w_height/15);
+    }
+    
+    /***** character *****/
     renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
     /***** projectiles *****/
     projectile* p_buffer = projectiles;
@@ -188,8 +259,7 @@ int main(){
       if (state==1){
 	do_action_p(p_buffer);
       }
-      p_buffer=p_buffer->next;
-      
+      p_buffer=p_buffer->next; 
     }
     /***** mobs *****/
     mob* m_buffer = mobs;
@@ -200,25 +270,13 @@ int main(){
     }
     /***** background *****/
     SDL_RenderCopy(renderer, bg_texture, 0, 0);
-    
-    if (state==3){
-      SDL_RenderCopy(renderer, shade,0,0);
-      renderTexture(continue_tex,renderer,w_width/3,w_height/3,w_width/5,w_height/15);
-      renderTexture(restart_tex,renderer,w_width/3,w_height/2,w_width*7/45,w_height/15);
-      renderTexture(mainmenu_tex,renderer,w_width/3,w_height/3*2,w_width/5,w_height/15);
-    }else{
-      
-    }
-    
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
-    
-    //time ends:
+    /*time ends:
     if (time > 300){//5 sec removal
       clear(0);
       time=0;//reset
-    }
-
+      }*/
   }
  end:
   SDL_DestroyTexture(bg_texture);
