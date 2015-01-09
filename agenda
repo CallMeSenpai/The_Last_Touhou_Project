@@ -1,6 +1,6 @@
 TODO::
 
-get images, barak covered sprites already
+still some images.
 
 figure out how to put (patterned) enemies into a file and read it
 --> making own interpreter for enemies/boss/bullet patterns
@@ -25,7 +25,6 @@ attack-1:30 { attack-1 for 30 seconds }
     function pointers that will work in order
 
 title-screen
-pausing, figuring out time-paused
 game-stages (and transition b/t stage)
 game difficulties
 chat-boxing?
