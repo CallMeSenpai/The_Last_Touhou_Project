@@ -7,5 +7,5 @@
 
 void trim(char*);
 void load_dat(char*);
-void shoot();
+int shoot(); //leave as int for now
 #endif
