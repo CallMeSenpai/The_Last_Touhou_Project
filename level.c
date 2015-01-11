@@ -14,7 +14,8 @@ void trim(char* line) { //trims the trailing newline
 }
 
 int shoot() {
-//to be implemented	
+//to be implemented
+	return 0;
 }
 
 typedef int (*behavior)(); //the return of an int is now the function pointer called "behavior" with 0 parameters
