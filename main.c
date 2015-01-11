@@ -12,6 +12,7 @@
 #include "sprite.h"
 #include "mob.h"
 #include "bullet.h"
+#include "level.h"
 
 #define WHITE (SDL_Color){255,255,255}
 
@@ -275,6 +276,9 @@ int main(){
   TTF_Init();
   //we need font only for text boxes
   font = TTF_OpenFont("whitrabt.ttf", 20);
+
+  /***** TESTING *****/
+  load_dat("1e.dat");
 
   /***** INIT ALL IMAGES *****/
   //we will put bg/in-game related images in a separate

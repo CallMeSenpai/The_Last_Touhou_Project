@@ -1,5 +1,5 @@
-#ifndef STRUCTS_H
-#define STRUCTS_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,6 +21,7 @@ void key_up(SDL_Event);
 void start();
 void title();
 void levels();
+
 typedef struct sprite{
   int frames;
   int current_frame;
@@ -52,7 +53,7 @@ extern projectile* projectiles;
 
 typedef struct mob{
   int hp;//char might be too low
-  int x,y;
+  double x,y; //mob.c:33.3 also changed
   double speed;
   short angle;
   struct mob* next;

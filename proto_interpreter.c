@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+//*********This file is a dummy. Flaged for deletion.
+
 // void read_dat(char* file)
 int main() {
   FILE *f = fopen("1e.dat","r");
@@ -14,6 +17,7 @@ int main() {
   int hp;
   int x;
   int y;
+  int spawntime;
 
   while ((read = getline(&line,&len,f)) != -1) {
     printf("Retrieved length %d\n", read);

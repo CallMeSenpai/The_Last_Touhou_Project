@@ -30,7 +30,7 @@ mob* summon(){
 void set_default_values_m(mob* m){
   m->x=w_width/3;
   m->y=w_height/5;
-  printf("location %d, %d\n",m->x,m->y);
+  printf("location %f, %f\n",m->x,m->y);
   m->speed=0;
   m->hp=40;
   m->angle=0;

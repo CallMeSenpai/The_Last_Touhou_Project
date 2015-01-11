@@ -1,0 +1,7 @@
+#ifndef LEVEL_H
+#define LEVEL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#endif

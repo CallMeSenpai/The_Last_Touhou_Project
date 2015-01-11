@@ -1,5 +1,9 @@
 mob
 id=1
 hp=10
-x=50
-y=50
+x=49
+y=49
+speed=3
+angle=0
+spawntime=3
+end-might not even need it
