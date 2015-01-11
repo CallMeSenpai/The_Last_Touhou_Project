@@ -20,8 +20,6 @@ int shoot() {
 
 typedef int (*behavior)(); //the return of an int is now the function pointer called "behavior" with 0 parameters
 
-}
-
 behavior test_shoot = &shoot; //test_shoot is now shoot
 
 void load_dat(char* filename){
