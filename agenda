@@ -2,6 +2,8 @@ TODO::
 
 edit bullets some more
 make shoot() in levels shoot
+start() in main => level=1 => call read file function.
+make another array of monsters called mobs_to_summon()
 summon monster after reading
 still some images.
 
