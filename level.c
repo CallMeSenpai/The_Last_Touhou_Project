@@ -23,11 +23,11 @@ void load_dat(char* filename){
     trim(line);
     //for mobs
     if (!strcmp(line,"mob")) {
-      //mobs
-	read = getline(&line, &len, f);
 	mob* new = summon();
 	printf("created new mob\n");
 	char* token;
+
+	read = getline(&line, &len, f);
 	token = strsep(&line,"=");
 	token = strsep(&line,"="); //number for id
 	//skip this for now
