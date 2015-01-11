@@ -7,11 +7,21 @@
 #include "bullet.h"
 #include "include/SDL.h"
 
-void trim(char* line) {
+void trim(char* line) { //trims the trailing newline
     int end = strlen(line) -1;
     if (line[end] == '\n')
         line[end] = '\0';
 }
+
+int shoot() {
+//to be implemented	
+}
+
+typedef int (*behavior)(); //the return of an int is now the function pointer called "behavior" with 0 parameters
+
+}
+
+behavior test_shoot = &shoot; //test_shoot is now shoot
 
 void load_dat(char* filename){
   FILE*f = fopen(filename, "r");
