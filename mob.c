@@ -9,23 +9,23 @@
 #define PI 3.14159265
 //!!!!! include mob.c into the compile makefile
 /*
-mob* load(){
+  mob* load(){
   if (!to_summon){
-    to_summon = calloc(1,sizeof(mob));
-    return to_summon;
+  to_summon = calloc(1,sizeof(mob));
+  return to_summon;
   }else{
-    mob* mob_buf=to_summon;
-    while(mob_buf){
-      if (mob_buf->next==NULL){
-	mob* new = calloc(1,sizeof(mob));
-	mob_buf->next=new;
-	new->prev=mob_buf;
-	return new;
-      }
-      mob_buf=mob_buf->next;
-    }
+  mob* mob_buf=to_summon;
+  while(mob_buf){
+  if (mob_buf->next==NULL){
+  mob* new = calloc(1,sizeof(mob));
+  mob_buf->next=new;
+  new->prev=mob_buf;
+  return new;
   }
-}*/
+  mob_buf=mob_buf->next;
+  }
+  }
+  }*/
 mob* summon(){
   if (!mobs){
     mobs=calloc(1,sizeof(mob));
@@ -62,7 +62,9 @@ void set_values_m(mob* m,int x, int y,double speed,int hp,short angle){
 void do_action_m(mob* m){
   m->x += m->speed*cos(m->angle/180.0*PI);
   m->y -= m->speed*sin(m->angle/180.0*PI);
-  
+  /* if bounds or hp */
+}
+void check_remove(mob* m){
   if(m->x < 0 || m->y < 0 ||
      m->x > w_width || m->y > w_height || m->hp<0){//or hp=0
     puts("going to be removed");
@@ -79,5 +81,4 @@ void do_action_m(mob* m){
       puts("freed bdy");
     }
   }
-    /* if bounds or hp */
 }
