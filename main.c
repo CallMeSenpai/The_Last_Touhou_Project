@@ -339,16 +339,18 @@ int main(){
       projectile* p_buffer = projectiles;
       while(p_buffer){
 	renderTexture(p_tex,renderer,p_buffer->x-16,p_buffer->y-16,32,32);
-	if (state==2){
+	if (state==2)
 	  do_action_p(p_buffer);
-	}
 	p_buffer=p_buffer->next; 
       }
       /***** mobs *****/
       mob* m_buffer = mobs;
       while (m_buffer){
-	do_action_m(m_buffer);
+	//if (m_buffer->spawn_time > time){
 	renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
+	if (state==2)
+	  do_action_m(m_buffer);
+	//}
 	m_buffer=m_buffer->next;
       }
       if ( state == 2 ){

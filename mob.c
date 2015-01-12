@@ -8,10 +8,11 @@
 #include "include/SDL.h"
 #define PI 3.14159265
 //!!!!! include mob.c into the compile makefile
-
+/*
 mob* load(){
-  if (!mobs){
+  if (!to_summon){
     to_summon = calloc(1,sizeof(mob));
+    return to_summon;
   }else{
     mob* mob_buf=to_summon;
     while(mob_buf){
@@ -24,11 +25,11 @@ mob* load(){
       mob_buf=mob_buf->next;
     }
   }
-}
-
+}*/
 mob* summon(){
   if (!mobs){
-    mobs = calloc(1,sizeof(mob));
+    mobs=calloc(1,sizeof(mob));
+    return mobs;
   }else{
     mob* mob_buf=mobs;
     while(mob_buf){
@@ -46,24 +47,27 @@ mob* summon(){
 void set_default_values_m(mob* m){
   m->x=w_width/3;
   m->y=w_height/5;
-  printf("location %f, %f\n",m->x,m->y);
   m->speed=0;
   m->hp=40;
   m->angle=0;
 }
 
-void set_values_m(mob* m,int x, int y,double speed,int hp){
+void set_values_m(mob* m,int x, int y,double speed,int hp,short angle){
   m->x=x;
   m->y=y;
   m->speed=speed;
   m->hp=hp;
+  m->angle = angle;
 }
 void do_action_m(mob* m){
   m->x += m->speed*cos(m->angle/180.0*PI);
   m->y -= m->speed*sin(m->angle/180.0*PI);
-  if(m->x < 1 || m->y < 0 ||
+  
+  if(m->x < 0 || m->y < 0 ||
      m->x > w_width || m->y > w_height || m->hp<0){//or hp=0
+    puts("going to be removed");
     if (m == mobs){//is head
+      puts("removed head");
       mobs=mobs->next;
       free(m);
     }else{
@@ -71,8 +75,9 @@ void do_action_m(mob* m){
       if (m->next)
 	m->next->prev=m->prev;
       free(m);
+      printf("current after free: %p \n",m);
+      puts("freed bdy");
     }
-  }/* if bounds or hp */
-  
-
+  }
+    /* if bounds or hp */
 }

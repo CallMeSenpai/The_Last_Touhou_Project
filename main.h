@@ -53,7 +53,7 @@ extern projectile* projectiles;
 
 typedef struct mob{
   int hp;//char might be too low
-  double x,y; //mob.c:33.3 also changed
+  int x,y; //mob.c:33.3 also changed
   double speed;
   short angle;
   struct mob* next;

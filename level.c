@@ -34,7 +34,7 @@ void load_dat(char* filename){
     trim(line);
     //for mobs
     if (!strcmp(line,"mob")) {
-      mob* new = load();
+      mob* new = summon();
       //printf("created new mob\n");
       char* token;
 
@@ -52,17 +52,17 @@ void load_dat(char* filename){
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double x %
-      double percent = (double)((double)atoi(token) / (double)100.0);
-      new->x = (double)(percent * (double)w_width); //isn't this really bad? This is the actual window width but not the game width
+      int percent = atoi(token);
+      new->x = (percent * w_width /100); //isn't this really bad? This is the actual window width but not the game width
       //also what's bad: atoi makes a number an int. So 3.5 -> 3. (double) 3 is still 3, not 3.5.
-      printf("x %f\n",new->x);
+      printf("x %d\n",new->x);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double y %
-      percent = (double)((double)atoi(token) / (double)100.0);
-      new->y = (double)(percent * (double)w_height);
-      printf("y %f\n",new->y);
+      percent = atoi(token);
+      new->y = percent * w_height /100;
+      printf("y %d\n",new->y);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
@@ -87,6 +87,6 @@ void load_dat(char* filename){
     }
     
   }
-  
+  puts("-----------------");
   fclose(f);
 }

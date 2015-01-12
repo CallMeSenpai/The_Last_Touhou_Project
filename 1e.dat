@@ -3,7 +3,7 @@ id=1
 hp=10
 x=45
 y=45
-speed=3
+speed=1
 angle=0
 spawntime=180
 mob
@@ -11,6 +11,6 @@ id=2
 hp=12
 x=55
 y=55
-speed=4
+speed=4x
 angle=90
-spawntime=240
+spawntime=180
