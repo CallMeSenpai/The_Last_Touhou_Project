@@ -65,9 +65,10 @@ typedef struct mob{
   char delay;
   char set;//the num of shots each boss shoots in a "set"
 } mob;
-
+//extern typedef int (*behavior)(int,int,short,char); 
+//extern behavior test_shoot;
 extern mob* mobs;
-extern mob* to_summon;
+
 typedef struct bullet{
   int hp, x, y;
   double speed;
