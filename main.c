@@ -244,7 +244,6 @@ void start(){
   set_default_values_c(c);
   state=2;
   //mobs=summ
-  to_summon=calloc(sizeof(mob),1);
   //set_default_values_m(mobs);
   init_reimu_test(&c->sprite, renderer);
   time=0;
@@ -331,7 +330,8 @@ int main(){
     }else if (state == 1){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
       renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
-      printf("menu option %d/%d\n",menu_index,menu_options);
+      renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/15);
+      ////////////////////////////remember menu option images
     }else if (state==2 || state==3){
       /***** character *****/
       renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
