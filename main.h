@@ -59,8 +59,13 @@ typedef struct mob{
   struct mob* next;
   struct mob* prev;
   unsigned long spawn_time;
-  char delay;//barak we need delay
+  char id;
+  //int function pointer for shoot()
+  char last_shot;
+  char delay;
+  char set;//the num of shots each boss shoots in a "set"
 } mob;
+
 extern mob* mobs;
 extern mob* to_summon;
 typedef struct bullet{

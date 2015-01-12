@@ -6,6 +6,8 @@ y=45
 speed=1
 angle=0
 spawntime=180
+delay=10
+set=5
 mob
 id=2
 hp=12
@@ -14,3 +16,5 @@ y=55
 speed=4x
 angle=90
 spawntime=180
+delay=5
+set=10

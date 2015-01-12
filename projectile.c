@@ -33,7 +33,7 @@ void do_action_p(projectile* p){
   p->x += p->speed*cos((double)p->angle/180.0*PI);
   p->y -= p->speed*sin((double)p->angle/180.0*PI);
   if(p->x < 0 || p->y < 0 ||
-     p->x > w_width || p->y > w_height){//or hp=0
+     p->x > w_width*5/8 || p->y > w_height){//or hp=0
     if (p == projectiles){//is head
       projectiles=projectiles->next;
       free(p);
