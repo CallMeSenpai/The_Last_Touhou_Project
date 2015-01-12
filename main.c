@@ -348,7 +348,7 @@ int main(){
       while (m_buffer){
 	if (m_buffer->spawn_time > time){
 	renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
-	if (state==2)
+	if ( state == 2 )
 	  do_action_m(m_buffer);
 	}
 	check_remove(m_buffer);

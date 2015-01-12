@@ -52,13 +52,14 @@ typedef struct projectile{
 extern projectile* projectiles;
 
 typedef struct mob{
-  int hp;//char might be too low
-  int x,y; //mob.c:33.3 also changed
+  int hp;
+  int x,y; 
   double speed;
   short angle;
   struct mob* next;
   struct mob* prev;
   unsigned long spawn_time;
+  char delay;//barak we need delay
 } mob;
 extern mob* mobs;
 extern mob* to_summon;
