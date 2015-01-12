@@ -28,6 +28,7 @@ int w_width;
 int w_height;
 projectile* projectiles;
 mob* mobs;
+mob* to_summon;
 int full;
 character* c;
 unsigned long time;//60fps time, 1/60th of a second
@@ -242,10 +243,12 @@ void start(){
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
   state=2;
-  mobs=summon();
-  set_default_values_m(mobs);
+  //mobs=summ
+  to_summon=calloc(sizeof(mob),1);
+  //set_default_values_m(mobs);
   init_reimu_test(&c->sprite, renderer);
   time=0;
+  load_dat("1e.dat");
 }
 void title(){
   clear(1);
@@ -277,8 +280,6 @@ int main(){
   //we need font only for text boxes
   font = TTF_OpenFont("whitrabt.ttf", 20);
 
-  /***** TESTING *****/
-  load_dat("1e.dat");
 
   /***** INIT ALL IMAGES *****/
   //we will put bg/in-game related images in a separate

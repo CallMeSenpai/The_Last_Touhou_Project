@@ -61,6 +61,7 @@ typedef struct mob{
   unsigned long spawn_time;
 } mob;
 extern mob* mobs;
+extern mob* to_summon;
 typedef struct bullet{
   int hp, x, y;
   double speed;

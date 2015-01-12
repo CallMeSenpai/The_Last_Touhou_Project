@@ -13,12 +13,14 @@ void trim(char* line) { //trims the trailing newline
         line[end] = '\0';
 }
 
-int shoot() {
+int shoot(int x, int y, short angle, char speed) {
 //to be implemented
-	return 0;
+  bullet* b =create();
+  set_values_b(b,x,y,angle,speed);
+  return 0;
 }
 
-typedef int (*behavior)(); //the return of an int is now the function pointer called "behavior" with 0 parameters
+typedef int (*behavior)(int,int,short,char); //the return of an int is now the function pointer called "behavior" with 0 parameters
 
 behavior test_shoot = &shoot; //test_shoot is now shoot
 
@@ -33,7 +35,7 @@ void load_dat(char* filename){
     //for mobs
     if (!strcmp(line,"mob")) {
 	mob* new = summon();
-	printf("created new mob\n");
+	//printf("created new mob\n");
 	char* token;
 
 	read = getline(&line, &len, f);

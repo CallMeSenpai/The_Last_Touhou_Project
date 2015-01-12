@@ -2,7 +2,8 @@
 #define BULLET_H
 #include "include/SDL.h"
 
-bullet* create(int,int,char,char,short);
-
+bullet* create();
+void set_default_values_b(bullet*,int,int);
+void set_values_b(bullet*,int,int,short,char);
 
 #endif
