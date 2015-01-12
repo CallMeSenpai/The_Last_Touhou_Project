@@ -346,6 +346,7 @@ int main(){
       /***** mobs *****/
       mob* m_buffer = mobs;
       while (m_buffer){
+	//spawn_time is still wrong
 	if (m_buffer->spawn_time > time){
 	renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
 	if ( state == 2 )
