@@ -1,3 +1,12 @@
+//eric
+//dw - systems
+//konstans - apcs
+
+//barak
+//brown - intro
+//sharknado - softdev 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

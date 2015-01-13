@@ -1,35 +1,20 @@
 TODO::
 
-edit bullets some more
-make shoot() in levels shoot
-start() in main => level=1 => call read file function.
-make another array of monsters called mobs_to_summon()
-summon monster after reading
-still some images.
+edit bullets some more- IMAGE ROTATION
+more shoot() funtions depending on the mob id
+still some images.-level selection images
 
-figure out how to put (patterned) enemies into a file and read it
---> making own interpreter for enemies/boss/bullet patterns
+more intricate mob actions in interpreter
+example:
+mob
+hp=x
+blah=y
+action //all variable settings after this will change, will give mob array of functions
+hang=10
+?shoot=20
+angle=
 
-format? TBD:
-[BULLET1]
-speed:5
-@@@@
-hang:10 { keep moving 10 seconds }
-action:
-dist:10 { keep moving until 10 distance units }
-action:
-move-to:420,420
-[MOB1]
-move-to:420,720nosc0pee
-hang:10
-attack-1:30 { attack-1 for 30 seconds }
 
---> interpreter:
-    each move will have a separate corresponding function
-    and each mob/bullet will have an array of
-    function pointers that will work in order
-
-level selection images
 level differences? perhaps cutting out half or 2/3 of bullets
 
 options: select lives/bombs, etc
