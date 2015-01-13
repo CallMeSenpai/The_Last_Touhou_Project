@@ -26,9 +26,8 @@ int shoot(int x, int y, short angle, char speed){
   return 0;
 }
 
-typedef int (*behavior)(int,int,short,char); 
-behavior test_shoot = &shoot;
-
+//typedef int (*behavior)(int,int,short,char); 
+//behavior test_shoot = &shoot;
 //if id==x give the test_shoot pointer to a mob
 void load_dat(char* filename){
   FILE*f = fopen(filename, "r");
@@ -89,13 +88,13 @@ void load_dat(char* filename){
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
-      token = strsep(&line,"="); //int hp
+      token = strsep(&line,"="); //int delay
       new->delay = atoi(token);
       printf("delay %d\n", new->delay);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
-      token = strsep(&line,"="); //int hp
+      token = strsep(&line,"="); //int set
       new->set = atoi(token);
       printf("set %d\n", new->set);
 
