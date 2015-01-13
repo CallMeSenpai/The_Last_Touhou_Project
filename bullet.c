@@ -48,10 +48,8 @@ void set_speed(bullet* b,double speed){
   b->speed=speed;
 }
 void do_action_b(bullet* b){
-  b->x += b->speed*cos(b->angle/180.0*PI);
-  b->y -= b->speed*sin(b->angle/180.0*PI);
+  b->x += (int)(b->speed*cos(b->angle/180.0*PI));
+  b->y -= (int)(b->speed*sin(b->angle/180.0*PI));
   printf("angle for this bullet is %d. \n",b->angle);
-  //printf("delta X is %f. \n",b->speed*cos(b->angle/180.0*PI));
-  //delta x returns 0 but bullets are moving right???
+  printf("x is now %d.\n",b->x);
 }
-//set dimensions of bullet? or static vars as defined vars
