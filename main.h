@@ -51,6 +51,8 @@ typedef struct projectile{
 } projectile;
 extern projectile* projectiles;
 
+typedef void (*behavior)(int,int,short,char); 
+//extern behavior* test_shoot;
 typedef struct mob{
   int hp;
   int x,y; 
@@ -64,9 +66,8 @@ typedef struct mob{
   char last_shot;
   char delay;
   char set;//the num of shots each boss shoots in a "set"
+  behavior behavior;
 } mob;
-typedef int (*behavior)(int,int,short,char); 
-extern behavior* test_shoot;
 extern mob* mobs;
 
 typedef struct bullet{

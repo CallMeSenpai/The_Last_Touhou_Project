@@ -97,10 +97,15 @@ void load_dat(char* filename){
       token = strsep(&line,"="); //int set
       new->set = atoi(token);
       printf("set %d\n", new->set);
-
+      
       //other than next and prev, new mob is basically created here
       //load_dat(1) is tested in main() for numbers only
       //printf("address of new mob %p\n", (void*)&new);
+      void test_shot(int i, int j, short k, char l) {
+	printf("shot");
+	return;
+      }
+      new->behavior = &test_shot;
     }
     
   }
