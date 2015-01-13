@@ -49,6 +49,22 @@ void do_action_m(mob* m){
     m->behavior(m->x,m->y,270,5);
     m->last_shot=time;
   }
+  projectile* p_buf = projectiles;
+  while ( p_buf ){
+    if (fabs(m->x - p_buf->x) < w_width/20 && fabs(m->y - p_buf->y ) < w_height/20){
+      if (p_buf == projectiles){
+	projectiles=projectiles->next;
+	free(p_buf);
+      }else{
+	p_buf->prev->next=p_buf->next;
+	if (p_buf->next)
+	  p_buf->next->prev=p_buf->prev;
+	free(p_buf);
+      }
+      m->hp--;
+    }
+
+  }
 }
 void check_remove(mob* m){
   if(m->x < 0 || m->y < 0 ||

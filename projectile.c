@@ -7,13 +7,6 @@
 #include "include/SDL.h"
 #define PI 3.14159265
 
-//returns 0 or 1 if it is in the square
-char interact(mob* m, projectile* p,int radius){
-  if (fabs(m->x - p->x) < radius && fabs(m->y - p->y) < radius){
-    return 1;
-  }
-  return 0;
-}
 
 void set_default_values_p(projectile* p){
   p->x=c->x;
@@ -43,28 +36,5 @@ void do_action_p(projectile* p){
 	p->next->prev=p->prev;
       free(p);
     }
-  }
-  /* loop through mobs and check if objects are near */
-  mob* m_buf = mobs;
-  while (m_buf){
-    projectile* p_buf = projectiles;
-    while (p_buf){
-      if (interact(m_buf,p_buf,30)){
-	//radius accepted will be image height/width!
-	if (p == projectiles){
-	  projectiles=projectiles->next;
-	  free(p);
-	}else{
-	  p->prev->next=p->next;
-	  if (p->next)
-	    p->next->prev=p->prev;
-	  free(p);
-	}
-	m_buf->hp--;
-	//printf("mob hp decreased to %d\n",m_buf->hp);
-      }
-      p_buf=p_buf->next;
-    }
-    m_buf=m_buf->next;
   }
 }
