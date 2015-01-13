@@ -102,7 +102,9 @@ void load_dat(char* filename){
       //load_dat(1) is tested in main() for numbers only
       //printf("address of new mob %p\n", (void*)&new);
       void test_shot(int i, int j, short k, char l) {
-	printf("shot");
+	//*** THIS IS NOT SUPPOSED TO BE HERE. DEFINE IT SOMEWHERE ELSE; I MADE A LOCAL FUNCTION
+	//*** FOR TESTING ONLY
+	//printf("shot");
 	return;
       }
       new->behavior = &test_shot;
