@@ -348,11 +348,11 @@ int main(){
       mob* m_buffer = mobs;
       while (m_buffer){
 	//spawn_time is still wrong
-	if (m_buffer->spawn_time < time){
+	if (m_buffer->spawn_time && m_buffer->spawn_time < time){
 	  renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
-	  //shouldn't call the behavior due to spawn time so idk
-	  if ( state == 2 )
+	  if ( state == 2 ){
 	    do_action_m(m_buffer);
+	  }
 	}
 	check_remove(m_buffer);
 	m_buffer=m_buffer->next;

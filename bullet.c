@@ -37,15 +37,21 @@ void set_default_values_b(bullet* b,int x, int y){
   b->angle=270;
   //make sure to kill bullets or mobs heading off the screen
 }
-void set_values_b(bullet* b,int x, int y,short angle,char speed){
+void set_values_b(bullet* b,int x, int y){
   b->x = x;
   b->y=y;
-  b->angle=angle;
+}
+void set_angle(bullet* b, short angle){
+  b->angle = angle;
+}
+void set_speed(bullet* b,double speed){
+  b->speed=speed;
 }
 void do_action_b(bullet* b){
   b->x += b->speed*cos(b->angle/180.0*PI);
   b->y -= b->speed*sin(b->angle/180.0*PI);
-
-
+  printf("angle for this bullet is %d. \n",b->angle);
+  //printf("delta X is %f. \n",b->speed*cos(b->angle/180.0*PI));
+  //delta x returns 0 but bullets are moving right???
 }
 //set dimensions of bullet? or static vars as defined vars

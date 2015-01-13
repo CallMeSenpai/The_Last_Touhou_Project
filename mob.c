@@ -45,8 +45,7 @@ void do_action_m(mob* m){
   m->x += m->speed*cos(m->angle/180.0*PI);
   m->y -= m->speed*sin(m->angle/180.0*PI);
   /* if bounds or hp */
-  if (time- m->last_shot > m->delay) {
-    puts("test");
+  if (time- m->last_shot > m->delay){
     m->behavior(m->x,m->y,270,5);
     m->last_shot=time;
   }
@@ -54,9 +53,7 @@ void do_action_m(mob* m){
 void check_remove(mob* m){
   if(m->x < 0 || m->y < 0 ||
      m->x > w_width*5/8 || m->y > w_height || m->hp<0){//or hp=0
-    puts("going to be removed");
     if (m == mobs){//is head
-      puts("removed head");
       mobs=mobs->next;
       free(m);
     }else{
@@ -64,8 +61,6 @@ void check_remove(mob* m){
       if (m->next)
 	m->next->prev=m->prev;
       free(m);
-      printf("current after free: %p \n",m);
-      puts("freed bdy");
     }
   }
 }

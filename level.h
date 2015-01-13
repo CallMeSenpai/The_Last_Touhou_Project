@@ -5,6 +5,5 @@
 
 void trim(char*);
 void load_dat(char*);
-int shoot(int,int,short,char);
-
+void shoot(int,int,short,char);
 #endif

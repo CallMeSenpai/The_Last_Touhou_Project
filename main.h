@@ -63,7 +63,7 @@ typedef struct mob{
   unsigned long spawn_time;
   char id;
   //int function pointer for shoot()
-  char last_shot;
+  long unsigned last_shot;
   char delay;
   char set;//the num of shots each boss shoots in a "set"
   behavior behavior;
