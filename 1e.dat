@@ -15,6 +15,6 @@ x=55
 y=55
 speed=4x
 angle=90
-spawntime=180
+spawntime=240
 delay=5
 set=10

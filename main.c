@@ -28,7 +28,7 @@ int w_width;
 int w_height;
 projectile* projectiles;
 mob* mobs;
-mob* to_summon;
+bullet* bullets;
 int full;
 character* c;
 unsigned long time;//60fps time, 1/60th of a second
@@ -300,6 +300,7 @@ int main(){
   SDL_Texture* exit_tex = IMG_LoadTexture(renderer,"images/exit.png");
   SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
   SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
+  SDL_Texture* bullet_tex = IMG_LoadTexture(renderer,"images/bullet_red.png");
   /*----- test -----*/
   title();
   
@@ -347,16 +348,25 @@ int main(){
       mob* m_buffer = mobs;
       while (m_buffer){
 	//spawn_time is still wrong
-	if (m_buffer->spawn_time > time){
-	renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
-	if ( state == 2 )
-	  do_action_m(m_buffer);
+	if (m_buffer->spawn_time < time){
+	  renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
+	  //shouldn't call the behavior due to spawn time so idk
+	  if ( state == 2 )
+	    do_action_m(m_buffer);
 	}
 	check_remove(m_buffer);
 	m_buffer=m_buffer->next;
       }
+      /***** bullets *****/
+      bullet* b_buffer = bullets;
+      while ( b_buffer ){
+	renderTexture(bullet_tex,renderer,b_buffer->x-6,b_buffer->y-6,13,13);
+	if ( state == 2 )
+	  do_action_b(b_buffer);
+	//remove bullets if off screen
+	b_buffer=  b_buffer->next;
+      }
       if ( state == 2 ){
-	/***** playing mode *****/
 	/***** sprites *****/
 	if ( time%10 == 0 ){
 	  c->sprite.current_frame++;

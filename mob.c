@@ -42,15 +42,14 @@ void set_values_m(mob* m,int x, int y,double speed,int hp,short angle){
   m->angle = angle;
 }
 void do_action_m(mob* m){
-  //m->behavior(1,1,1,1);
   m->x += m->speed*cos(m->angle/180.0*PI);
   m->y -= m->speed*sin(m->angle/180.0*PI);
   /* if bounds or hp */
   if (time- m->last_shot > m->delay) {
-    puts("CALL SHOOT HERE");/////////////////
-    m->behavior(1,1,1,1);
+    puts("test");
+    m->behavior(m->x,m->y,270,5);
+    m->last_shot=time;
   }
-  //remember to change cooldown here in mob scope (level.c L.22)
 }
 void check_remove(mob* m){
   if(m->x < 0 || m->y < 0 ||

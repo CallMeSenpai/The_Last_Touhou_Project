@@ -17,18 +17,19 @@ void trim(char* line) { //trims the trailing newline
 }
 
 int shoot(int x, int y, short angle, char speed){
-  
+  puts("eyyyyy"); 
   bullet* b =create();
   set_values_b(b,x,y,angle,speed);
   
-  //last_shot=time;
-  //CALL FROM MOB'S SCOPE. (mob.c L.51)
   return 0;
+}
+//strsep but cleaner
+void sep_twice(char* dest,char* src,char* token){
+  dest = strsep(&src,token);
 }
 
 //typedef int (*behavior)(int,int,short,char); 
 //behavior test_shoot = &shoot;
-//if id==x give the test_shoot pointer to a mob
 void load_dat(char* filename){
   FILE*f = fopen(filename, "r");
   char* line = NULL;
@@ -43,58 +44,49 @@ void load_dat(char* filename){
       char* token;
       
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //number for id, give function
+      sep_twice(token,line,"=");
       new->id = atoi(token);//pointer to this guy if id==x
       printf("id: %d\n",new->id);
       
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //int hp
+      sep_twice(token,line,"=");
       new->hp = atoi(token);
       printf("hp %d\n", new->hp);
       
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //double x %
+      sep_twice(token,line,"=");
       int percent = atoi(token);
       new->x = (percent * w_width /100); 
       printf("x %d\n",new->x);
 
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //double y %
+      sep_twice(token,line,"=");
       percent = atoi(token);
       new->y = percent * w_height /100;
       printf("y %d\n",new->y);
 
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //double speed
+      sep_twice(token,line,"=");
       new->speed = (double)atoi(token);
       printf("speed %f\n",new->speed);	
 
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //short angle
+      sep_twice(token,line,"=");
       new->angle = (short)atoi(token);
       printf("angle %u\n", new->angle);
 	
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //unsigned long spawn_time
+      sep_twice(token,line,"=");
       new->spawn_time = (unsigned long)atoi(token);
       printf("spawn_time %lu\n", new->spawn_time);
 
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //int delay
+      sep_twice(token,line,"=");
       new->delay = atoi(token);
       printf("delay %d\n", new->delay);
 
       read = getline(&line, &len, f);
-      token = strsep(&line,"=");
-      token = strsep(&line,"="); //int set
+      sep_twice(token,line,"=");
       new->set = atoi(token);
       printf("set %d\n", new->set);
       
@@ -104,7 +96,7 @@ void load_dat(char* filename){
       void test_shot(int i, int j, short k, char l) {
 	//*** THIS IS NOT SUPPOSED TO BE HERE. DEFINE IT SOMEWHERE ELSE; I MADE A LOCAL FUNCTION
 	//*** FOR TESTING ONLY
-	//printf("shot");
+	//puts(".");
 	return;
       }
       new->behavior = &test_shot;

@@ -68,5 +68,3 @@ void do_action_p(projectile* p){
     m_buf=m_buf->next;
   }
 }
-
-//__ is a _ programmer who envisions creating _ and wants _ and needs 
