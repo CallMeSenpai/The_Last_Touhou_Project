@@ -53,3 +53,29 @@ void do_action_b(bullet* b){
   printf("angle for this bullet is %d. \n",b->angle);
   printf("x is now %d.\n",b->x);
 }
+void interact_b(bullet* b){
+  //bullet kills character.
+  if (fabs(c->x-16 - b->x-6)<6+16 && 
+      fabs(c->y-16 - b->y-6)<6+16){
+    //barak hasnt centered the character sprite yet
+    puts("died");
+    lives--;
+    if (lives>=0){
+      c->x=w_width/3;
+      c->y=w_height*7/8;
+    }
+  }
+  //to remove
+  if(b->x < 0 || b->y < 0 ||
+     b->x > w_width*5/8 || b->y > w_height){
+    if (b == bullets){
+      bullets=bullets->next;
+      free(b);
+    }else{
+      b->prev->next=b->next;
+      if (b->next)
+	b->next->prev=b->prev;
+      free(b);
+    }
+  }
+}

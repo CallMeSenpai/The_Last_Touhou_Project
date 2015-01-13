@@ -237,17 +237,16 @@ void key_up(SDL_Event e){
     }/* switch e.key.keysym- up */
   }/* if state=2 */
 }
-/***** begins the game *****/
+/***** INIT GAME VARIABLES *****/
 void start(){
-  /***** INIT GAME VARIABLES *****/
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
   state=2;
-  //mobs=summ
-  //set_default_values_m(mobs);
   init_reimu_test(&c->sprite, renderer);
   time=0;
   load_dat("1e.dat");
+  lives=3;//might set in options
+  bombs=3;//options
 }
 void title(){
   clear(1);
@@ -269,7 +268,6 @@ void levels(){
   //get images
   //Easy.png
   //Insane.png
-  //Back
 }
 int main(){
   /***** INIT SDL AND WINDOW *****/
@@ -278,8 +276,6 @@ int main(){
   TTF_Init();
   //we need font only for text boxes
   font = TTF_OpenFont("whitrabt.ttf", 20);
-
-
   /***** INIT ALL IMAGES *****/
   //we will put bg/in-game related images in a separate
   //function later
@@ -290,7 +286,7 @@ int main(){
   SDL_Texture* shade = IMG_LoadTexture(renderer,"images/transparency.png");
   SDL_Texture* score_tex = IMG_LoadTexture(renderer,"images/score.png");
   SDL_Texture* lives_tex = IMG_LoadTexture(renderer,"images/lives.png");
-  SDL_Texture* grazes_tex = IMG_LoadTexture(renderer,"images/lives.png");
+  SDL_Texture* grazes_tex = IMG_LoadTexture(renderer,"images/grazes.png");
   SDL_Texture* bombs_tex = IMG_LoadTexture(renderer,"images/bombs.png");
   SDL_Texture* mainmenu_tex = IMG_LoadTexture(renderer,"images/mainmenu.png");
   SDL_Texture* continue_tex = IMG_LoadTexture(renderer,"images/continue.png");
@@ -347,7 +343,6 @@ int main(){
       /***** mobs *****/
       mob* m_buffer = mobs;
       while (m_buffer){
-	//spawn_time is still wrong
 	if (m_buffer->spawn_time && m_buffer->spawn_time < time){
 	  renderTexture(dw,renderer,m_buffer->x-16,m_buffer->y-16,32,32);
 	  if ( state == 2 ){
@@ -363,6 +358,7 @@ int main(){
 	renderTexture(bullet_tex,renderer,b_buffer->x-6,b_buffer->y-6,13,13);
 	if ( state == 2 )
 	  do_action_b(b_buffer);
+	interact_b(b_buffer);
 	//remove bullets if off screen
 	b_buffer=  b_buffer->next;
       }
