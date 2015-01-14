@@ -197,7 +197,7 @@ int main(){
       time++;
     SDL_RenderClear(renderer);
     if (SDL_PollEvent(&e)){
-      switch (e.type){//add enter key lmao
+      switch (e.type){
       case SDL_QUIT:
 	goto end;
       case SDL_KEYDOWN:

@@ -1,9 +1,8 @@
 TODO::
 
 advanced interpreter: put more options in the function
-edit bullets some more- IMAGE ROTATION
+images of bullets and mobs and bosses
 more shoot() funtions depending on the mob id
-still some images.-level selection images
 
 more intricate mob actions in interpreter
 example:
@@ -22,3 +21,6 @@ options: select lives/bombs, etc
 
 chat boxing, state of 4
 
+bugs:
+restart doesn't restart
+fullscreen isn't fullscreen
