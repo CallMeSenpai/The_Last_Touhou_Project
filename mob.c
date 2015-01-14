@@ -49,21 +49,22 @@ void do_action_m(mob* m){
     m->behavior(m->x,m->y,270,5);
     m->last_shot=time;
   }
-  projectile* p_buf = projectiles;
-  while ( p_buf ){
-    if (fabs(m->x - p_buf->x) < w_width/20 && fabs(m->y - p_buf->y ) < w_height/20){
-      if (p_buf == projectiles){
+  
+  projectile* p = projectiles;
+  while ( p ){
+    if (fabs(m->x - p->x) < w_width/20 && fabs(m->y - p->y ) < w_height/20){
+      if (p == projectiles){
 	projectiles=projectiles->next;
-	free(p_buf);
+	free(p);
       }else{
-	p_buf->prev->next=p_buf->next;
-	if (p_buf->next)
-	  p_buf->next->prev=p_buf->prev;
-	free(p_buf);
+	p->prev->next=p->next;
+	if (p->next)
+	  p->next->prev=p->prev;
+	free(p);
       }
       m->hp--;
     }
-
+    p=p->next;
   }
 }
 void check_remove(mob* m){

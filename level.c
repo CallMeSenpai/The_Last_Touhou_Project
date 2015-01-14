@@ -100,9 +100,13 @@ void load_dat(char* filename){
 void test_shot(int i, int j, short k, char l) {  
   return;
 }
+
+//shoot function should be held constant?
 void shoot(int x, int y, short angle, char speed){
   bullet* b =create();
   set_values_b(b,x,y);
-  set_angle(b,angle);
+  target(b);
+  //set_angle(b,angle);
   set_speed(b,speed);
+  
 }

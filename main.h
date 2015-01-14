@@ -13,7 +13,7 @@ extern int c_height;
 extern int c_width;//character dimensions
 extern int w_height;
 extern int w_width;//window dimensions
-extern unsigned long time;
+extern unsigned long time,last_death;
 
 //add functions from main,c
 void key_down(SDL_Event);

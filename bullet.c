@@ -47,18 +47,39 @@ void set_angle(bullet* b, short angle){
 void set_speed(bullet* b,double speed){
   b->speed=speed;
 }
+/* targets the character */
+void target(bullet* b){
+  double dx = fabs(b->x - c->x);
+  double dy = fabs(b->y - c->y);
+  double ref_angle = atan((double)dy/(double)dx)/PI*180.0;
+  /*
+    how to do trig:
+    Q I: angle is left alone (c->x > b->x, c->y > b->y)
+    Q II: angle is subtracted from 180 (c->x < b->x , c->y >b->y)
+    Q III: angle is added to 180 (c->x < b->x , c->y < b->y)
+    Q IV: angle is subtracted from 360 (c->x > b->x, c->y < b->y)
+   */
+  if (c->x < b->x)
+    if (c->y > b->y)
+      ref_angle+=180;
+    else 
+      ref_angle=180-ref_angle;
+  else
+    if (c->y > b->y)
+      ref_angle = 360-ref_angle;
+  b->angle=ref_angle;
+}
 void do_action_b(bullet* b){
   b->x += (int)(b->speed*cos(b->angle/180.0*PI));
   b->y -= (int)(b->speed*sin(b->angle/180.0*PI));
-  printf("angle for this bullet is %d. \n",b->angle);
-  printf("x is now %d.\n",b->x);
+  //printf("angle for this bullet is %d. \n",b->angle);
 }
 void interact_b(bullet* b){
   //bullet kills character.
-  if (fabs(c->x-16 - b->x-6)<6+16 && 
+  if (time-last_death > 300 && fabs(c->x-16 - b->x-6)<6+16 && 
       fabs(c->y-16 - b->y-6)<6+16){
-    //barak hasnt centered the character sprite yet
-    puts("died");
+    //3 second death cooldonw
+    last_death=time;
     lives--;
     if (lives>=0){
       c->x=w_width/3;

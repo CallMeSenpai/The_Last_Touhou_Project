@@ -26,7 +26,7 @@
 #define WHITE (SDL_Color){255,255,255}
 
 int level;
-unsigned long score;
+unsigned long score,time,last_death;
 char bombs,lives,grazes;
 //state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue
 char state;
@@ -40,7 +40,6 @@ mob* mobs;
 bullet* bullets;
 int full;
 character* c;
-unsigned long time;//60fps time, 1/60th of a second
 char menu_index,menu_options;
 
 SDL_Window* window;
@@ -56,7 +55,15 @@ void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int
   dst.h = h;
   SDL_RenderCopy(ren, tex, 0, &dst );
 }
-
+//rotates images
+void renderTexture_r(SDL_Texture* tex, SDL_Renderer *ren, int x, int y, int w, int h, double angle){
+  SDL_Rect dst;
+  dst.x = x;
+  dst.y = y;
+  dst.w = w;
+  dst.h = h;
+  SDL_RenderCopyEx(ren,tex,0,&dst,360-angle,0,SDL_FLIP_VERTICAL);
+}
 void create_window(){
   f=fopen("config","r");
   if (!f){
@@ -256,6 +263,7 @@ void start(){
   load_dat("1e.dat");
   lives=3;//might set in options
   bombs=3;//options
+  last_death=0;
 }
 void title(){
   clear(1);
@@ -291,6 +299,7 @@ int main(){
   renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
   SDL_Texture* bg_texture = IMG_LoadTexture(renderer,"images/background.png");
   SDL_Texture* dw = IMG_LoadTexture(renderer,"images/dw.png");
+  SDL_Texture* temp = IMG_LoadTexture(renderer,"images/dw.bmp");
   SDL_Texture* p_tex = IMG_LoadTexture(renderer,"images/star.gif");
   SDL_Texture* shade = IMG_LoadTexture(renderer,"images/transparency.png");
   SDL_Texture* score_tex = IMG_LoadTexture(renderer,"images/score.png");
@@ -340,7 +349,9 @@ int main(){
       ////////////////////////////remember menu option images
     }else if (state==2 || state==3){
       /***** character *****/
-      renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
+      //- temporary character, the character needs to be centered
+      //renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
+      renderTexture(temp,renderer,c->x-16,c->y-16,32,32);
       /***** projectiles *****/
       projectile* p_buffer = projectiles;
       while(p_buffer){
@@ -364,7 +375,7 @@ int main(){
       /***** bullets *****/
       bullet* b_buffer = bullets;
       while ( b_buffer ){
-	renderTexture(bullet_tex,renderer,b_buffer->x-6,b_buffer->y-6,13,13);
+	renderTexture_r(bullet_tex,renderer,b_buffer->x-10,b_buffer->y-10,20,20,b_buffer->angle);
 	if ( state == 2 )
 	  do_action_b(b_buffer);
 	interact_b(b_buffer);
