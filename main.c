@@ -217,8 +217,9 @@ int main(){
     }else if (state == 1){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
       renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
-      renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/15);
-      ////////////////////////////remember menu option images
+      renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/16);
+      renderTexture(easy_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/20);
+      renderTexture(insane_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/20);
     }else if (state==2 || state==3){
       /***** character *****/
       //- temporary character, the character needs to be centered
