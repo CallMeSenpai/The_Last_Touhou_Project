@@ -111,22 +111,31 @@ void clear(char bool){
   //bool: do we want to remove the character?
   mob* m_buf = mobs;
   while (m_buf){
-    if (m_buf==mobs)
+    /*if (m_buf==mobs)
       mobs=mobs->next;
     mob* to_free = m_buf;
-    free(to_free);
     m_buf=m_buf->next;
+    free(to_free);*/
+    mob* to_free = m_buf;
+    m_buf=m_buf->next;
+    free(to_free);
+    //puts("rewrite free linked list");
   }
   projectile* p_buf = projectiles;
-  while (p_buf){
+  while (p_buf){/*
     if (p_buf==projectiles)
       projectiles=projectiles->next;
     projectile* to_free = p_buf;
-    free(to_free);
     p_buf=p_buf->next;
+    free(to_free);
   }
-  if (bool)
-    free(c);
+  if (bool && c)
+  free(c);*/
+    //puts("rewrite free linked list");
+    projectile* to_free = p_buf;
+    p_buf=p_buf->next;
+    free(to_free);
+  }
 }
 
 void key_down(SDL_Event e){
@@ -173,7 +182,8 @@ void key_up(SDL_Event e){
   if (state==0){
     switch (e.key.keysym.sym){
     case SDLK_RETURN:
-      levels();
+      if ( menu_index == 0 )
+	levels();
       break;
     }
   }else if ( state == 1 ){
@@ -375,7 +385,7 @@ int main(){
       /***** bullets *****/
       bullet* b_buffer = bullets;
       while ( b_buffer ){
-	renderTexture_r(bullet_tex,renderer,b_buffer->x-10,b_buffer->y-10,20,20,b_buffer->angle);
+	renderTexture_r(bullet_tex,renderer,b_buffer->x-w_height/80,b_buffer->y-w_height/60,w_height/40,w_height/30,b_buffer->angle);
 	if ( state == 2 )
 	  do_action_b(b_buffer);
 	interact_b(b_buffer);
