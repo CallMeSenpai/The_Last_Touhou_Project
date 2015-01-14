@@ -22,5 +22,5 @@ options: select lives/bombs, etc
 chat boxing, state of 4
 
 bugs:
-restart doesn't restart
+bullets arent removed
 fullscreen isn't fullscreen

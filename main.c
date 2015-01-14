@@ -98,6 +98,10 @@ void create_window(){
 	}
     }
     free(settings);
+    if (full){
+      puts("grabbed window size");
+      SDL_GetWindowSize(window,&w_width,&w_height);
+    }
     window=SDL_CreateWindow("Touhou- stuy version",0,0,
 			    w_width,w_height,
 			    full*SDL_WINDOW_FULLSCREEN_DESKTOP);

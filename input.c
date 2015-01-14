@@ -94,8 +94,8 @@ void key_up(SDL_Event e){
       }else if (menu_index==1){//restart
 	state=2;
 	score=0;
-	//clear(1);
-	set_default_values_c(c);
+	clear(1);
+        start();
 	break;
       }else if (menu_index==2){ 
 	title(); 
