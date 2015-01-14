@@ -21,11 +21,14 @@ options: select lives/bombs, etc
 
 chat boxing, state of 4
 
+perhaps get video/animation for each level?
+sounds!
+extra animations we need to make this flashy
+1e.dat should be the same as 1i.dat? if we want to use the same file for both difficulties
+
 bugs:
 options screen to change fullscreen/options/lives/bombs
 (skip to that byte and rewrite)
 fullscreen isn't fullscreen
 
-perhaps get video/animation for each level?
-sounds!
-extra animations we need to make this flashy
+
