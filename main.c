@@ -16,6 +16,7 @@
 #include "include/SDL_image.h"
 #include "include/SDL_ttf.h"
 #include "main.h"
+#include "input.h"
 #include "character.h"
 #include "projectile.h"
 #include "sprite.h"
@@ -108,15 +109,14 @@ void create_window(){
 }
 /***** clears screen *****/
 void clear(char bool){
+  //clear bullets
   mob* m_buf = mobs;
   while (m_buf){
-    //still test
-    if (m_buf==mobs){
+    if (m_buf==mobs)
       mobs=mobs->next;
-      mob* to_free = m_buf;
-      m_buf=m_buf->next;
-      free(to_free);
-    }
+    mob* to_free = m_buf;
+    m_buf=m_buf->next;
+    free(to_free);
   }
   projectile* p_buf = projectiles;
   printf("the pointer of projectiles: %p \n",projectiles);
@@ -127,143 +127,10 @@ void clear(char bool){
     p_buf=p_buf->next;
     free(to_free);
   }
-
   if (bool && c)
     free(c);
 }
 
-void key_down(SDL_Event e){
-  if (state==2){
-    switch (e.key.keysym.sym){
-    case SDLK_LEFT:  
-      if (!c->left){ c->left=1; }
-      break;
-    case SDLK_RIGHT: 
-      if (!c->right){ c->right=1; }
-      break;
-    case SDLK_UP:    
-      if(!c->up){ c->up=1; }
-      break;
-    case SDLK_DOWN:  
-      if(!c->down){ c->down=1; }
-      break;
-    case SDLK_LSHIFT:
-      if(!c->focus){
-	c->focus=1;
-	c->speed=2;
-      }
-      break;
-    case SDLK_z:
-      if(!c->shoot){ c->shoot=1; }
-      break;
-    case SDLK_x:
-      if(!c->bomb){ c->bomb=1; }
-      break;
-    }/* switch e.key.keysym */
-  }/* if state==2 */
-}
-void key_up(SDL_Event e){
-  if (state==0 || state==1 || state==3){
-    switch (e.key.keysym.sym){
-    case SDLK_DOWN:
-      menu_index=(menu_index+1)%menu_options;
-      break;
-    case SDLK_UP:
-      menu_index=(menu_index-1+menu_options)%menu_options;
-      break;
-    }
-  }
-  if (state==0){
-    switch (e.key.keysym.sym){
-    case SDLK_RETURN:
-      if ( menu_index == 0 )
-	levels();
-      if ( menu_index == 2 )
-	exit(0);
-      break;
-    }
-  }else if ( state == 1 ){
-    switch (e.key.keysym.sym){
-    case SDLK_RETURN:
-      //cases with exit and start,
-      if ( menu_index == 0 ){ start(); } // start on ez
-      if ( menu_index == 1 ){ start(); }//start on insane
-      if ( menu_index == 2 ){ 
-	state=0;
-	menu_options=3;
-	menu_index=0;
-      }//back to title?
-      break;
-    case SDLK_ESCAPE:
-      state=0;
-      menu_options=3;
-      menu_index=0;
-      break;
-    }
-  }else if (state==3){
-    switch (e.key.keysym.sym){
-    case SDLK_ESCAPE:
-      c->up=0;
-      c->down=0;
-      c->right=0;
-      c->left=0;
-      c->shoot=0;
-      state=2;
-      break;
-    case SDLK_RETURN:
-      if (menu_index==0){
-        c->up=0;
-	c->down=0;
-	c->right=0;
-	c->left=0;
-	c->shoot=0;
-	state=2;
-	break;
-      }else if (menu_index==1){//restart
-	state=2;
-	score=0;
-	//clear(1);
-	set_default_values_c(c);
-	break;
-      }else if (menu_index==2){ 
-	title(); 
-	//bugs, double free @ game->title
-      }
-    }
-  }else if (state==2){
-    switch (e.key.keysym.sym){
-    case SDLK_LEFT: 
-      if(c->left){ c->left=0; }
-      break;
-    case SDLK_RIGHT: 
-      if(c->right){ c->right=0; }
-      break;
-    case SDLK_UP:    
-      if(c->up){ c->up=0; }
-      break;
-    case SDLK_DOWN:  
-      if(c->down){ c->down=0; }
-      break;
-    case SDLK_LSHIFT:
-      if(c->focus){
-	c->focus=0;
-	c->speed=5;
-      }
-      break;
-    case SDLK_z:
-      if(c->shoot){ c->shoot=0; }
-      break;
-    case SDLK_x:
-      if(c->bomb){ c->bomb=0; }
-      break;
-    case SDLK_ESCAPE:
-      state=3;
-      menu_options=3;
-      menu_index=0;
-      break;
-    }/* switch e.key.keysym- up */
-  }/* if state=2 */
-}
 /***** INIT GAME VARIABLES *****/
 void start(){
   c = calloc(1,sizeof(character));
@@ -277,9 +144,8 @@ void start(){
   last_death=0;
 }
 void title(){
-  //printf all info to compare 1st and 2nd start()
   clear(1);
-  printf("pointers:\nc:%p\np:%p\nm:%p\n",c,projectiles,mobs);
+  //printf("pointers:\nc:%p\np:%p\nm:%p\n",c,projectiles,mobs);
   time=0;
   state=0;
   menu_options=3;
@@ -314,6 +180,8 @@ int main(){
   SDL_Texture* grazes_tex = IMG_LoadTexture(renderer,"images/grazes.png");
   SDL_Texture* bombs_tex = IMG_LoadTexture(renderer,"images/bombs.png");
   SDL_Texture* mainmenu_tex = IMG_LoadTexture(renderer,"images/mainmenu.png");
+  SDL_Texture* easy_tex = IMG_LoadTexture(renderer,"images/easy.png");
+  SDL_Texture* insane_tex = IMG_LoadTexture(renderer,"images/insane.png");
   SDL_Texture* continue_tex = IMG_LoadTexture(renderer,"images/continue.png");
   SDL_Texture* restart_tex = IMG_LoadTexture(renderer,"images/restart.png");
   SDL_Texture* start_tex = IMG_LoadTexture(renderer,"images/start.png");

@@ -7,7 +7,7 @@
 #include "include/SDL.h"
 #include "include/SDL_image.h"
 extern char state,bombs,lives,grazes;
-extern char menu_options, menu_options;
+extern char menu_options, menu_index;
 extern unsigned long score;
 extern int c_height;
 extern int c_width;//character dimensions
@@ -15,9 +15,6 @@ extern int w_height;
 extern int w_width;//window dimensions
 extern unsigned long time,last_death;
 
-//add functions from main,c
-void key_down(SDL_Event);
-void key_up(SDL_Event);
 void start();
 void title();
 void levels();
