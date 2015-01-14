@@ -22,5 +22,10 @@ options: select lives/bombs, etc
 chat boxing, state of 4
 
 bugs:
-bullets arent removed
+options screen to change fullscreen/options/lives/bombs
+(skip to that byte and rewrite)
 fullscreen isn't fullscreen
+
+perhaps get video/animation for each level?
+sounds!
+extra animations we need to make this flashy

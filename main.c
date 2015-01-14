@@ -122,8 +122,8 @@ void clear(char bool){
     m_buf=m_buf->next;
     free(to_free);
   }
+  //clear projectiles
   projectile* p_buf = projectiles;
-  printf("the pointer of projectiles: %p \n",projectiles);
   while (p_buf){
     if (p_buf==projectiles)
       projectiles=projectiles->next;
@@ -131,6 +131,16 @@ void clear(char bool){
     p_buf=p_buf->next;
     free(to_free);
   }
+  //clear bullets
+  bullet* b_buf = bullets;
+  while (b_buf){
+    if (b_buf==bullets)
+      bullets = bullets->next;
+    bullet* to_free = b_buf;
+    b_buf=b_buf->next;
+    free(to_free);
+  }
+  //clear character
   if (bool && c)
     free(c);
 }
