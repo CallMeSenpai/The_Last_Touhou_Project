@@ -33,57 +33,57 @@ void load_dat(char* filename){
       token = strsep(&line,"=");
       token = strsep(&line,"="); //number for id, give function
       new->id = atoi(token);//pointer to this guy if id==x
-      printf("id: %d\n",new->id);
+      //printf("id: %d\n",new->id);
       
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //int hp
       new->hp = atoi(token);
-      printf("hp %d\n", new->hp);
+      //printf("hp %d\n", new->hp);
       
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double x %
       int percent = atoi(token);
       new->x = (percent * w_width /100); 
-      printf("x %d\n",new->x);
+      //printf("x %d\n",new->x);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double y %
       percent = atoi(token);
       new->y = percent * w_height /100;
-      printf("y %d\n",new->y);
+      //printf("y %d\n",new->y);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double speed
       new->speed = (double)atoi(token);
-      printf("speed %f\n",new->speed);	
+      //printf("speed %f\n",new->speed);	
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //short angle
       new->angle = (short)atoi(token);
-      printf("angle %u\n", new->angle);
+      //printf("angle %u\n", new->angle);
 	
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //unsigned long spawn_time
       new->spawn_time = (unsigned long)atoi(token);
-      printf("spawn_time %lu\n", new->spawn_time);
+      //printf("spawn_time %lu\n", new->spawn_time);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //int delay
       new->delay = atoi(token);
-      printf("delay %d\n", new->delay);
-
+      //printf("delay %d\n", new->delay);
+      
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //int set
       new->set = atoi(token);
-      printf("set %d\n", new->set);
+      //printf("set %d\n", new->set);
       
       //other than next and prev, new mob is basically created here
       //load_dat(1) is tested in main() for numbers only

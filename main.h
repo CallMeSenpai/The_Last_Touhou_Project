@@ -21,7 +21,7 @@ void key_up(SDL_Event);
 void start();
 void title();
 void levels();
-
+void clear(char);
 typedef struct sprite{
   int frames;
   int current_frame;

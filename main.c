@@ -108,34 +108,28 @@ void create_window(){
 }
 /***** clears screen *****/
 void clear(char bool){
-  //bool: do we want to remove the character?
   mob* m_buf = mobs;
   while (m_buf){
-    /*if (m_buf==mobs)
+    //still test
+    if (m_buf==mobs){
       mobs=mobs->next;
-    mob* to_free = m_buf;
-    m_buf=m_buf->next;
-    free(to_free);*/
-    mob* to_free = m_buf;
-    m_buf=m_buf->next;
-    free(to_free);
-    //puts("rewrite free linked list");
+      mob* to_free = m_buf;
+      m_buf=m_buf->next;
+      free(to_free);
+    }
   }
   projectile* p_buf = projectiles;
-  while (p_buf){/*
+  printf("the pointer of projectiles: %p \n",projectiles);
+  while (p_buf){
     if (p_buf==projectiles)
       projectiles=projectiles->next;
     projectile* to_free = p_buf;
     p_buf=p_buf->next;
     free(to_free);
   }
+
   if (bool && c)
-  free(c);*/
-    //puts("rewrite free linked list");
-    projectile* to_free = p_buf;
-    p_buf=p_buf->next;
-    free(to_free);
-  }
+    free(c);
 }
 
 void key_down(SDL_Event e){
@@ -184,6 +178,8 @@ void key_up(SDL_Event e){
     case SDLK_RETURN:
       if ( menu_index == 0 )
 	levels();
+      if ( menu_index == 2 )
+	exit(0);
       break;
     }
   }else if ( state == 1 ){
@@ -192,10 +188,16 @@ void key_up(SDL_Event e){
       //cases with exit and start,
       if ( menu_index == 0 ){ start(); } // start on ez
       if ( menu_index == 1 ){ start(); }//start on insane
-      if (menu_index==2){ title(); }//back to title?
+      if ( menu_index == 2 ){ 
+	state=0;
+	menu_options=3;
+	menu_index=0;
+      }//back to title?
       break;
     case SDLK_ESCAPE:
-      title();
+      state=0;
+      menu_options=3;
+      menu_index=0;
       break;
     }
   }else if (state==3){
@@ -224,7 +226,6 @@ void key_up(SDL_Event e){
 	set_default_values_c(c);
 	break;
       }else if (menu_index==2){ 
-	clear(1);
 	title(); 
 	//bugs, double free @ game->title
       }
@@ -276,23 +277,19 @@ void start(){
   last_death=0;
 }
 void title(){
+  //printf all info to compare 1st and 2nd start()
   clear(1);
+  printf("pointers:\nc:%p\np:%p\nm:%p\n",c,projectiles,mobs);
   time=0;
   state=0;
   menu_options=3;
   menu_index=0;
-  /*might include another options under start
-    to add extra level.
-    depends on time constraints
-   */
   //Extra.png?
-  //Entering some CS-dojo type png.
 }
 void levels(){
   menu_options=3;
   state=1;
   menu_index=0;
-  //get images
   //Easy.png
   //Insane.png
 }
@@ -325,11 +322,8 @@ int main(){
   SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
   SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
   SDL_Texture* bullet_tex = IMG_LoadTexture(renderer,"images/bullet_red.png");
-  /*----- test -----*/
   title();
   
-
-  /*----- end test -----*/
   while (1){
     if (state!=3)
       time++;
