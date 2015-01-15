@@ -122,8 +122,8 @@ void clear(char bool){
     m_buf=m_buf->next;
     free(to_free);
   }
+  //clear projectiles
   projectile* p_buf = projectiles;
-  printf("the pointer of projectiles: %p \n",projectiles);
   while (p_buf){
     if (p_buf==projectiles)
       projectiles=projectiles->next;
@@ -131,6 +131,16 @@ void clear(char bool){
     p_buf=p_buf->next;
     free(to_free);
   }
+  //clear bullets
+  bullet* b_buf = bullets;
+  while (b_buf){
+    if (b_buf==bullets)
+      bullets = bullets->next;
+    bullet* to_free = b_buf;
+    b_buf=b_buf->next;
+    free(to_free);
+  }
+  //clear character
   if (bool && c)
     free(c);
 }
@@ -226,9 +236,9 @@ int main(){
       renderTexture(insane_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/20);
     }else if (state==2 || state==3){
       /***** character *****/
-      //- temporary character, the character needs to be centered
       //renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
       renderTexture(temp,renderer,c->x-16,c->y-16,32,32);
+      
       /***** projectiles *****/
       projectile* p_buffer = projectiles;
       while(p_buffer){
@@ -259,6 +269,15 @@ int main(){
 	//remove bullets if off screen
 	b_buffer=  b_buffer->next;
       }
+      /***** game panel on right *****/
+      renderTexture(score_tex,renderer,w_width*7/8,w_height/6,w_width/15,w_height/20);//not sure on dimensions, need testing
+      /*renderTexture(lives_tex,renderer,x,y,w,h);
+	renderTexture(bombs_tex,renderer,x,y,w,h);
+	renderTexture(grazes_tex,renderer,x,y,w,h);
+	//----!! also should display icons of lives/bombs
+	//----!! start using text for displaying score and grazes
+
+       */
       if ( state == 2 ){
 	/***** sprites *****/
 	//if ( time%10 == 0 ){

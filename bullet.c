@@ -39,7 +39,7 @@ void set_default_values_b(bullet* b,int x, int y){
 }
 void set_values_b(bullet* b,int x, int y){
   b->x = x;
-  b->y=y;
+  b->y = y;
 }
 void set_angle(bullet* b, short angle){
   b->angle = angle;
@@ -72,14 +72,12 @@ void target(bullet* b){
 void do_action_b(bullet* b){
   b->x += (int)(b->speed*cos(b->angle/180.0*PI));
   b->y -= (int)(b->speed*sin(b->angle/180.0*PI));
-  //printf("angle for this bullet is %d. \n",b->angle);
 }
 void interact_b(bullet* b){
-  //bullet kills character.
+  //------------don't use constants
   if (time-last_death > 300 && fabs(c->x-16 - b->x-6)<6+16 && 
       fabs(c->y-16 - b->y-6)<6+16){
-    //3 second death cooldonw
-    last_death=time;
+    last_death=time;//3 second death cooldown
     lives--;
     if (lives>=0){
       c->x=w_width/3;
