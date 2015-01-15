@@ -261,10 +261,11 @@ int main(){
       }
       if ( state == 2 ){
 	/***** sprites *****/
-	if ( time%10 == 0 ){
-	  c->sprite.current_frame++;
-	  c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
-	}
+	//if ( time%10 == 0 ){
+	//c->sprite.current_frame++;
+	//c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
+	//}
+	cycleSprite(c->sprite,time,10);
 	handle_input(c);
       }else if ( state == 3 ){
 	/***** pause menu *****/
