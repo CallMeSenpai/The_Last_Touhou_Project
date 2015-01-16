@@ -64,6 +64,7 @@ void renderTexture_r(SDL_Texture* tex, SDL_Renderer *ren, int x, int y, int w, i
   dst.w = w;
   dst.h = h;
   SDL_RenderCopyEx(ren,tex,0,&dst,360-angle,0,SDL_FLIP_VERTICAL);
+  //?? angles are rounded? by 15 deg...
 }
 void create_window(){
   f=fopen("config","r");
@@ -159,7 +160,6 @@ void start(){
 }
 void title(){
   clear(1);
-  //printf("pointers:\nc:%p\np:%p\nm:%p\n",c,projectiles,mobs);
   time=0;
   state=0;
   menu_options=3;
@@ -269,22 +269,9 @@ int main(){
 	//remove bullets if off screen
 	b_buffer=  b_buffer->next;
       }
-      /***** game panel on right *****/
-      renderTexture(score_tex,renderer,w_width*7/8,w_height/6,w_width/15,w_height/20);//not sure on dimensions, need testing
-      /*renderTexture(lives_tex,renderer,x,y,w,h);
-	renderTexture(bombs_tex,renderer,x,y,w,h);
-	renderTexture(grazes_tex,renderer,x,y,w,h);
-	//----!! also should display icons of lives/bombs
-	//----!! start using text for displaying score and grazes
-
-       */
       if ( state == 2 ){
 	/***** sprites *****/
-	//if ( time%10 == 0 ){
-	//c->sprite.current_frame++;
-	//c->sprite.current_frame = c->sprite.current_frame % c->sprite.frames;
-	//}
-	cycleSprite(c->sprite,time,10);
+	//cycleSprite(c->sprite,time);
 	handle_input(c);
       }else if ( state == 3 ){
 	/***** pause menu *****/
@@ -296,6 +283,13 @@ int main(){
       }
       /***** background *****/
       renderTexture(bg_texture,renderer, 0, 0,w_width,w_height);
+      /***** game panel on right *****/
+      renderTexture(score_tex,renderer,w_width*13/20,w_height/6,w_width/9,w_height/16);//not sure on dimensions, need testing
+      renderTexture(lives_tex,renderer,w_width*13/20,w_height/4,w_width/10,w_height/20);
+      renderTexture(bombs_tex,renderer,w_width*13/20,w_height/3,w_width/9,w_height/16);
+      renderTexture(grazes_tex,renderer,w_width*13/20,w_height*5/12,w_width/9,w_height/16);
+      //----!! start using text for displaying score and grazes
+
     }/* if state==2 or state==3 */
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS

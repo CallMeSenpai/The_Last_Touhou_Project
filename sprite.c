@@ -8,10 +8,10 @@ void renderSprite(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int 
   dst.h = h;
   SDL_RenderCopy(ren, tex, clip, &dst );
 }
-void cycleSprite(sprite* sprite, unsigned long time, unsigned long delay) {
-  if (time == delay) {
-    sprite.current_frame++;
-    sprite.current_frame = sprite.current_frame % sprite.frames;
+void cycleSprite(sprite* sprite, unsigned long time) {
+  if (time%10==0) {
+    sprite->current_frame++;
+    sprite->current_frame = sprite->current_frame % sprite->frames;
   }
 }
 //assumes clip is not initialized
@@ -19,8 +19,8 @@ void init_reimu_test(sprite* sprite, SDL_Renderer* renderer) {
   sprite->frames = 4;
   sprite->current_frame = 0;
   sprite->clip = calloc(4, sizeof(SDL_Rect));
-  sprite->texture = IMG_LoadTexture(renderer, "images/reimu_test_sheet.png");
-
+  //sprite->texture = IMG_LoadTexture(renderer, "images/reimu_test_sheet.png");
+  //we load image in main and render here barak
   sprite->clip[0].x = 0;
   sprite->clip[0].y = 0;
   sprite->clip[0].w = 31;
