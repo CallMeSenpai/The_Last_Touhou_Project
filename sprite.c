@@ -9,10 +9,10 @@ void renderSprite(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int 
   SDL_RenderCopy(ren, tex, clip, &dst );
 }
 void cycleSprite(sprite* sprite, unsigned long time) {
-  if (time%10==0) {
-    sprite->current_frame++;
-    sprite->current_frame = sprite->current_frame % sprite->frames;
-  }
+ if (time%10==0) {
+ sprite->current_frame++;
+ sprite->current_frame = sprite->current_frame % sprite->frames;
+ }
 }
 //assumes clip is not initialized
 void init_reimu_test(sprite* sprite, SDL_Renderer* renderer) {

@@ -29,7 +29,7 @@
 int level;
 unsigned long score,time,last_death;
 char bombs,lives,grazes;
-//state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue
+//state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue, 5 = game-finished, 6 is options?
 char state;
 SDL_Event e;
 int c_height=32;
@@ -63,7 +63,7 @@ void renderTexture_r(SDL_Texture* tex, SDL_Renderer *ren, int x, int y, int w, i
   dst.y = y;
   dst.w = w;
   dst.h = h;
-  SDL_RenderCopyEx(ren,tex,0,&dst,360-angle,0,SDL_FLIP_VERTICAL);
+  SDL_RenderCopyEx(ren,tex,0,&dst,360.0-angle,0,SDL_FLIP_VERTICAL);
   //?? angles are rounded? by 15 deg...
 }
 void create_window(){
@@ -157,6 +157,16 @@ void start(){
   lives=3;//might set in options
   bombs=3;//options
   last_death=0;
+  level=1;
+}
+void next(){
+  if (level==2){
+    puts("sup");
+    load_dat("2e.dat");
+    time=0;
+    last_death=0;
+  }
+  level++;
 }
 void title(){
   clear(1);
@@ -209,6 +219,9 @@ int main(){
   while (1){
     if (state!=3)
       time++;
+    if (time > 60*10){
+      next();
+    }
     SDL_RenderClear(renderer);
     if (SDL_PollEvent(&e)){
       switch (e.type){
