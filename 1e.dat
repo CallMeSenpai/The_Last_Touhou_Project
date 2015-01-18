@@ -21,7 +21,7 @@ y=55
 speed=4
 angle=90
 spawntime=240
-delay=5
+delay=10
 set=10
 action:
 time-10

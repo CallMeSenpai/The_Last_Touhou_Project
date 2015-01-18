@@ -73,10 +73,11 @@ void load_dat(char* filename){
       new->spawn_time = (unsigned long)atoi(token);
       //printf("spawn_time %lu\n", new->spawn_time);
 
+      //the delay should be in the behavior
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
-      token = strsep(&line,"="); //int delay
-      new->delay = atoi(token);
+      token = strsep(&line,"="); //char delay
+      new->delay = (char)atoi(token);
       //printf("delay %d\n", new->delay);
       
       read = getline(&line, &len, f);
@@ -91,12 +92,13 @@ void load_dat(char* filename){
       
       while(read = getline(&line,&len,f)){
 	trim(line);
-	printf("string is %s. \n",line);
+	printf("string is {%s} \n",line);
 	if (strcmp(line,"end:")==0)
 	  break;
       }
       
-      new->behavior = &shoot;
+      //new->behavior = &shoot;
+      new->behavior = &circle_8_60;
     }/*if mobs */
     
     
@@ -111,11 +113,25 @@ void test_shot(int i, int j, short k, char l) {
 }
 
 //shoot function should be held constant?
-void shoot(int x, int y, short angle, char speed){
+//-> yes, the parameters should.
+//mob pointer to itself, delay
+//this is the prototype; change parameters in main.h if necessary
+void shoot(int x, int y, short angle, char speed, int delay){
   bullet* b =create();
   set_values_b(b,x,y);
   target(b);
   //set_angle(b,angle);
   set_speed(b,speed);
   
+}
+
+//one of the bullets will start at the angle
+void circle_8_60(int x, int y, short angle, char speed, int delay){
+  int i = 0;
+  for (;i<8;i++) {
+    bullet* b = create();
+    set_values_b(b, x, y);
+    set_angle(b, (short)((short)(((short)360/8)*i) + angle));
+    set_speed(b,speed);
+  }
 }

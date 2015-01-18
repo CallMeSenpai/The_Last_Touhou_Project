@@ -46,7 +46,7 @@ void do_action_m(mob* m){
   m->y -= m->speed*sin(m->angle/180.0*PI);
   /* if bounds or hp */
   if (time- m->last_shot > m->delay){
-    m->behavior(m->x,m->y,270,5);
+    m->behavior(m->x,m->y,270,5,m->delay);
     m->last_shot=time;
   }
   
