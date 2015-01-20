@@ -13,6 +13,7 @@ mob* summon(){
     mobs=calloc(1,sizeof(mob));
     return mobs;
   }else{
+    /*
     mob* mob_buf=mobs;
     while(mob_buf){
       if (mob_buf->next==NULL){
@@ -22,7 +23,12 @@ mob* summon(){
 	return new;
       }
       mob_buf=mob_buf->next;
-    }
+      }*/
+    mob* new = calloc(1,sizeof(mob));
+    mobs->prev=new;
+    new->next=mobs;
+    mobs=new;
+    return new;
   }
 }
 /* just a test function to get us started */

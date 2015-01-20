@@ -107,15 +107,8 @@ void load_dat(char* filename){
   fclose(f);
 }
 
-/***** shoot functions *****/
-void test_shot(int i, int j, short k, char l) {  
-  return;
-}
+/* -------------------SHOOT FUNCTIONS---------------------*/
 
-//shoot function should be held constant?
-//-> yes, the parameters should.
-//mob pointer to itself, delay
-//this is the prototype; change parameters in main.h if necessary
 void shoot(int x, int y, short angle, char speed, int delay){
   bullet* b =create();
   set_values_b(b,x,y);
@@ -131,7 +124,7 @@ void circle_8_60(int x, int y, short angle, char speed, int delay){
   for (;i<8;i++) {
     bullet* b = create();
     set_values_b(b, x, y);
-    set_angle(b, (short)((short)(((short)360/8)*i) + angle));
+    set_angle(b, (short)((short)((360/8)*i) + angle));
     set_speed(b,speed);
   }
 }

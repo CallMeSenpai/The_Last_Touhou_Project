@@ -15,7 +15,8 @@ bullet* create(){
     bullets = calloc(1,sizeof(bullet));
     return bullets;
   }else{
-    bullet* bullet_buf = bullets;
+    //bullet* bullet_buf = bullets;
+    /*
     while (bullet_buf){
       if (bullet_buf->next==NULL){
 	bullet* new = calloc(1,sizeof(bullet));
@@ -24,7 +25,12 @@ bullet* create(){
 	return new;
       }
       bullet_buf = bullet_buf->next;
-    }
+      }*/
+    bullet* new = calloc(1,sizeof(bullet));
+    bullets->prev = new;
+    new->next=bullets;
+    bullets=new;
+    return bullets;
   }
 }
 
@@ -72,6 +78,20 @@ void target(bullet* b){
 void do_action_b(bullet* b){
   b->x += (int)(b->speed*cos(b->angle/180.0*PI));
   b->y -= (int)(b->speed*sin(b->angle/180.0*PI));
+
+
+  //add id, time, dv, da to bullet
+  //if id==3
+  //if time>5
+  //dv++;
+  
+  
+  //behavior in indexed list
+
+  //** to do for camera:
+  // - hallway, people
+  
+
 }
 void interact_b(bullet* b){
   //------------don't use constants

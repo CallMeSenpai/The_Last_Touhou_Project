@@ -17,7 +17,7 @@ void set_default_values_c(character* c){
   c->up=0;
   c->down=0;
   c->right=0;
-  c->speed=5;
+  c->speed=8;
   c->shoot=0;
   c->focus=0;
   c->bomb=0;
@@ -36,6 +36,7 @@ void handle_input(character* c){
   if (time % 6 == 0){
     if(c->shoot){
       if(projectiles){
+	/*
 	projectile* p = projectiles;
 	while(p->next){
 	  p=p->next;
@@ -43,7 +44,12 @@ void handle_input(character* c){
 	projectile* new = calloc(1,sizeof(projectile));
 	set_default_values_p(new);
 	new->prev=p;
-	p->next=new;
+	p->next=new;*/
+	projectile* new = calloc(1,sizeof(projectile));
+	set_default_values_p(new);
+	projectiles->prev = new;
+	new->next = projectiles;
+	projectiles = new;
       }else{
 	projectiles = calloc(1,sizeof(projectile));
 	set_default_values_p(projectiles);

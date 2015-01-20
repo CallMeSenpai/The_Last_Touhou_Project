@@ -8,10 +8,6 @@ angle=0
 spawntime=180
 delay=10
 set=5
-action:
-command1
-lol
-end:
 
 mob
 id=2
@@ -23,7 +19,3 @@ angle=90
 spawntime=240
 delay=10
 set=10
-action:
-time-10
-goto-x,y
-end:

@@ -23,7 +23,7 @@ void key_down(SDL_Event e){
     case SDLK_LSHIFT:
       if(!c->focus){
 	c->focus=1;
-	c->speed=2;
+	c->speed=4;
       }
       break;
     case SDLK_z:
@@ -119,7 +119,7 @@ void key_up(SDL_Event e){
     case SDLK_LSHIFT:
       if(c->focus){
 	c->focus=0;
-	c->speed=5;
+	c->speed=8;
       }
       break;
     case SDLK_z:
