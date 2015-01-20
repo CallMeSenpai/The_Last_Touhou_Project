@@ -39,6 +39,7 @@ int w_height;
 projectile* projectiles;
 mob* mobs;
 bullet* bullets;
+fade* fades;
 int full;
 character* c;
 char menu_index,menu_options;

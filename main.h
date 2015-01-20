@@ -78,4 +78,12 @@ typedef struct bullet{
 } bullet;
 extern bullet* bullets;
 
+typedef struct fade{
+  //the # frames that stays the texture is shown in parabolic form
+  short frames,max_frames;
+  SDL_Texture* tex;
+  struct fade* next;
+} fade;
+extern fade* fades;
+
 #endif
