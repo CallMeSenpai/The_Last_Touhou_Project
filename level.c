@@ -90,14 +90,9 @@ void load_dat(char* filename){
       //load_dat(1) is tested in main() for numbers only
       //printf("address of new mob %p\n", (void*)&new);
       
-      while(read = getline(&line,&len,f)){
-	trim(line);
-	printf("string is {%s} \n",line);
-	if (strcmp(line,"end:")==0)
-	  break;
-      }
-      
       //new->behavior = &shoot;
+
+      //if id!!
       new->behavior = &circle_8_60;
     }/*if mobs */
     

@@ -14,7 +14,7 @@ extern int c_width;//character dimensions
 extern int w_height;
 extern int w_width;//window dimensions
 extern unsigned long time,last_death;
-
+extern SDL_Renderer* renderer;
 void start();
 void title();
 void levels();
@@ -79,10 +79,12 @@ typedef struct bullet{
 extern bullet* bullets;
 
 typedef struct fade{
+  float x,y;//the percentage of the window's width height
   //the # frames that stays the texture is shown in parabolic form
   short frames,max_frames;
   SDL_Texture* tex;
   struct fade* next;
+  struct fade* prev;
 } fade;
 extern fade* fades;
 

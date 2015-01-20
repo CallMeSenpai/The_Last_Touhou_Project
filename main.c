@@ -23,6 +23,7 @@
 #include "mob.h"
 #include "bullet.h"
 #include "level.h"
+#include "fade.h"
 
 #define WHITE (SDL_Color){255,255,255}
 
@@ -47,6 +48,10 @@ char menu_index,menu_options;
 SDL_Window* window;
 SDL_Renderer* renderer;
 FILE* f;
+SDL_Texture* level1_tex;
+SDL_Texture* level2_tex;
+SDL_Texture* level3_tex;
+SDL_Texture* level4_tex;
 TTF_Font* font;
 enum textquality {solid, shaded, blended};
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
@@ -159,6 +164,7 @@ void start(){
   bombs=3;//options
   last_death=0;
   level=1;
+  create_fade(level1_tex,150,0.33f,0.33f);
 }
 void next(){
   if (level==2){
@@ -215,6 +221,10 @@ int main(){
   SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
   SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
   SDL_Texture* bullet_tex = IMG_LoadTexture(renderer,"images/bullet_red.png");
+  level1_tex = IMG_LoadTexture(renderer,"images/level1.png");
+  level2_tex = IMG_LoadTexture(renderer,"images/level2.png");
+  level3_tex = IMG_LoadTexture(renderer,"images/level3.png");
+  level4_tex = IMG_LoadTexture(renderer,"images/level4.png");
   title();
   
   while (1){
