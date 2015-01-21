@@ -154,6 +154,7 @@ void clear(char bool){
 
 /***** INIT GAME VARIABLES *****/
 void start(){
+  create_fade(level1_tex,150,w_width/3,w_height/3);
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
   state=2;
@@ -293,6 +294,12 @@ int main(){
 	//remove bullets if off screen
 	b_buffer=  b_buffer->next;
       }
+      fade* f_buf = fades;
+      while ( f_buf ){
+	render_fade(f_buf);
+	f_buf = f_buf->next;
+      }
+
       if ( state == 2 ){
 	/***** sprites *****/
 	//cycleSprite(c->sprite,time);
