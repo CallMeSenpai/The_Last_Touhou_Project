@@ -40,16 +40,18 @@ void set_default_values_m(mob* m){
   m->angle=0;
 }
 
+//this is called nowhere lol
 void set_values_m(mob* m,int x, int y,double speed,int hp,short angle){
-  m->x=x;
+  m->x= (int)((double)x * (double)5 / (double)8);
   m->y=y;
   m->speed=speed;
   m->hp=hp;
   m->angle = angle;
+  printf("x %d\n", m->x);
 }
 void do_action_m(mob* m){
-  m->x += m->speed*cos(m->angle/180.0*PI);
-  m->y -= m->speed*sin(m->angle/180.0*PI);
+  m->x += (int)(m->speed*cos((double)m->angle/(double)180*PI));
+  m->y -= (int)(m->speed*sin((double)m->angle/(double)180*PI));
   /* if bounds or hp */
   if (time- m->last_shot > m->delay){
     m->behavior(m->x,m->y,270,5,m->delay);
@@ -72,6 +74,10 @@ void do_action_m(mob* m){
     }
     p=p->next;
   }
+  //  if (time % 10 == 0) {
+    m->speed += m->dv;
+    //printf("%f\n",m->speed);
+    //}
 }
 void check_remove(mob* m){
   if(m->x < 0 || m->y < 0 ||

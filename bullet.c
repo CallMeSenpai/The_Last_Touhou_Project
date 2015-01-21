@@ -76,8 +76,8 @@ void target(bullet* b){
   b->angle=ref_angle;
 }
 void do_action_b(bullet* b){
-  b->x += (int)(b->speed*cos(b->angle/180.0*PI));
-  b->y -= (int)(b->speed*sin(b->angle/180.0*PI));
+  b->x += (int)(b->speed*cos((double)b->angle/(double)180.0*PI));
+  b->y -= (int)(b->speed*sin((double)b->angle/(double)180.0*PI));
 
 
   //add id, time, dv, da to bullet

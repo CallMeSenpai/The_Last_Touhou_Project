@@ -23,7 +23,7 @@
 #include "mob.h"
 #include "bullet.h"
 #include "level.h"
-#include "fade.h"
+//#include "fade.h"
 
 #define WHITE (SDL_Color){255,255,255}
 
@@ -164,7 +164,7 @@ void start(){
   bombs=3;//options
   last_death=0;
   level=1;
-  create_fade(level1_tex,150,0.33f,0.33f);
+  //create_fade(level1_tex,150,0.33f,0.33f);
 }
 void next(){
   if (level==2){

@@ -54,6 +54,7 @@ typedef struct mob{
   int hp;
   int x,y; 
   double speed;
+  double dv; //out of 100
   short angle;
   struct mob* next;
   struct mob* prev;

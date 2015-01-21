@@ -5,6 +5,6 @@
 
 void trim(char*);
 void load_dat(char*);
-void shoot(int,int,short,char,int);
+void target_shoot(int,int,short,char,int);
 void circle_8_60(int,int,short,char,int);
 #endif

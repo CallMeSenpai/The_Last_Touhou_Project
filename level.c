@@ -45,7 +45,7 @@ void load_dat(char* filename){
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double x %
       int percent = atoi(token);
-      new->x = (percent * w_width /100); 
+      new->x = (percent * w_width /100) * 5 /8; 
       //printf("x %d\n",new->x);
 
       read = getline(&line, &len, f);
@@ -60,6 +60,12 @@ void load_dat(char* filename){
       token = strsep(&line,"="); //double speed
       new->speed = (double)atoi(token);
       //printf("speed %f\n",new->speed);	
+      
+      read = getline(&line, &len, f);
+      token = strsep(&line,"=");
+      token = strsep(&line,"="); //double dv
+      new->dv = (double)atoi(token) / 100;
+      //printf("dv %f\n", new->dv);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
@@ -93,7 +99,10 @@ void load_dat(char* filename){
       //new->behavior = &shoot;
 
       //if id!!
-      new->behavior = &circle_8_60;
+      if (new->id == 0)
+	new->behavior = &circle_8_60;
+      else if (new->id == 1)
+	new->behavior = &target_shoot;
     }/*if mobs */
     
     
@@ -104,7 +113,7 @@ void load_dat(char* filename){
 
 /* -------------------SHOOT FUNCTIONS---------------------*/
 
-void shoot(int x, int y, short angle, char speed, int delay){
+void target_shoot(int x, int y, short angle, char speed, int delay){
   bullet* b =create();
   set_values_b(b,x,y);
   target(b);
@@ -114,6 +123,7 @@ void shoot(int x, int y, short angle, char speed, int delay){
 }
 
 //one of the bullets will start at the angle
+//I have no idea what 60 means anymore and I will probably change it later
 void circle_8_60(int x, int y, short angle, char speed, int delay){
   int i = 0;
   for (;i<8;i++) {
