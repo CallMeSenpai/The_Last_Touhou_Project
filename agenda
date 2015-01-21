@@ -1,19 +1,7 @@
 TODO::
 
-advanced interpreter: put more options in the function
 images of bullets and mobs and bosses
 more shoot() funtions depending on the mob id
-
-more intricate mob actions in interpreter
-example:
-mob
-hp=x
-blah=y
-action //all variable settings after this will change, will give mob array of functions
-hang=10
-?shoot=20
-angle=
-
 
 level differences? perhaps cutting out half or 2/3 of bullets
 
@@ -21,14 +9,11 @@ options: select lives/bombs, etc
 
 chat boxing, state of 4
 
-perhaps get video/animation for each level?
 sounds!
-extra animations we need to make this flashy
-1e.dat should be the same as 1i.dat? if we want to use the same file for both difficulties
+
+options screen to change fullscreen/options/lives/bombs
 
 bugs:
-options screen to change fullscreen/options/lives/bombs
-(skip to that byte and rewrite)
 fullscreen isn't fullscreen
 
 

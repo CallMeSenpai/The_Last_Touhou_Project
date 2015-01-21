@@ -100,7 +100,7 @@ void load_dat(char* filename){
 
       //if id!!
       if (new->id == 0)
-	new->behavior = &circle_8_60;
+	new->behavior = &circle_8;
       else if (new->id == 1)
 	new->behavior = &target_shoot;
     }/*if mobs */
@@ -124,7 +124,7 @@ void target_shoot(int x, int y, short angle, char speed, int delay){
 
 //one of the bullets will start at the angle
 //I have no idea what 60 means anymore and I will probably change it later
-void circle_8_60(int x, int y, short angle, char speed, int delay){
+void circle_8(int x, int y, short angle, char speed, int delay){
   int i = 0;
   for (;i<8;i++) {
     bullet* b = create();
