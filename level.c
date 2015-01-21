@@ -85,6 +85,12 @@ void load_dat(char* filename){
       token = strsep(&line,"="); //char delay
       new->delay = (char)atoi(token);
       //printf("delay %d\n", new->delay);
+
+      read = getline(&line, &len, f);
+      token = strsep(&line,"=");
+      token = strsep(&line,"="); //int load_time
+      new->load_time = atoi(token);
+      //printf("delay %d\n", new->delay);
       
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
@@ -131,5 +137,32 @@ void circle_8(int x, int y, short angle, char speed, int delay){
     set_values_b(b, x, y);
     set_angle(b, (short)((short)((360/8)*i) + angle));
     set_speed(b,speed);
+  }
+}
+
+//shoot horizontally left
+void left_shoot(int x, int y, short angle, char speed, int delay) {
+  bullet* b = create();
+  set_values_b(b,x,y);
+  set_angle(b, 180);
+  set_speed(b, speed);
+}
+
+//shoot horizontally right
+void right_shoot(int x, int y, short angle, char speed, int delay) {
+  bullet* b = create();
+  set_values_b(b,x,y);
+  set_angle(b, 0);
+  set_speed(b, speed);
+}
+
+//seriously we need to change the sprite of bullets
+//11 bullets
+void cone_down(int x, int y, short angle, char speed, int delay) {
+  int i = 0;
+  for (;i<11;i++) {
+    bullet* b = create();
+    set_values_b(b,x,y);
+    set_angle(b, (short)220 + ((short)10 * (short)i));
   }
 }

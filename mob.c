@@ -53,9 +53,11 @@ void do_action_m(mob* m){
   m->x += (int)(m->speed*cos((double)m->angle/(double)180*PI));
   m->y -= (int)(m->speed*sin((double)m->angle/(double)180*PI));
   /* if bounds or hp */
-  if (time- m->last_shot > m->delay){
-    m->behavior(m->x,m->y,270,5,m->delay);
-    m->last_shot=time;
+  if (time- m->last_shot > m->load_time) {
+    if (time- m->last_shot > m->delay){
+      m->behavior(m->x,m->y,270,5,m->delay);
+      m->last_shot=time;
+    }
   }
   
   projectile* p = projectiles;

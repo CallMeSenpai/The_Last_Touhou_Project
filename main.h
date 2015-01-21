@@ -63,6 +63,7 @@ typedef struct mob{
   //int function pointer for shoot()
   long unsigned last_shot;
   char delay;
+  int load_time; //delay before first shot
   char set;//the num of shots each boss shoots in a "set"
   behavior behavior;
 } mob;

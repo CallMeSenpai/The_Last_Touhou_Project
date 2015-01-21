@@ -8,6 +8,7 @@ dv=-6
 angle=270
 spawntime=60
 delay=10
+loadtime=60
 set=5
 
 mob
@@ -20,4 +21,5 @@ dv=6
 angle=180
 spawntime=150
 delay=10
+loadtime=60
 set=10
