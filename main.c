@@ -113,6 +113,7 @@ void create_window(){
 			    w_width,w_height,
 			    full*SDL_WINDOW_FULLSCREEN_DESKTOP);
   }
+  SDL_GetWindowSize(window,&w_width,&w_height);
   if (! window){
     printf("Unable to create window.\n%s\n",SDL_GetError());
     exit(-1);
@@ -154,6 +155,7 @@ void clear(char bool){
 
 /***** INIT GAME VARIABLES *****/
 void start(){
+  //printf("the original dimensions are %d, %d\n",w_width,w_height);
   create_fade(level1_tex,150,w_width/3,w_height/3);
   c = calloc(1,sizeof(character));
   set_default_values_c(c);
@@ -294,12 +296,7 @@ int main(){
 	//remove bullets if off screen
 	b_buffer=  b_buffer->next;
       }
-      fade* f_buf = fades;
-      while ( f_buf ){
-	render_fade(f_buf);
-	f_buf = f_buf->next;
-      }
-
+      
       if ( state == 2 ){
 	/***** sprites *****/
 	//cycleSprite(c->sprite,time);
@@ -311,6 +308,12 @@ int main(){
 	renderTexture(continue_tex,renderer,w_width/3-w_width/10,w_height/3,w_width/5,w_height/15);
 	renderTexture(restart_tex,renderer,w_width/3-w_width/12,w_height/2,w_width/6,w_height/15);
 	renderTexture(mainmenu_tex,renderer,w_width/3-w_width/10,w_height/3*2,w_width/5,w_height/15);
+      }
+      /***** fading images *****/
+      fade* f_buf = fades;
+      while ( f_buf ){
+	render_fade(f_buf);
+	f_buf = f_buf->next;
       }
       /***** background *****/
       renderTexture(bg_texture,renderer, 0, 0,w_width,w_height);
