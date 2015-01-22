@@ -73,9 +73,9 @@ typedef struct bullet{
   int hp;
   double x, y;
   double speed;
-  double dv; //out of 100
+  double dv;
   double angle;
-  double da; //out of 100
+  double da;
   struct bullet* next;
   struct bullet* prev;
   char width,height;

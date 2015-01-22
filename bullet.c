@@ -43,15 +43,21 @@ void set_default_values_b(bullet* b,int x, int y){
   b->angle=270;
   //make sure to kill bullets or mobs heading off the screen
 }
-void set_values_b(bullet* b,int x, int y){
+void set_values_b(bullet* b,double x, double y){
   b->x = x;
   b->y = y;
 }
-void set_angle(bullet* b, short angle){
+void set_angle(bullet* b, double angle){
   b->angle = angle;
 }
 void set_speed(bullet* b,double speed){
   b->speed=speed;
+}
+void set_dv(bullet* b,double dv) {
+  b->dv=dv;
+}
+void set_da(bullet* b,double da) {
+  b->da=da;
 }
 /* targets the character */
 void target(bullet* b){
@@ -93,7 +99,9 @@ void do_action_b(bullet* b){
 
   //** to do for camera:
   // - hallway, people
-  
+  b->speed += b->dv;
+  b->angle += b->da;
+  b->angle = fmod(b->angle,(double)360);
 
 }
 void interact_b(bullet* b){

@@ -126,8 +126,7 @@ void target_shoot(double x, double y){
   set_values_b(b,x,y);
   target(b);
   //set_angle(b,angle);
-  set_speed(b,5);
-  
+  set_speed(b,4);
 }
 
 //one of the bullets will start at the angle
@@ -139,8 +138,8 @@ void circle_8(double x, double y){
     set_values_b(b, x, y);
     //set_angle(b, (short)((short)((360/30)*i) + angle));
     set_angle(b,(360/8)*i);
-    printf("%f\n", b->angle);
-    set_speed(b,5);
+    //printf("%f\n", b->angle);
+    set_speed(b,4);
   }
 }
 
