@@ -113,6 +113,8 @@ void load_dat(char* filename){
 	new->behavior = &cone_down;
       else if (new->id == 3)
 	new->behavior = &brown_shot;
+      else if (new->id == 4)
+	new->behavior = &brown_recursion;
     }/*if mobs */
     
     
@@ -194,4 +196,30 @@ void brown_shot(double x, double y, unsigned long spawn_time) {
   }
 }
 
-void brown_recursion(double x, double y, unsigned long spawn_time){}
+//helper function
+void cross_shot(double x, double y, unsigned long spawn_time) {
+  int i = 0;
+  for (;i<4;i++) {
+    bullet* b = create();
+    set_values_b(b, x, y);
+    //set_angle(b, (short)((short)((360/30)*i) + angle));
+    set_angle(b,(360/4)*i);
+    //printf("%f\n", b->angle);
+    set_speed(b,2);
+  }
+}
+
+void brown_recursion(double x, double y, unsigned long spawn_time){
+  printf("%d\n", time-spawn_time);
+  if(time-spawn_time < 180){  
+    cross_shot(x,y,spawn_time);
+  }
+  else {
+    cross_shot(x-100,y-100,spawn_time);
+    cross_shot(x+100,y-100,spawn_time);
+    cross_shot(x-100,y+100,spawn_time);
+    cross_shot(x+100,y+100,spawn_time);
+
+  }
+}
+  
