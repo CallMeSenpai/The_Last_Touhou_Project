@@ -83,7 +83,7 @@ void load_dat(char* filename){
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //char delay
-      new->delay = (char)atoi(token);
+      new->delay = (short)atoi(token);
       //printf("delay %d\n", new->delay);
 
       read = getline(&line, &len, f);
@@ -104,7 +104,7 @@ void load_dat(char* filename){
       
       //new->behavior = &shoot;
 
-      //if id!!
+      //brown
       if (new->id == 0)
 	new->behavior = &circle_8;
       else if (new->id == 1)
@@ -115,6 +115,10 @@ void load_dat(char* filename){
 	new->behavior = &brown_shot;
       else if (new->id == 4)
 	new->behavior = &brown_recursion;
+      //konstans
+      else if (new->id == 10){
+	new->behavior = &tree;
+      }
     }/*if mobs */
     
     
@@ -210,8 +214,8 @@ void cross_shot(double x, double y, unsigned long spawn_time) {
 }
 
 void brown_recursion(double x, double y, unsigned long spawn_time){
-  printf("%d\n", time-spawn_time);
-  if(time-spawn_time < 180){  
+  //printf("%ld\n", time-spawn_time);
+  if(time-spawn_time < 180){
     cross_shot(x,y,spawn_time);
   }
   else {
@@ -223,3 +227,46 @@ void brown_recursion(double x, double y, unsigned long spawn_time){
   }
 }
   
+/* --------- konstans ----------- */
+
+//tree delay should be HIGH
+void tree(double x, double y, unsigned long spawn_time){
+  bullet* b = create();
+  b->spawn_time = time;
+  set_values_b(b,x,y);
+  target(b);
+  b->id = 10;
+  b->movement = &split;
+  set_speed(b,2);
+  split(b);
+}
+
+
+/* --------- dw --------- */
+
+
+
+/* -------- zman --------- */
+
+
+
+/* -------movement -------- */
+void split(bullet* b){
+  if (b->id==10 && time - b->spawn_time > 60){
+    bullet* new = create();
+    new->spawn_time=time;
+    set_values_b(new,b->x,b->y);
+    new->id = 10;
+    new->movement = &split;
+    set_speed(new,2);
+    set_angle(new,b->angle + 10);
+    new = create();
+    new->spawn_time=time;
+    set_values_b(new,b->x,b->y);
+    new->id = 10;
+    new->movement = &split;
+    set_speed(new,2);
+    set_angle(new,b->angle - 15);
+    b->x=-100;//instant kill
+  }
+}

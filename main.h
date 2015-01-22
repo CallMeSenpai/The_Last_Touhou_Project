@@ -49,7 +49,9 @@ typedef struct projectile{
 extern projectile* projectiles;
 
 typedef void (*behavior)(double,double,unsigned long); 
-//extern behavior* test_shoot;
+
+typedef void (*movement)();//pass id
+
 typedef struct mob{
   int hp;
   double x,y; 
@@ -62,15 +64,19 @@ typedef struct mob{
   char id;
   //int function pointer for shoot()
   long unsigned last_shot;
-  char delay;
+  short delay;
   int load_time; //delay before first shot
-  char set;//the num of shots each boss shoots in a "set"
+  char set;//t5he num of shots each boss shoots in a "set"
   behavior behavior;
+  movement movement;
 } mob;
 extern mob* mobs;
 
 typedef struct bullet{
+
+  unsigned long spawn_time;
   int hp;
+  char id;
   double x, y;
   double speed;
   double dv;
@@ -79,7 +85,7 @@ typedef struct bullet{
   struct bullet* next;
   struct bullet* prev;
   char width,height;
-  //might want different size bullets?
+  movement movement;
 } bullet;
 extern bullet* bullets;
 

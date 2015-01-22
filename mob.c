@@ -47,7 +47,7 @@ void set_values_m(mob* m,int x, int y,double speed,int hp,short angle){
   m->speed=speed;
   m->hp=hp;
   m->angle = angle;
-  printf("x %f\n", m->x);
+  //printf("x %f\n", m->x);
 }
 void do_action_m(mob* m){
   m->x += (int)(m->speed*cos((double)m->angle/(double)180*PI));
@@ -59,7 +59,6 @@ void do_action_m(mob* m){
       m->last_shot=time;
     }
   }
-  
   projectile* p = projectiles;
   while ( p ){
     if (fabs(m->x - p->x) < w_width/20 && fabs(m->y - p->y ) < w_height/20){

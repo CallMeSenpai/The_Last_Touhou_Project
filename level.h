@@ -33,9 +33,11 @@ void brown_ray(double,double,unsigned long);
 /* ---------zman------------ */
 
 /* --------konstans--------- */
-
+void tree(double,double,unsigned long);
 /* --------dw-----------*/
 void dw_segfault(double,double,unsigned long);
+/* ------zman------- */
 
+/* -----movement ----- */
 
 #endif

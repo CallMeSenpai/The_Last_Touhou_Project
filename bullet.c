@@ -64,13 +64,6 @@ void target(bullet* b){
   double dx = fabs(b->x - c->x);
   double dy = fabs(b->y - c->y);
   double ref_angle = atan((double)dy/(double)dx)/PI*180.0;
-  /*
-    how to do trig:
-    Q I: angle is left alone (c->x > b->x, c->y > b->y)
-    Q II: angle is subtracted from 180 (c->x < b->x , c->y >b->y)
-    Q III: angle is added to 180 (c->x < b->x , c->y < b->y)
-    Q IV: angle is subtracted from 360 (c->x > b->x, c->y < b->y)
-   */
   if (c->x < b->x)
     if (c->y > b->y)
       ref_angle+=180;
@@ -82,27 +75,14 @@ void target(bullet* b){
   b->angle=ref_angle;
 }
 void do_action_b(bullet* b){
-  //b->x += (int)((double)b->speed*cos((double)b->angle/(double)180.0*PI));
-  //b->y -= (int)((double)b->speed*sin((double)b->angle/(double)180.0*PI));
   b->x += b->speed * cos((double)((double)b->angle/180) * PI);
   b->y -= b->speed * sin((double)((double)b->angle/180) * PI);
-  //b->x += 5;
-  //b->y -= 5;
-
-  //add id, time, dv, da to bullet
-  //if id==3
-  //if time>5
-  //dv++;
-  
-  
-  //behavior in indexed list
-
-  //** to do for camera:
-  // - hallway, people
+  if (b->movement && b-> id == 10)
+    split(b);
   b->speed += b->dv;
   b->angle += b->da;
   b->angle = fmod(b->angle,(double)360);
-
+  
 }
 void interact_b(bullet* b){
   //------------don't use constants

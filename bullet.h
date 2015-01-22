@@ -10,4 +10,5 @@ void set_speed(bullet*,double);
 void set_dv(bullet*,double);
 void set_da(bullet*,double);
 void interact_b(bullet* b);
+void split(bullet*);
 #endif
