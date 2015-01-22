@@ -47,7 +47,7 @@ void set_values_m(mob* m,int x, int y,double speed,int hp,short angle){
   m->speed=speed;
   m->hp=hp;
   m->angle = angle;
-  printf("x %d\n", m->x);
+  printf("x %f\n", m->x);
 }
 void do_action_m(mob* m){
   m->x += (int)(m->speed*cos((double)m->angle/(double)180*PI));
@@ -55,7 +55,7 @@ void do_action_m(mob* m){
   /* if bounds or hp */
   if (time > m->load_time + m->spawn_time) {
     if (time- m->last_shot > m->delay){
-      m->behavior(m->x,m->y,270,5,m->delay);
+      m->behavior(m->x,m->y);
       m->last_shot=time;
     }
   }

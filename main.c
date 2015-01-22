@@ -290,6 +290,7 @@ int main(){
       bullet* b_buffer = bullets;
       while ( b_buffer ){
 	renderTexture_r(bullet_tex,renderer,b_buffer->x-w_height/80,b_buffer->y-w_height/60,w_height/40,w_height/30,b_buffer->angle);
+	//renderTexture(bullet_tex,renderer,b_buffer->x-w_height/80,b_buffer->y-w_height/60,w_height/40,w_height/30);
 	if ( state == 2 )
 	  do_action_b(b_buffer);
 	interact_b(b_buffer);

@@ -28,7 +28,7 @@ typedef struct sprite{
 
 typedef struct character{
   char lives,bombs;
-  int x,y;
+  double x,y;
   double speed;
   //booleans
   char left,right,up,down;
@@ -38,7 +38,7 @@ typedef struct character{
 extern character* c;
 
 typedef struct projectile{
-  int x,y;
+  double x,y;
   double speed;
   short angle;
   //we might not need to make homing because it is time consuming
@@ -48,11 +48,11 @@ typedef struct projectile{
 } projectile;
 extern projectile* projectiles;
 
-typedef void (*behavior)(int,int,short,char,int); 
+typedef void (*behavior)(double,double); 
 //extern behavior* test_shoot;
 typedef struct mob{
   int hp;
-  int x,y; 
+  double x,y; 
   double speed;
   double dv; //out of 100
   short angle;
@@ -70,9 +70,12 @@ typedef struct mob{
 extern mob* mobs;
 
 typedef struct bullet{
-  int hp, x, y;
+  int hp;
+  double x, y;
   double speed;
-  short angle;
+  double dv; //out of 100
+  double angle;
+  double da; //out of 100
   struct bullet* next;
   struct bullet* prev;
   char width,height;

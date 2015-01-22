@@ -76,8 +76,10 @@ void target(bullet* b){
   b->angle=ref_angle;
 }
 void do_action_b(bullet* b){
-  b->x += (int)((double)b->speed*cos((double)b->angle/(double)180.0*PI));
-  b->y -= (int)((double)b->speed*sin((double)b->angle/(double)180.0*PI));
+  //b->x += (int)((double)b->speed*cos((double)b->angle/(double)180.0*PI));
+  //b->y -= (int)((double)b->speed*sin((double)b->angle/(double)180.0*PI));
+  b->x += b->speed * cos((double)((double)b->angle/180) * PI);
+  b->y -= b->speed * sin((double)((double)b->angle/180) * PI);
   //b->x += 5;
   //b->y -= 5;
 

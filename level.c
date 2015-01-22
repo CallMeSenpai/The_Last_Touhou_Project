@@ -44,15 +44,15 @@ void load_dat(char* filename){
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double x %
-      int percent = atoi(token);
-      new->x = (percent * w_width /100) * 5 /8; 
+      double percent = (double)atoi(token);
+      new->x = (double)((percent * (double)w_width /100) * 5 /8); 
       //printf("x %d\n",new->x);
 
       read = getline(&line, &len, f);
       token = strsep(&line,"=");
       token = strsep(&line,"="); //double y %
-      percent = atoi(token);
-      new->y = percent * w_height /100;
+      percent = (double)atoi(token);
+      new->y = (double)(percent * (double)w_height /100);
       //printf("y %d\n",new->y);
 
       read = getline(&line, &len, f);
@@ -121,52 +121,53 @@ void load_dat(char* filename){
 
 /* -------------------SHOOT FUNCTIONS---------------------*/
 
-void target_shoot(int x, int y, short angle, char speed, int delay){
+void target_shoot(double x, double y){
   bullet* b =create();
   set_values_b(b,x,y);
   target(b);
   //set_angle(b,angle);
-  set_speed(b,speed);
+  set_speed(b,5);
   
 }
 
 //one of the bullets will start at the angle
 //I have no idea what 60 means anymore and I will probably change it later
-void circle_8(int x, int y, short angle, char speed, int delay){
+void circle_8(double x, double y){
   int i = 0;
   for (;i<8;i++) {
     bullet* b = create();
     set_values_b(b, x, y);
     //set_angle(b, (short)((short)((360/30)*i) + angle));
-    set_angle(b, (short)((short)(360/8)*i));
-    set_speed(b,speed);
+    set_angle(b,(360/8)*i);
+    printf("%f\n", b->angle);
+    set_speed(b,5);
   }
 }
 
 //shoot horizontally left
-void left_shoot(int x, int y, short angle, char speed, int delay) {
+void left_shoot(double x, double y){
   bullet* b = create();
   set_values_b(b,x,y);
   set_angle(b, 180);
-  set_speed(b, speed);
+  set_speed(b, 5);
 }
 
 //shoot horizontally right
-void right_shoot(int x, int y, short angle, char speed, int delay) {
+void right_shoot(double x, double y){
   bullet* b = create();
   set_values_b(b,x,y);
   set_angle(b, 0);
-  set_speed(b, speed);
+  set_speed(b, 5);
 }
 
 //seriously we need to change the sprite of bullets
 //11 bullets
-void cone_down(int x, int y, short angle, char speed, int delay) {
+void cone_down(double x, double y){
   int i = 0;
   for (;i<11;i++) {
     bullet* b = create();
     set_values_b(b,x,y);
-    set_angle(b, (short)220 + ((short)10 * (short)i));
-    set_speed(b, speed);
+    set_angle(b, 220 + (10 * i));
+    set_speed(b, 5);
   }
 }
