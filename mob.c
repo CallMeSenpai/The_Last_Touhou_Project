@@ -55,7 +55,7 @@ void do_action_m(mob* m){
   /* if bounds or hp */
   if (time > m->load_time + m->spawn_time) {
     if (time- m->last_shot > m->delay){
-      m->behavior(m->x,m->y);
+      m->behavior(m->x,m->y,m->spawn_time);
       m->last_shot=time;
     }
   }

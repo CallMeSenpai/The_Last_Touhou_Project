@@ -48,7 +48,7 @@ typedef struct projectile{
 } projectile;
 extern projectile* projectiles;
 
-typedef void (*behavior)(double,double); 
+typedef void (*behavior)(double,double,unsigned long); 
 //extern behavior* test_shoot;
 typedef struct mob{
   int hp;

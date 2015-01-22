@@ -111,6 +111,8 @@ void load_dat(char* filename){
 	new->behavior = &target_shoot;
       else if (new->id == 2)
 	new->behavior = &cone_down;
+      else if (new->id == 3)
+	new->behavior = &brown_shot;
     }/*if mobs */
     
     
@@ -121,7 +123,7 @@ void load_dat(char* filename){
 
 /* -------------------SHOOT FUNCTIONS---------------------*/
 
-void target_shoot(double x, double y){
+void target_shoot(double x, double y, unsigned long spawn_time){
   bullet* b =create();
   set_values_b(b,x,y);
   target(b);
@@ -131,7 +133,7 @@ void target_shoot(double x, double y){
 
 //one of the bullets will start at the angle
 //I have no idea what 60 means anymore and I will probably change it later
-void circle_8(double x, double y){
+void circle_8(double x, double y, unsigned long spawn_time){
   int i = 0;
   for (;i<8;i++) {
     bullet* b = create();
@@ -144,7 +146,7 @@ void circle_8(double x, double y){
 }
 
 //shoot horizontally left
-void left_shoot(double x, double y){
+void left_shoot(double x, double y, unsigned long spawn_time){
   bullet* b = create();
   set_values_b(b,x,y);
   set_angle(b, 180);
@@ -152,7 +154,7 @@ void left_shoot(double x, double y){
 }
 
 //shoot horizontally right
-void right_shoot(double x, double y){
+void right_shoot(double x, double y, unsigned long spawn_time){
   bullet* b = create();
   set_values_b(b,x,y);
   set_angle(b, 0);
@@ -161,7 +163,7 @@ void right_shoot(double x, double y){
 
 //seriously we need to change the sprite of bullets
 //11 bullets
-void cone_down(double x, double y){
+void cone_down(double x, double y, unsigned long spawn_time){
   int i = 0;
   for (;i<11;i++) {
     bullet* b = create();
@@ -170,3 +172,26 @@ void cone_down(double x, double y){
     set_speed(b, 5);
   }
 }
+
+/* ----------brown---------- */
+
+void brown_shot(double x, double y, unsigned long spawn_time) {
+  int i = 0;
+  for (;i<15;i++) {
+    bullet* b = create();
+    set_values_b(b,x,y);
+    set_angle(b, i * 24);
+    set_speed(b, 4);
+    set_da(b,0.7);
+  }
+  i=0;
+  for (;i<15;i++) {
+    bullet* b = create();
+    set_values_b(b,x,y);
+    set_angle(b, (i * 24)+12);
+    set_speed(b, 4);
+    set_da(b,0.7);
+  }
+}
+
+void brown_recursion(double x, double y, unsigned long spawn_time){}
