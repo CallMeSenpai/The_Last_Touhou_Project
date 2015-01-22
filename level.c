@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -116,9 +117,10 @@ void load_dat(char* filename){
       else if (new->id == 4)
 	new->behavior = &brown_recursion;
       //konstans
-      else if (new->id == 10){
+      else if (new->id == 10)
 	new->behavior = &tree;
-      }
+      else if (new->id == 11)
+	new->behavior = &get_juked;
     }/*if mobs */
     
     
@@ -229,16 +231,32 @@ void brown_recursion(double x, double y, unsigned long spawn_time){
   
 /* --------- konstans ----------- */
 
+//called every frame
+void get_juked(double x, double y, unsigned long spawn_time){
+  //shoot in a circle / rotate
+  //angle change: determined by current time and spawn time 
+  int angle_speed;
+  angle_speed=7;
+  //360 deg / 8 seconds = 360deg / 480 ticks.
+  double heading = ((spawn_time - time)%480)*3/4;
+  bullet* b = create();
+  set_values_b(b, x, y);
+  set_angle(b,heading);
+  set_speed(b,20);
+  //might want movement behavior here
+  b->dv=-2;
+}
+
 //tree delay should be HIGH
 void tree(double x, double y, unsigned long spawn_time){
   bullet* b = create();
-  b->spawn_time = time;
+  b->spawn_time = time-60;
   set_values_b(b,x,y);
   target(b);
   b->id = 10;
   b->movement = &split;
   set_speed(b,2);
-  split(b);
+  split(b,4);
 }
 
 
@@ -251,22 +269,23 @@ void tree(double x, double y, unsigned long spawn_time){
 
 
 /* -------movement -------- */
-void split(bullet* b){
+
+//bullets split n nodes
+void split(bullet* b, int n){
   if (b->id==10 && time - b->spawn_time > 60){
-    bullet* new = create();
-    new->spawn_time=time;
-    set_values_b(new,b->x,b->y);
-    new->id = 10;
-    new->movement = &split;
-    set_speed(new,2);
-    set_angle(new,b->angle + 10);
-    new = create();
-    new->spawn_time=time;
-    set_values_b(new,b->x,b->y);
-    new->id = 10;
-    new->movement = &split;
-    set_speed(new,2);
-    set_angle(new,b->angle - 15);
+    bullet* new;
+    for (; n>0;n--){
+      new = create();
+      new->spawn_time=time;
+      set_values_b(new,b->x,b->y);
+      new->id = 10;
+      new->movement = &split;
+      set_speed(new,2);
+      if (n%2==1)//if odd
+	set_angle(new,b->angle - (n+1/2)*15);
+      else
+	set_angle(new,b->angle + (n/2)*15);
+    }
     b->x=-100;//instant kill
   }
 }

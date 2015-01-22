@@ -1,5 +1,5 @@
 mob
-id=10
+id=11
 hp=14
 x=30
 y=30
@@ -7,6 +7,6 @@ speed=0
 dv=0
 angle=270
 spawntime=60
-delay=180
+delay=6
 loadtime=60
 set=5

@@ -59,6 +59,15 @@ void set_dv(bullet* b,double dv) {
 void set_da(bullet* b,double da) {
   b->da=da;
 }
+/* doesnt let you change vector and angualr acceleration
+   after the limit parameter */
+void dv_until(bullet* b,double limit){
+  if ( (b->dv > 0 && b->speed < limit) ||
+       (b->dv < 0 && b->speed > limit) ){
+    b->speed += b-> dv;
+  }else
+    b->dv=0;
+}
 /* targets the character */
 void target(bullet* b){
   double dx = fabs(b->x - c->x);
@@ -77,9 +86,18 @@ void target(bullet* b){
 void do_action_b(bullet* b){
   b->x += b->speed * cos((double)((double)b->angle/180) * PI);
   b->y -= b->speed * sin((double)((double)b->angle/180) * PI);
+
   if (b->movement && b-> id == 10)
-    split(b);
-  b->speed += b->dv;
+    split(b,2);
+  /* temp */
+  dv_until(b,2);
+
+  /* end temp */
+
+  //all dv,da,angle will be modded by MOVEMENT behavior
+  //and we will call it from there
+  //b->speed += b->dv;
+  /*!!!! new line to use: b->movement(id num??) */
   b->angle += b->da;
   b->angle = fmod(b->angle,(double)360);
   
@@ -88,7 +106,7 @@ void interact_b(bullet* b){
   //------------don't use constants
   if (time-last_death > 300 && fabs(c->x-16 - b->x-6)<6+16 && 
       fabs(c->y-16 - b->y-6)<6+16){
-    last_death=time;//3 second death cooldown
+    last_death=time;//5 second death cooldown
     lives--;
     if (lives>=0){
       c->x=w_width/3;
