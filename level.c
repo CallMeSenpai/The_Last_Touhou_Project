@@ -117,8 +117,8 @@ void load_dat(char* filename){
 	new->behavior = &brown_recursion;
       //konstans
       else if (new->id == 10){
-	new->behavior = &tree;
-      }
+	new->behavior = &k_tree;
+     } 
     }/*if mobs */
     
     
@@ -200,7 +200,19 @@ void brown_shot(double x, double y, unsigned long spawn_time) {
   }
 }
 
-//helper function
+//helper function for brown_recursion
+//should be slightly higher delays
+void x_shot(double x, double y, unsigned long spawn_time) {
+  int i = 0;
+  for (;i<4;i++) {
+    bullet* b = create();
+    set_values_b(b, x, y);
+    //set_angle(b, (short)((short)((360/30)*i) + angle));
+    set_angle(b,(360/4)*i + 45);
+    //printf("%f\n", b->angle);
+    set_speed(b,2);
+  }
+}
 void cross_shot(double x, double y, unsigned long spawn_time) {
   int i = 0;
   for (;i<4;i++) {
@@ -215,9 +227,10 @@ void cross_shot(double x, double y, unsigned long spawn_time) {
 
 void brown_recursion(double x, double y, unsigned long spawn_time){
   //printf("%ld\n", time-spawn_time);
-  if(time-spawn_time < 180){
-    cross_shot(x,y,spawn_time);
+  if(time-spawn_time < 120){
+    x_shot(x,y,spawn_time);
   }
+  //needs more conditions
   else {
     cross_shot(x-100,y-100,spawn_time);
     cross_shot(x+100,y-100,spawn_time);
@@ -226,11 +239,61 @@ void brown_recursion(double x, double y, unsigned long spawn_time){
 
   }
 }
+
+
+//helper functions for brown_halo
+void angel_halo(double x, double y, unsigned long spawn_time){
   
+}
+
+void brown_halo(double x, double y, unsigned long spawn_time){
+  if (time-spawn_time < 5) {
+    mob* new = summon();
+    //I need two angels to get in here
+    
+    new->id =0;
+    //printf("id: %d\n",new->id);
+    
+    new->hp = 200;
+    //printf("hp %d\n", new->hp);
+    
+    new->x = x - 100; 
+    //printf("x %d\n",new->x);
+
+    new->y = y;
+    //printf("y %d\n",new->y);
+
+    new->speed = 0;
+    //printf("speed %f\n",new->speed);	
+      
+    new->dv = 0;
+    //printf("dv %f\n", new->dv);
+
+    new->angle = 270;
+    //printf("angle %u\n", new->angle);
+      
+    new->spawn_time = spawn_time;
+    //no idea how to do this yet
+    //printf("spawn_time %lu\n", new->spawn_time);
+
+    new->delay = 180;
+    //printf("delay %d\n", new->delay);
+
+    new->load_time = 60;
+    //printf("delay %d\n", new->delay);
+      
+    new->set = 5;
+    //printf("set %d\n", new->set);
+
+    //angel
+    new->behavior = &angel_halo;
+
+  }
+}
 /* --------- konstans ----------- */
 
 //tree delay should be HIGH
-void tree(double x, double y, unsigned long spawn_time){
+void k_tree(double x, double y, unsigned long spawn_time){
   bullet* b = create();
   b->spawn_time = time;
   set_values_b(b,x,y);

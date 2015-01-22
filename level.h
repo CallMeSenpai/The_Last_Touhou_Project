@@ -21,8 +21,7 @@ void cone_down(double,double,unsigned long);
 
 
 
-/* ----------brown---------- */
-//brown regular
+/* ----------brown---------- *///brown regular
 void brown_shot(double,double,unsigned long);
 //brown recursion
 void brown_recursion(double,double,unsigned long);
@@ -33,7 +32,7 @@ void brown_ray(double,double,unsigned long);
 /* ---------zman------------ */
 
 /* --------konstans--------- */
-void tree(double,double,unsigned long);
+void k_tree(double,double,unsigned long);
 /* --------dw-----------*/
 void dw_segfault(double,double,unsigned long);
 /* ------zman------- */
