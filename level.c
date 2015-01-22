@@ -109,6 +109,8 @@ void load_dat(char* filename){
 	new->behavior = &circle_8;
       else if (new->id == 1)
 	new->behavior = &target_shoot;
+      else if (new->id == 2)
+	new->behavior = &cone_down;
     }/*if mobs */
     
     
@@ -135,7 +137,8 @@ void circle_8(int x, int y, short angle, char speed, int delay){
   for (;i<8;i++) {
     bullet* b = create();
     set_values_b(b, x, y);
-    set_angle(b, (short)((short)((360/8)*i) + angle));
+    //set_angle(b, (short)((short)((360/30)*i) + angle));
+    set_angle(b, (short)((short)(360/8)*i));
     set_speed(b,speed);
   }
 }
@@ -164,5 +167,6 @@ void cone_down(int x, int y, short angle, char speed, int delay) {
     bullet* b = create();
     set_values_b(b,x,y);
     set_angle(b, (short)220 + ((short)10 * (short)i));
+    set_speed(b, speed);
   }
 }

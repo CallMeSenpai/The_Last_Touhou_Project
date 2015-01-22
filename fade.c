@@ -26,7 +26,7 @@ int render_fade(fade* fade){
   float alpha = function(2.0*fade->frames/fade->max_frames);
   SDL_SetTextureAlphaMod(fade->tex,(int)(alpha*255));
   //printf("orig is %f\talpha is %d\n",alpha,(int)(alpha*255));
-  printf("printing at %d, %d\n",(int)fade->x,(int)fade->y);
+  //printf("printing at %d, %d\n",(int)fade->x,(int)fade->y);
   
   renderTexture(fade->tex,renderer,w_width/3,w_height/3,w_width/6,w_height/12);
   if (state==2)
