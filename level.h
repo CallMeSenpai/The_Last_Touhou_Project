@@ -37,7 +37,9 @@ void get_juked(double,double,unsigned long);
 void k_tree(double,double,unsigned long);
 void circle(double,double, unsigned long);
 /* --------dw-----------*/
+void extend_shoot(double,double,unsigned long);
 void dw_segfault(double,double,unsigned long);
+
 /* ------zman------- */
 
 /* -----movement ----- */

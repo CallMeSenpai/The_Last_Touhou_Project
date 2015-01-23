@@ -13,5 +13,7 @@ void interact_b(bullet* b);
 /* mvoement functions for bullets */
 void split(bullet*);
 void movement11(bullet*);
+void movement20(bullet*);
+
 void dv_until(bullet*, double);
 #endif

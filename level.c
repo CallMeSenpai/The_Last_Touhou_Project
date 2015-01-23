@@ -123,7 +123,8 @@ void load_dat(char* filename){
 	new->behavior = &k_tree;
       }else if (new->id == 12){
 	new->behavior = &circle;
-      }
+      }else if (new->id == 20)
+	new->behavior = &extend_shoot;
        
     }/*if mobs */
     
@@ -178,7 +179,24 @@ void down_shoot(double x, double y, unsigned long spawn_time){
   set_angle(b,270);
   set_speed(b,4);
 }
-  
+//mob id 20, delay of 120 
+void extend_shoot(double x, double y, unsigned long spawn_time){
+  bullet* b;
+  int i = -1;
+  for (;i<2;i++){
+    int j = 0;
+    for (; j<8;j++){
+      b=create();
+      set_values_b(b,x,y);
+      target(b);
+      set_angle(b,b->angle + i*15);
+      set_speed(b,2);
+      b->dv=0.005*j;
+      b->id=20;
+      b->movement=&movement20;
+    }
+  }
+}
 //seriously we need to change the sprite of bullets
 //11 bullets
 void cone_down(double x, double y, unsigned long spawn_time){
@@ -280,7 +298,7 @@ void brown_halo(double x, double y, unsigned long spawn_time){
 }
 /* --------- konstans ----------- */
 
-//called every frame
+//called every frame - id11
 void get_juked(double x, double y, unsigned long spawn_time){
   //shoot in a circle / rotate
   //angle change: determined by current time and spawn time 
@@ -295,13 +313,17 @@ void get_juked(double x, double y, unsigned long spawn_time){
     set_values_b(b, x, y);
     set_angle(b,heading + index*90);
     set_speed(b,20);
-    //might want movement behavior here
-    //b->dv=-2;
+    b->movement = &movement11;
+
+    b = create();
+    set_values_b(b, x, y);
+    set_angle(b,360 - (heading + index*90));
+    set_speed(b,20);
     b->movement = &movement11;
   }
 }
 
-//tree delay should be HIGH
+//tree delay should be HIGH - id 10
 void k_tree(double x, double y, unsigned long spawn_time){
   bullet* b = create();
   b->spawn_time = time-60;
@@ -312,6 +334,7 @@ void k_tree(double x, double y, unsigned long spawn_time){
   set_speed(b,2);
   split(b);
 }
+// id 12
 void circle(double x, double y, unsigned long spawn_time){
   int i=-1;
   bullet* b;
@@ -344,7 +367,12 @@ void movement11(bullet* b){
     }else if (time - b->spawn_time > 30)
       b->speed = 2;
 }
-
+void movement20(bullet* b){
+  if (time - b->spawn_time < 70)
+    b->speed += b->dv;
+  else
+    b->speed=2;
+}
 void split(bullet* b){
   if (b->id==10 && time - b->spawn_time > 60){
     bullet* new;
