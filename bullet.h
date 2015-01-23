@@ -10,6 +10,8 @@ void set_speed(bullet*,double);
 void set_dv(bullet*,double);
 void set_da(bullet*,double);
 void interact_b(bullet* b);
-void split(bullet*,int);
+/* mvoement functions for bullets */
+void split(bullet*);
+void movement11(bullet*);
 void dv_until(bullet*, double);
 #endif

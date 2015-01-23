@@ -16,6 +16,7 @@ void circle_8(double,double,unsigned long);
 void left_shoot(double,double,unsigned long);
 //shoot horizontally right
 void right_shoot(double,double,unsigned long);
+void down_shoot(double,double,unsigned long);
 //shoot in a cone downwards
 void cone_down(double,double,unsigned long);
 
@@ -39,5 +40,4 @@ void dw_segfault(double,double,unsigned long);
 /* ------zman------- */
 
 /* -----movement ----- */
-
 #endif

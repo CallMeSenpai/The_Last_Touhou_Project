@@ -169,7 +169,13 @@ void right_shoot(double x, double y, unsigned long spawn_time){
   set_angle(b, 0);
   set_speed(b, 5);
 }
-
+void down_shoot(double x, double y, unsigned long spawn_time){
+  bullet* b = create();
+  set_values_b(b,x,y);
+  set_angle(b,270);
+  set_speed(b,4);
+}
+  
 //seriously we need to change the sprite of bullets
 //11 bullets
 void cone_down(double x, double y, unsigned long spawn_time){
@@ -303,12 +309,17 @@ void get_juked(double x, double y, unsigned long spawn_time){
   angle_speed=7;
   //360 deg / 8 seconds = 360deg / 480 ticks.
   double heading = ((spawn_time - time)%480)*3/4;
-  bullet* b = create();
-  set_values_b(b, x, y);
-  set_angle(b,heading);
-  set_speed(b,20);
-  //might want movement behavior here
-  b->dv=-2;
+  bullet* b;
+  int index=0;
+  for(;index<4;index++){
+    b = create();
+    set_values_b(b, x, y);
+    set_angle(b,heading + index*(90));
+    set_speed(b,20);
+    //might want movement behavior here
+    b->dv=-2;
+    b->movement = &movement11;
+  }
 }
 
 //tree delay should be HIGH
@@ -320,7 +331,7 @@ void k_tree(double x, double y, unsigned long spawn_time){
   b->id = 10;
   b->movement = &split;
   set_speed(b,2);
-  split(b,4);
+  split(b);
 }
 
 
@@ -335,9 +346,18 @@ void k_tree(double x, double y, unsigned long spawn_time){
 /* -------movement -------- */
 
 //bullets split n nodes
-void split(bullet* b, int n){
+void movement11(bullet* b){
+  if (time - b->spawn_time > 3)
+    if (time - b->spawn_time < 5){
+      b->dv=0;
+      b->speed = 0;
+    }else if (time - b->spawn_time > 30)
+      b->speed = 2;
+}
+void split(bullet* b){
   if (b->id==10 && time - b->spawn_time > 60){
     bullet* new;
+    int n=2;//went from general to static lol
     for (; n>0;n--){
       new = create();
       new->spawn_time=time;
@@ -345,6 +365,7 @@ void split(bullet* b, int n){
       new->id = 10;
       new->movement = &split;
       set_speed(new,2);
+      
       if (n%2==1)//if odd
 	set_angle(new,b->angle - (n+1/2)*15);
       else

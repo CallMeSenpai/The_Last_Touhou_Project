@@ -46,6 +46,7 @@ void set_default_values_b(bullet* b,int x, int y){
 void set_values_b(bullet* b,double x, double y){
   b->x = x;
   b->y = y;
+  b->spawn_time = time;
 }
 void set_angle(bullet* b, double angle){
   b->angle = angle;
@@ -87,17 +88,17 @@ void do_action_b(bullet* b){
   b->x += b->speed * cos((double)((double)b->angle/180) * PI);
   b->y -= b->speed * sin((double)((double)b->angle/180) * PI);
 
-  if (b->movement && b-> id == 10)
-    split(b,2);
+  if (b->movement)
+    b->movement(b);
   /* temp */
-  dv_until(b,2);
 
   /* end temp */
 
   //all dv,da,angle will be modded by MOVEMENT behavior
   //and we will call it from there
   //b->speed += b->dv;
-  /*!!!! new line to use: b->movement(id num??) */
+  /*!!!! new line to use: b->id_num();
+    id_num given by level.c interpreter */
   b->angle += b->da;
   b->angle = fmod(b->angle,(double)360);
   
