@@ -261,42 +261,18 @@ void angel_halo(double x, double y, unsigned long spawn_time){
 void brown_halo(double x, double y, unsigned long spawn_time){
   if (time-spawn_time < 5) {
     mob* new = summon();
-    //I need two angels to get in here
-    
+    //I need two angels to get in here    
     new->id =0;
-    //printf("id: %d\n",new->id);
-    
     new->hp = 200;
-    //printf("hp %d\n", new->hp);
-    
     new->x = x - 100; 
-    //printf("x %d\n",new->x);
-
     new->y = y;
-    //printf("y %d\n",new->y);
-
     new->speed = 0;
-    //printf("speed %f\n",new->speed);	
-      
     new->dv = 0;
-    //printf("dv %f\n", new->dv);
-
     new->angle = 270;
-    //printf("angle %u\n", new->angle);
-      
     new->spawn_time = spawn_time;
-    //no idea how to do this yet
-    //printf("spawn_time %lu\n", new->spawn_time);
-
     new->delay = 180;
-    //printf("delay %d\n", new->delay);
-
     new->load_time = 60;
-    //printf("delay %d\n", new->delay);
-      
     new->set = 5;
-    //printf("set %d\n", new->set);
-
     //angel
     new->behavior = &angel_halo;
 
