@@ -121,7 +121,10 @@ void load_dat(char* filename){
 	new->behavior = &get_juked;
       else if (new->id == 10){
 	new->behavior = &k_tree;
-     } 
+      }else if (new->id == 12){
+	new->behavior = &circle;
+      }
+       
     }/*if mobs */
     
     
@@ -211,7 +214,7 @@ void brown_shot(double x, double y, unsigned long spawn_time) {
 
 //helper function for brown_recursion
 //should be slightly higher delays
-void x_shot(double x, double y, unsigned long spawn_time) {
+void x_shot(double x, double y, unsigned long spawn_time){
   int i = 0;
   for (;i<4;i++) {
     bullet* b = create();
@@ -314,10 +317,10 @@ void get_juked(double x, double y, unsigned long spawn_time){
   for(;index<4;index++){
     b = create();
     set_values_b(b, x, y);
-    set_angle(b,heading + index*(90));
+    set_angle(b,heading + index*90);
     set_speed(b,20);
     //might want movement behavior here
-    b->dv=-2;
+    //b->dv=-2;
     b->movement = &movement11;
   }
 }
@@ -333,7 +336,18 @@ void k_tree(double x, double y, unsigned long spawn_time){
   set_speed(b,2);
   split(b);
 }
-
+void circle(double x, double y, unsigned long spawn_time){
+  int i=-1;
+  bullet* b;
+  double heading = ((spawn_time - time)%480)*3/4;
+  while(i++<8){
+    b = create();
+    set_values_b(b,x,y);
+    set_angle(b,heading + 45*i);
+    set_speed(b,4);
+  }
+  
+}
 
 /* --------- dw --------- */
 
@@ -354,6 +368,7 @@ void movement11(bullet* b){
     }else if (time - b->spawn_time > 30)
       b->speed = 2;
 }
+
 void split(bullet* b){
   if (b->id==10 && time - b->spawn_time > 60){
     bullet* new;

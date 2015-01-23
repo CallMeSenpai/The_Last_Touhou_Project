@@ -35,6 +35,7 @@ void brown_ray(double,double,unsigned long);
 /* --------konstans--------- */
 void get_juked(double,double,unsigned long);
 void k_tree(double,double,unsigned long);
+void circle(double,double, unsigned long);
 /* --------dw-----------*/
 void dw_segfault(double,double,unsigned long);
 /* ------zman------- */
