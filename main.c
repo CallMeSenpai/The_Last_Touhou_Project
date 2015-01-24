@@ -1,12 +1,3 @@
-//eric
-//dw - systems
-//konstans - apcs
-
-//barak
-//brown - intro
-//sharknado - softdev 
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,7 +21,7 @@
 int level;
 unsigned long score,time,last_death;
 char bombs,lives,grazes;
-//state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue, 5 = game-finished, 6 is options?
+//state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue, 5 = game-finished, 6-multiplayer (change options->)
 char state;
 SDL_Event e;
 int c_height=32;
@@ -53,7 +44,8 @@ SDL_Texture* level2_tex;
 SDL_Texture* level3_tex;
 SDL_Texture* level4_tex;
 TTF_Font* font;
-enum textquality {solid, shaded, blended};
+int num_players;
+//enum textquality {solid, shaded, blended};
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
   dst.x = x;
@@ -154,13 +146,15 @@ void clear(char bool){
 }
 
 /***** INIT GAME VARIABLES *****/
-void start(){
+void start(int num){
+  num_players = num;
   //printf("the original dimensions are %d, %d\n",w_width,w_height);
   create_fade(level1_tex,150,w_width/3,w_height/3);
-  c = calloc(1,sizeof(character));
+  c = calloc(num,sizeof(character));
+  
   set_default_values_c(c);
   state=2;
-  init_reimu_test(&c->sprite, renderer);
+  //init_reimu_test(&c->sprite, renderer);
   time=0;
   load_dat("1e.dat");
   lives=3;//might set in options
@@ -185,6 +179,12 @@ void title(){
   menu_options=3;
   menu_index=0;
   //Extra.png?
+}
+void multi(){
+  state=6;
+  menu_options=3;
+  menu_index=0;
+  puts("lol multi");
 }
 void levels(){
   menu_options=3;
@@ -219,18 +219,26 @@ int main(){
   SDL_Texture* continue_tex = IMG_LoadTexture(renderer,"images/continue.png");
   SDL_Texture* restart_tex = IMG_LoadTexture(renderer,"images/restart.png");
   SDL_Texture* start_tex = IMG_LoadTexture(renderer,"images/start.png");
+
   SDL_Texture* options_tex = IMG_LoadTexture(renderer,"images/options.png");
+
   SDL_Texture* exit_tex = IMG_LoadTexture(renderer,"images/exit.png");
   SDL_Texture* select_tex = IMG_LoadTexture(renderer,"images/select.png");
   SDL_Texture* title_tex = IMG_LoadTexture(renderer,"images/title.jpg");
   SDL_Texture* bullet_tex = IMG_LoadTexture(renderer,"images/bullet_red.png");
+  SDL_Texture* server_tex = IMG_LoadTexture(renderer,"images/server.png");
+  SDL_Texture* client_tex = IMG_LoadTexture(renderer,"images/client.png");
+  SDL_Texture* multi_tex = IMG_LoadTexture(renderer,"images/multi.png");
   level1_tex = IMG_LoadTexture(renderer,"images/level1.png");
   level2_tex = IMG_LoadTexture(renderer,"images/level2.png");
   level3_tex = IMG_LoadTexture(renderer,"images/level3.png");
   level4_tex = IMG_LoadTexture(renderer,"images/level4.png");
   title();
-  
   while (1){
+    break;
+  }//while host
+
+  while (1){//while server
     if (state!=3)
       time++;
     if (time > 60*10){
@@ -253,7 +261,7 @@ int main(){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
       renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
       renderTexture(start_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/15);
-      renderTexture(options_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/15);
+      renderTexture(multi_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/15);
       renderTexture(exit_tex,renderer,w_width/4-w_width/24,w_height/3*2,w_width/12,w_height/15);
     }else if (state == 1){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
@@ -261,11 +269,17 @@ int main(){
       renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/16);
       renderTexture(easy_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/20);
       renderTexture(insane_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/20);
+    }else if (state == 6){
+      ////////////////////////////multi
+      renderTexture(title_tex,renderer,0,0,w_width,w_height);
+      renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
+      renderTexture(server_tex,renderer,w_width/4-w_width/18,w_height/3,w_width/9,w_height/15);
+      renderTexture(client_tex,renderer,w_width/4-w_width/20,w_height/2,w_width/10,w_height/15);
+      renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/15);
+      ///////////////////multi
     }else if (state==2 || state==3){
       /***** character *****/
-      //renderSprite(c->sprite.texture,renderer,c->x-16,c->y-21,31,42,&c->sprite.clip[c->sprite.current_frame]);
       renderTexture(temp,renderer,c->x-16,c->y-16,32,32);
-      
       /***** projectiles *****/
       projectile* p_buffer = projectiles;
       while(p_buffer){

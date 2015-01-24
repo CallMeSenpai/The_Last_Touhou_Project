@@ -105,8 +105,8 @@ void do_action_b(bullet* b){
 }
 void interact_b(bullet* b){
   //------------don't use constants
-  if (time-last_death > 300 && fabs(c->x-16 - b->x-6)<6+16 && 
-      fabs(c->y-16 - b->y-6)<6+16){
+  if (time-last_death > 180 && fabs(c->x-16 - b->x-6)<5 && 
+      fabs(c->y-16 - b->y-6)<5){
     last_death=time;//5 second death cooldown
     lives--;
     if (lives>=0){
