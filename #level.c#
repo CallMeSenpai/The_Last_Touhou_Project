@@ -322,6 +322,7 @@ void brown_recursion(double x, double y, unsigned long spawn_time){
 
 //helper functions for brown_halo
 void angel_halo(double x, double y, unsigned long spawn_time){
+  
   return;
 }
 

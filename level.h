@@ -1,6 +1,6 @@
 #ifndef LEVEL_H
 #define LEVEL_H
-
+#include "main.h"
 
 
 void trim(char*);
@@ -26,6 +26,10 @@ void cone_down(double,double,unsigned long);
 void brown_shot(double,double,unsigned long);
 //brown recursion
 void brown_recursion(double,double,unsigned long);
+void x_shot(double,double,unsigned long);
+void cross_shot(double,double,unsigned long);
+void b_recursion(bullet*);
+void b_rec_target(bullet*);
 //brown halo
 void brown_halo(double,double,unsigned long);
 //brown ray
