@@ -117,7 +117,7 @@ void load_dat(char* filename){
       else if (new->id == 4)
 	new->behavior = &brown_recursion;
       else if (new->id == 5)
-	new->behavior = &brown_halo;
+	new->behavior = &brown_ray;
       //konstans
       else if (new->id == 11)
 	new->behavior = &get_juked;
@@ -310,7 +310,6 @@ void cross_shot(double x, double y, unsigned long spawn_time) {
 
 void brown_recursion(double x, double y, unsigned long spawn_time){
   unsigned long t = time - spawn_time;
-  printf("%lu\n",t);
   if (t % 60 == 0) {
     x_shot(x,y,spawn_time);
   }
@@ -321,12 +320,49 @@ void brown_recursion(double x, double y, unsigned long spawn_time){
 
 
 //helper functions for brown_halo
-void angel_halo(double x, double y, unsigned long spawn_time){
-  
-  return;
+void angel_rain(double x, double y, unsigned long spawn_time){
+  bullet* b = create();
+  set_values_b(b, x, y);
+  //set_angle(b, (short)((short)((360/30)*i) + angle));
+  set_angle(b,90);
+  //printf("%f\n", b->angle);
+  set_speed(b,10);
+  set_dv(b,-1);
+  b->movement = &rain;
 }
 
-void brown_halo(double x, double y, unsigned long spawn_time){
+void rain(bullet* b) {
+  b->speed += b->dv;
+  if (b->speed == 0) {
+    int i = 0;
+    for (;i<2;i++) {
+      bullet* bb = create();
+      set_values_b(bb,b->x,b->y);
+      set_angle(bb, 260 + (20 * i));
+      set_speed(bb, 12);
+      set_dv(bb, -0.5);
+      bb->movement = &explode;
+    }
+    b->x = -100;
+  }
+}
+void explode(bullet* b) {
+  b->speed += b->dv;
+  if (b->speed == 0){
+    int i = 0;
+    for (;i<6;i++) {
+      bullet* bb = create();
+      set_values_b(bb,b->x,b->y);
+      set_angle(bb, 220 + (20 * i));
+      set_speed(bb, 5);
+    }
+    b->x = -100;
+  }
+}
+
+
+//I NEED A RAY
+void brown_ray(double x, double y, unsigned long spawn_time){
   unsigned long t = time - spawn_time;
   if (t == 30) {
     mob* new = summon();
@@ -338,12 +374,12 @@ void brown_halo(double x, double y, unsigned long spawn_time){
     new->speed = 0;
     new->dv = 0;
     new->angle = 270;
-    new->spawn_time = spawn_time + 30;
-    new->delay = 20;
-    new->load_time = 60;
+    new->spawn_time = spawn_time + 29;
+    new->delay =34;
+    new->load_time = 59;
     new->set = 5;
     //angel
-    new->behavior = &angel_halo;
+    new->behavior = &angel_rain;
     
     new = summon();
     new->id =0;
@@ -353,12 +389,12 @@ void brown_halo(double x, double y, unsigned long spawn_time){
     new->speed = 0;
     new->dv = 0;
     new->angle = 270;
-    new->spawn_time = spawn_time + 30;
-    new->delay = 20;
-    new->load_time = 60;
+    new->spawn_time = spawn_time + 29;
+    new->delay = 34;
+    new->load_time = 59;
     new->set = 5;
     //angel
-    new->behavior = &angel_halo;
+    new->behavior = &angel_rain;
 
   }
 }

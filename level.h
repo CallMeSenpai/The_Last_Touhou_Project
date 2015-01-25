@@ -30,12 +30,14 @@ void x_shot(double,double,unsigned long);
 void cross_shot(double,double,unsigned long);
 void b_recursion(bullet*);
 void b_rec_target(bullet*);
-//brown halo
-void brown_halo(double,double,unsigned long);
 //brown ray
 void brown_ray(double,double,unsigned long);
+void angel_rain(double,double,unsigned long);
+void rain(bullet*);
+void explode(bullet*);
 /* ---------zman------------ */
-
+//z flask
+//z sharknado
 /* --------konstans--------- */
 void get_juked(double,double,unsigned long);
 void k_tree(double,double,unsigned long);
