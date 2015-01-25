@@ -21,13 +21,22 @@
 int level;
 unsigned long score,time,last_death;
 char bombs,lives,grazes;
-//state: 0=main, 1 =selections, 2 = game, 3 = paused, 4=dialogue, 5 = game-finished, 6-multiplayer (change options->)
+/*---------state: 
+  0=main
+  1 =selections
+  2 = game
+  3 = paused
+  4=dialogue
+  5 = game-finished
+  6-multiplayer ( menu screen )
+  7-server waiting for connection
+  8-client looking for server
+  */
 char state;
 SDL_Event e;
 int c_height=32;
 int c_width=32;
-int w_width;
-int w_height;
+int w_width , w_height;
 projectile* projectiles;
 mob* mobs;
 bullet* bullets;
@@ -164,7 +173,7 @@ void start(int num){
   //create_fade(level1_tex,150,0.33f,0.33f);
 }
 void next(){
-  if (level==2){
+  if (level==1){
     puts("sup");
     load_dat("2e.dat");
     time=0;
@@ -186,6 +195,12 @@ void multi(){
   menu_index=0;
   puts("lol multi");
 }
+void server(){
+  state=7;
+}
+void client(){
+  state=8;
+}
 void levels(){
   menu_options=3;
   state=1;
@@ -198,11 +213,8 @@ int main(){
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   create_window();
   TTF_Init();
-  //we need font only for text boxes
   font = TTF_OpenFont("whitrabt.ttf", 20);
   /***** INIT ALL IMAGES *****/
-  //we will put bg/in-game related images in a separate
-  //function later
   renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
   SDL_Texture* bg_texture = IMG_LoadTexture(renderer,"images/background.png");
   SDL_Texture* dw = IMG_LoadTexture(renderer,"images/dw.png");
@@ -233,15 +245,17 @@ int main(){
   level2_tex = IMG_LoadTexture(renderer,"images/level2.png");
   level3_tex = IMG_LoadTexture(renderer,"images/level3.png");
   level4_tex = IMG_LoadTexture(renderer,"images/level4.png");
-  title();
-  while (1){
+
+  title();//load title screen
+
+  while (1){//while host
     break;
-  }//while host
+  }
 
   while (1){//while server
     if (state!=3)
       time++;
-    if (time > 60*10){
+    if (state==2 && time > 60*10){
       next();
     }
     SDL_RenderClear(renderer);
@@ -257,26 +271,22 @@ int main(){
 	break;
       }
     }
-    if (state==0){
+    if (state == 0 || state == 1 || state == 6){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
       renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
+    }
+    if (state==0){
       renderTexture(start_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/15);
       renderTexture(multi_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/15);
       renderTexture(exit_tex,renderer,w_width/4-w_width/24,w_height/3*2,w_width/12,w_height/15);
     }else if (state == 1){
-      renderTexture(title_tex,renderer,0,0,w_width,w_height);
-      renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
       renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/16);
       renderTexture(easy_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/20);
       renderTexture(insane_tex,renderer,w_width/4-w_width/16,w_height/2,w_width/8,w_height/20);
     }else if (state == 6){
-      ////////////////////////////multi
-      renderTexture(title_tex,renderer,0,0,w_width,w_height);
-      renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
       renderTexture(server_tex,renderer,w_width/4-w_width/18,w_height/3,w_width/9,w_height/15);
       renderTexture(client_tex,renderer,w_width/4-w_width/20,w_height/2,w_width/10,w_height/15);
       renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/15);
-      ///////////////////multi
     }else if (state==2 || state==3){
       /***** character *****/
       renderTexture(temp,renderer,c->x-16,c->y-16,32,32);
