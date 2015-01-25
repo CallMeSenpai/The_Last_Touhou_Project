@@ -177,7 +177,7 @@ void next(){
     puts("sup");
     mob* m = mobs;
     while (m) {
-      m->x = -1;
+      m->x = -100;
       m = m->next;
     }
     load_dat("2e.dat");
