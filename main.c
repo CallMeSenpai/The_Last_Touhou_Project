@@ -175,6 +175,11 @@ void start(int num){
 void next(){
   if (level==1){
     puts("sup");
+    mob* m = mobs;
+    while (m) {
+      m->x = -1;
+      m = m->next;
+    }
     load_dat("2e.dat");
     time=0;
     last_death=0;

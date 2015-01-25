@@ -322,12 +322,12 @@ void brown_recursion(double x, double y, unsigned long spawn_time){
 
 //helper functions for brown_halo
 void angel_halo(double x, double y, unsigned long spawn_time){
+  
   return;
 }
 
 void brown_halo(double x, double y, unsigned long spawn_time){
   unsigned long t = time - spawn_time;
-  printf("%lu\n",t);
   if (t == 30) {
     mob* new = summon();
     //I need two angels to get in here    
