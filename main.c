@@ -60,7 +60,8 @@ int num_players;
 
 int socket_id;
 struct sockaddr_in serv_addr;
-char data;
+char* data;
+char host;//boolean to check if you are server or not
 
 //enum textquality {solid, shaded, blended};
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
@@ -170,6 +171,8 @@ void start(int num){
   c = calloc(num,sizeof(character));
   
   set_default_values_c(c);
+  if (num>1)
+    set_default_values_c(c+1);
   state=2;
   //init_reimu_test(&c->sprite, renderer);
   time=0;
@@ -224,6 +227,8 @@ void server(){
   accept(socket_id,0,0);
   puts("eyyy got a connection to the client");
   data= calloc(256,sizeof(char));
+  start(2);
+  host=1;
 }
 void client(){
   state=8;
@@ -241,8 +246,10 @@ void client(){
     puts("Connection failed.");
     state=6;
   }
-  puts("eyyy got a connection to the server");
+  puts("eyy done connecting");
   data= calloc(256,sizeof(char));
+  start(2);
+  host=3;
 }
 void levels(){
   menu_options=3;
@@ -290,12 +297,8 @@ int main(){
   level4_tex = IMG_LoadTexture(renderer,"images/level4.png");
 
   title();//load title screen
-
-  while (1){//while host
-    break;
-  }
-
-  while (1){//while server
+  host=2;
+  while (host){//while server
     if (state!=3)
       time++;
     if (state==2 && time > 60*10){
@@ -397,6 +400,11 @@ int main(){
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
   }/* while 1 */
+  while(host-1){
+    puts("lol working");
+    break;
+  }
+
  end:
   SDL_DestroyTexture(bg_texture);
   SDL_DestroyRenderer(renderer);
