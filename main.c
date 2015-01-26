@@ -4,7 +4,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/socket.h>
-
+#include <arpa/inet.h>
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
@@ -57,7 +57,10 @@ SDL_Texture* level3_tex;
 SDL_Texture* level4_tex;
 TTF_Font* font;
 int num_players;
+
 int socket_id;
+struct sockaddr_in serv_addr;
+
 //enum textquality {solid, shaded, blended};
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
@@ -207,18 +210,36 @@ void multi(){
 void server(){
   state=7;
   socket_id = socket(AF_INET,SOCK_STREAM,0);
-  listen(socket_id,1);
-  
+  puts("socket created.");
+  serv_addr.sin_family = AF_INET;
+  serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+  serv_addr.sin_port = htons(5000);
+  bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
+
+  if (listen(socket_id,1)== -1){
+    puts("failed to listen :(");
+    state=6;
+  }
   accept(socket_id,0,0);
-  puts("eyyy we got a connection");
+  puts("eyyy got a connection");
 }
 void client(){
   state=8;
+  socket_id = socket(AF_INET,SOCK_STREAM,0);
+  puts("socket created.");
   puts("Please enter the host's IPv4");
   char* ip_buf=calloc(256,1);
   fgets(ip_buf,256,stdin);
-  printf("string is %s\n",ip_buf);
-  //int i = connect(socket_id,
+  strtok(ip_buf,"\n");
+  serv_addr.sin_family = AF_INET;
+  serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
+  serv_addr.sin_port = htons(5000);
+  
+  if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr))<0){
+    puts("Connection failed.");
+    state=6;
+  }
+  puts("eyyy got a connection to the server");
 }
 void levels(){
   menu_options=3;
