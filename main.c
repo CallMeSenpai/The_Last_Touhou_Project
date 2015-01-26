@@ -219,12 +219,12 @@ void server(){
   serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
   serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
-
   if (listen(socket_id,1)== -1){
     puts("failed to listen :(");
     state=6;
   }
-  accept(socket_id,0,0);
+  puts("going to accept?");
+  accept(socket_id,(struct sockaddr *)&serv_addr, &sizeof(clilen));
   puts("eyyy got a connection to the client");
   data= calloc(256,sizeof(char));
   start(2);
