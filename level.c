@@ -109,7 +109,7 @@ void load_dat(char* filename){
       
       //new->behavior = &shoot;
 
-      //brown
+      //IMPORTANT: Remember to take out the print in main
       if (new->id == 0)
 	new->behavior = &circle_8;
       else if (new->id == 1)
@@ -124,18 +124,20 @@ void load_dat(char* filename){
 	new->behavior = &brown_ray;
       //konstans
       else if (new->id == 11)
-	new->behavior = &get_juked;
+	new->behavior = &k_get_juked;
       else if (new->id == 10){
 	new->behavior = &k_tree;
       }else if (new->id == 12){
 	new->behavior = &circle;
       }else if (new->id == 20){
-	new->behavior = &extend_shoot;
+	new->behavior = &dw_extend_shoot;
       }else if (new->id == 21){
+	new->behavior = &dw_segfault;
+      }else if (new->id == 31){
 	new->behavior = &z_shot;
-      }else if (new->id == 22) {
+      }else if (new->id == 32) {
 	new->behavior = &z_flask;
-      }else if (new->id == 23) {
+      }else if (new->id == 33) {
 	new->behavior = &z_sharknado;
       }
     }/*if mobs */
@@ -191,24 +193,7 @@ void down_shoot(double x, double y, unsigned long spawn_time){
   set_angle(b,270);
   set_speed(b,4);
 }
-//mob id 20, delay of 120 
-void extend_shoot(double x, double y, unsigned long spawn_time){
-  bullet* b;
-  int i = -1;
-  for (;i<2;i++){
-    int j = 0;
-    for (; j<8;j++){
-      b=create();
-      set_values_b(b,x,y);
-      target(b);
-      set_angle(b,b->angle + i*15);
-      set_speed(b,2);
-      b->dv=0.005*j;
-      b->id=20;
-      b->movement=&movement20;
-    }
-  }
-}
+
 //seriously we need to change the sprite of bullets
 //11 bullets
 void cone_down(double x, double y, unsigned long spawn_time){
@@ -411,7 +396,8 @@ void brown_ray(double x, double y, unsigned long spawn_time){
 /* --------- konstans ----------- */
 
 //called every frame - id11
-void get_juked(double x, double y, unsigned long spawn_time){
+//very low delay
+void k_get_juked(double x, double y, unsigned long spawn_time){
   //shoot in a circle / rotate
   //angle change: determined by current time and spawn time 
   int angle_speed;
@@ -423,13 +409,17 @@ void get_juked(double x, double y, unsigned long spawn_time){
   for(;index<4;index++){
     b = create();
     set_values_b(b, x, y);
-    set_angle(b,heading + index*90);
+    target(b);
+    b->angle = b->angle + heading + index*90;
+    //set_angle(b,heading + index*90);
     set_speed(b,20);
     b->movement = &movement11;
 
     b = create();
     set_values_b(b, x, y);
-    set_angle(b,360 - (heading + index*90));
+    target(b);
+    b->angle = b->angle + heading + index*90;
+    //set_angle(b,360 - (heading + index*90));
     set_speed(b,20);
     b->movement = &movement11;
   }
@@ -462,7 +452,36 @@ void circle(double x, double y, unsigned long spawn_time){
 
 /* --------- dw --------- */
 
+//mob id 20, delay of 120 
+void dw_extend_shoot(double x, double y, unsigned long spawn_time){
+  bullet* b;
+  int i = -1;
+  for (;i<2;i++){
+    int j = 0;
+    for (; j<8;j++){
+      b=create();
+      set_values_b(b,x,y);
+      target(b);
+      set_angle(b,b->angle + i*15);
+      set_speed(b,2);
+      b->dv=0.005*j;
+      b->id=20;
+      b->movement=&movement20;
+    }
+  }
+}
 
+//very low delay
+void dw_segfault(double x, double y, unsigned long spawn_time) {
+  int r = rand() % 15;
+  double x_cor = (double)w_width*5/8 * r / 15;
+  r = rand() % 12;
+  double y_cor = ((double)center_y-300) * r / 12;
+  bullet* b = create();
+  set_values_b(b, x_cor, y_cor);
+  set_angle(b,270);
+  set_speed(b, 8);
+}
 
 /* -------- zman --------- */
 //low delay
@@ -608,6 +627,7 @@ void z_sharknado(double x, double y, unsigned long spawn_time) {
 /* -------movement -------- */
 
 //bullets split n nodes
+//very low delay
 void movement11(bullet* b){
   if (time - b->spawn_time > 3)
     if (time - b->spawn_time < 5){

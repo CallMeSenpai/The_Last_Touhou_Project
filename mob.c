@@ -62,6 +62,7 @@ void do_action_m(mob* m){
   projectile* p = projectiles;
   while ( p ){
     if (fabs(m->x - p->x) < w_width/20 && fabs(m->y - p->y ) < w_height/20){
+      printf("%d\n",m->hp);
       if (p == projectiles){
 	projectiles=projectiles->next;
 	free(p);
@@ -76,9 +77,9 @@ void do_action_m(mob* m){
     p=p->next;
   }
   //  if (time % 10 == 0) {
-    m->speed += m->dv;
-    //printf("%f\n",m->speed);
-    //}
+  m->speed += m->dv;
+  //printf("%f\n",m->speed);
+  //}
 }
 void check_remove(mob* m){
   if(m->x < 0 || m->y < 0 ||
