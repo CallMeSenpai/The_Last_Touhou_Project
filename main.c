@@ -202,9 +202,11 @@ void multi(){
 }
 void server(){
   state=7;
+  puts("state is 7");
 }
 void client(){
   state=8;
+  puts("state is 8");
 }
 void levels(){
   menu_options=3;
@@ -276,9 +278,10 @@ int main(){
 	break;
       }
     }
-    if (state == 0 || state == 1 || state == 6){
+    if (state==0||state==1||state==6||state==7||state==8){
       renderTexture(title_tex,renderer,0,0,w_width,w_height);
-      renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
+      if (state!=7 && state!=8)
+	renderTexture(select_tex,renderer,w_width/4-w_width/12,w_height/2+w_height/6*(menu_index-1),w_width/6,w_height/12);
     }
     if (state==0){
       renderTexture(start_tex,renderer,w_width/4-w_width/20,w_height/3,w_width/10,w_height/15);

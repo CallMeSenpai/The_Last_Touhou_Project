@@ -55,8 +55,10 @@ void key_up(SDL_Event e){
 	menu_index=0;
       }else if ( menu_index == 0 ){
 	puts("server");
+	server();
       }else if (menu_index == 1){
 	puts("client");
+	client();
       }
       break;
     case SDLK_ESCAPE:
