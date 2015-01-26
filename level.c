@@ -10,6 +10,10 @@
 #include "mob.h"
 #include "bullet.h"
 #include "include/SDL.h"
+#define center_x (double)((double)w_width * 5 /16)
+#define center_y (double)((double)w_height/2)
+#define PI 3.14159265
+
 void trim(char* line) { //trims the trailing newline
   int end = strlen(line) -1;
   if (line[end] == '\n')
@@ -125,9 +129,15 @@ void load_dat(char* filename){
 	new->behavior = &k_tree;
       }else if (new->id == 12){
 	new->behavior = &circle;
-      }else if (new->id == 20)
+      }else if (new->id == 20){
 	new->behavior = &extend_shoot;
-       
+      }else if (new->id == 21){
+	new->behavior = &z_shot;
+      }else if (new->id == 22) {
+	new->behavior = &z_flask;
+      }else if (new->id == 23) {
+	new->behavior = &z_sharknado;
+      }
     }/*if mobs */
     
     
@@ -143,7 +153,7 @@ void target_shoot(double x, double y, unsigned long spawn_time){
   set_values_b(b,x,y);
   target(b);
   //set_angle(b,angle);
-  set_speed(b,4);
+  set_speed(b,6);
 }
 
 //one of the bullets will start at the angle
@@ -455,9 +465,146 @@ void circle(double x, double y, unsigned long spawn_time){
 
 
 /* -------- zman --------- */
+//low delay
+void z_shot(double x, double y, unsigned long spawn_time) {
+  int i = 0;
+  int phase = rand() % 30;
+  for(;i<12;i++) {
+    bullet* b = create();
+    set_values_b(b,x,y);
+    set_angle(b,(30*i + phase) % 360); 
+    set_speed(b, 3.5);
+    printf("%f\n",b->angle);
+  }
+}
 
+void span(bullet* b) {
+  unsigned long t = time - b->spawn_time;
+  if (t % 60 == 0 && t > 0) {
+    b->speed = -1 * b->speed;
+  }
+  
+}
 
+//high delay
+void z_flask(double x, double y, unsigned long spawn_time) {
+  target_shoot(x,y,spawn_time);
+  if (time - spawn_time == 60) {
+    int i = 1;
+    for (;i<16;i++) {
+      bullet* b = create();
+      double x_cor = ((double)w_width*5/8)/15 * i;
+      set_values_b(b,x_cor,0);
+      //converge at center
+      double dx = fabs(b->x - center_x);
+      double dy = fabs(b->y - center_y);
+      double ref_angle = atan((double)dy/(double)dx)/PI*180.0;
+      if (center_x < b->x)
+	if (center_y > b->y)
+	  ref_angle+=180;
+	else 
+	  ref_angle=180-ref_angle;
+      else
+	if (center_y > b->y)
+	  ref_angle = 360-ref_angle;
+      set_angle(b,ref_angle);
 
+      //printf("%f\n",b->angle);
+      set_speed(b, 3);
+      b->movement = &span;
+      //second
+      b = create();
+      set_values_b(b,x_cor,w_height);
+      //converge at center
+      dx = fabs(b->x - center_x);
+      dy = fabs(b->y - center_y);
+      ref_angle = atan((double)dy/(double)dx)/PI*180.0;
+      if (center_x < b->x)
+	if (center_y > b->y)
+	  ref_angle+=180;
+	else 
+	  ref_angle=180-ref_angle;
+      else
+	if (center_y > b->y)
+	  ref_angle = 360-ref_angle;
+      set_angle(b,ref_angle);
+
+      //printf("%f\n",b->angle);
+      set_speed(b, 3);
+      b->movement = &span;
+      //third
+      b = create();
+      double y_cor = ((double)w_height)/15 * i;
+      set_values_b(b,0,y_cor);
+      //converge at center
+      dx = fabs(b->x - center_x);
+      dy = fabs(b->y - center_y);
+      ref_angle = atan((double)dy/(double)dx)/PI*180.0;
+      if (center_x < b->x)
+	if (center_y > b->y)
+	  ref_angle+=180;
+	else 
+	  ref_angle=180-ref_angle;
+      else
+	if (center_y > b->y)
+	  ref_angle = 360-ref_angle;
+      set_angle(b,ref_angle);
+
+      //printf("%f\n",b->angle);
+      set_speed(b, 3);
+      b->movement = &span;
+      //fourth
+      b = create();
+      set_values_b(b,(double)w_width*5/8,y_cor);
+      //converge at center
+      dx = fabs(b->x - center_x);
+      dy = fabs(b->y - center_y);
+      ref_angle = atan((double)dy/(double)dx)/PI*180.0;
+      if (center_x < b->x)
+	if (center_y > b->y)
+	  ref_angle+=180;
+	else 
+	  ref_angle=180-ref_angle;
+      else
+	if (center_y > b->y)
+	  ref_angle = 360-ref_angle;
+      set_angle(b,ref_angle);
+
+      //printf("%f\n",b->angle);
+      set_speed(b, 3);
+      b->movement = &span;
+    }
+  }
+}
+
+void shark(bullet* b) {
+  //dv_until(b, -7.2);
+  //b->speed += b->dv;
+  unsigned long t = time-b->spawn_time;
+  if (t == 60) {
+    set_speed(b,20);
+    set_angle(b, 0);
+    set_da(b,18);
+  }
+  if (t > 240 && t < 300) {
+    set_speed(b,6);
+    set_da(b, 0);
+    target(b);
+  }
+}
+
+void z_sharknado(double x, double y, unsigned long spawn_time) {
+  bullet* b = create();
+  set_values_b(b, x, y);
+  //set_angle(b, (short)((short)((360/30)*i) + angle));
+  //set_angle(b,270);
+  target(b);
+  //printf("%f\n", b->angle);
+  set_speed(b,6);
+  //set_dv(b,-0.3);
+  //set_da(b,2.5);
+  b->movement = &shark;
+}
 /* -------movement -------- */
 
 //bullets split n nodes

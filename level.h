@@ -2,7 +2,6 @@
 #define LEVEL_H
 #include "main.h"
 
-
 void trim(char*);
 void load_dat(char*);
 
@@ -35,13 +34,21 @@ void brown_ray(double,double,unsigned long);
 void angel_rain(double,double,unsigned long);
 void rain(bullet*);
 void explode(bullet*);
+
 /* ---------zman------------ */
+//z shot
+void z_shot(double,double,unsigned long);
 //z flask
+void z_flask(double,double,unsigned long);
+void span(bullet*);
 //z sharknado
+void z_sharknado(double,double,unsigned long);
+void shark(bullet*);
 /* --------konstans--------- */
 void get_juked(double,double,unsigned long);
 void k_tree(double,double,unsigned long);
 void circle(double,double, unsigned long);
+
 /* --------dw-----------*/
 void extend_shoot(double,double,unsigned long);
 void dw_segfault(double,double,unsigned long);
