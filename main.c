@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
@@ -54,6 +57,7 @@ SDL_Texture* level3_tex;
 SDL_Texture* level4_tex;
 TTF_Font* font;
 int num_players;
+int socket_id;
 //enum textquality {solid, shaded, blended};
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
   SDL_Rect dst;
@@ -202,11 +206,19 @@ void multi(){
 }
 void server(){
   state=7;
-  puts("state is 7");
+  socket_id = socket(AF_INET,SOCK_STREAM,0);
+  listen(socket_id,1);
+  
+  accept(socket_id,0,0);
+  puts("eyyy we got a connection");
 }
 void client(){
   state=8;
-  puts("state is 8");
+  puts("Please enter the host's IPv4");
+  char* ip_buf=calloc(256,1);
+  fgets(ip_buf,256,stdin);
+  printf("string is %s\n",ip_buf);
+  //int i = connect(socket_id,
 }
 void levels(){
   menu_options=3;
@@ -216,6 +228,8 @@ void levels(){
   //Insane.png
 }
 int main(){
+  
+
   /***** INIT SDL AND WINDOW *****/
   SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO);
   create_window();
