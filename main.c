@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
+#include <netdb.h>
 /* we are using a local edited lib */
 #include "include/SDL.h"
 #include "include/SDL_image.h"
@@ -224,7 +226,7 @@ void server(){
     state=6;
   }
   puts("going to accept?");
-  accept(socket_id,(struct sockaddr *)&serv_addr, &sizeof(clilen));
+  accept(socket_id,(struct sockaddr *)0,0);
   puts("eyyy got a connection to the client");
   data= calloc(256,sizeof(char));
   start(2);
