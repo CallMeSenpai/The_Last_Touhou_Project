@@ -59,6 +59,7 @@ SDL_Texture* level3_tex;
 SDL_Texture* level4_tex;
 TTF_Font* font;
 int num_players;
+int sentences;
 
 int socket_id;
 struct sockaddr_in serv_addr;
@@ -164,7 +165,30 @@ void clear(char bool){
   if (bool && c)
     free(c);
 }
+/***** dialogue before boss mode? *****/
+//we check for time req's before calling the function
+//i.e if (time > 600?) dialogue();
+void dialogue(){
+  state=4;
+  if (level==1){
+    //reminder: load pics before using them
+    //TTF: lib->text->surface?->texture
+    sentences=0;
+    //while loop: each z/enter = sentences++;
+    //__if (sentences> max_sentences)
+    //____state=2
+    //
+    /* reminder
+       -bullets can move
+       -projectiles can move but not kill mobs
+       -mobs can move
+       -character can move but not get killed
+    */
+  }else if (level==2){
+    //do crap
+  }
 
+}
 /***** INIT GAME VARIABLES *****/
 void start(int num){
   num_players = num;
@@ -186,7 +210,8 @@ void start(int num){
   //create_fade(level1_tex,150,0.33f,0.33f);
 }
 void next(){
-  if (level==1){
+  switch (level){
+  case 1:
     puts("sup");
     mob* m = mobs;
     while (m) {
@@ -196,6 +221,31 @@ void next(){
     load_dat("2e.dat");
     time=0;
     last_death=0;
+    break;
+    /* we don't have 3e and 4e dat files
+  case 2:
+    puts("sup");
+    mob* m = mobs;
+    while (m) {
+      m->x = -100;
+      m = m->next;
+    }
+    load_dat("3e.dat");
+    time=0;
+    last_death=0;
+    break;
+  case 3:
+    puts("sup");
+    mob* m = mobs;
+    while (m) {
+      m->x = -100;
+      m = m->next;
+    }
+    load_dat("4e.dat");
+    time=0;
+    last_death=0;
+    break;
+    */
   }
   level++;
 }
@@ -301,9 +351,14 @@ int main(){
   host=2;
   while (host){//while server
     //puts("sup");
-    if (state!=3)
+    if (state!=3 && state !=4)
       time++;
-    if (state==2 && time > 60*10){
+    else if (state == 4) {
+      //display images
+      //display text
+      
+    }
+    if (state==2 && time > 1000){
       next();
     }
     SDL_RenderClear(renderer);
@@ -401,7 +456,8 @@ int main(){
     }/* if state==2 or state==3 */
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
-    //printf("%lu\n",time);
+    //print time
+    printf("%lu\n",time);
   }/* while 1 */
   while(host-1){
     /*in while(host)

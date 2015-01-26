@@ -14,6 +14,7 @@ extern int c_width;//character dimensions
 extern int w_height;
 extern int w_width;//window dimensions
 extern int num_players;
+extern int sentences;
 extern unsigned long time,last_death;
 extern SDL_Renderer* renderer;
 void start(int);

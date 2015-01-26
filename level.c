@@ -217,7 +217,7 @@ void cone_down(double x, double y, unsigned long spawn_time){
     bullet* b = create();
     set_values_b(b,x,y);
     set_angle(b, 220 + (10 * i));
-    set_speed(b, 5);
+    set_speed(b, 3.5);
   }
 }
 
