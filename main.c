@@ -60,6 +60,7 @@ int num_players;
 
 int socket_id;
 struct sockaddr_in serv_addr;
+char data;
 
 //enum textquality {solid, shaded, blended};
 void renderTexture(SDL_Texture *tex, SDL_Renderer *ren, int x, int y, int w, int h){
@@ -205,7 +206,7 @@ void multi(){
   state=6;
   menu_options=3;
   menu_index=0;
-  puts("lol multi");
+  //puts("lol multi");
 }
 void server(){
   state=7;
@@ -221,7 +222,8 @@ void server(){
     state=6;
   }
   accept(socket_id,0,0);
-  puts("eyyy got a connection");
+  puts("eyyy got a connection to the client");
+  data= calloc(256,sizeof(char));
 }
 void client(){
   state=8;
@@ -240,13 +242,12 @@ void client(){
     state=6;
   }
   puts("eyyy got a connection to the server");
+  data= calloc(256,sizeof(char));
 }
 void levels(){
   menu_options=3;
   state=1;
   menu_index=0;
-  //Easy.png
-  //Insane.png
 }
 int main(){
   
