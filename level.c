@@ -110,36 +110,51 @@ void load_dat(char* filename){
       //new->behavior = &shoot;
 
       //IMPORTANT: Remember to take out the print in main
+      //high
       if (new->id == 0)
 	new->behavior = &circle_8;
+      //mid
       else if (new->id == 1)
 	new->behavior = &target_shoot;
+      //high
       else if (new->id == 2)
 	new->behavior = &cone_down;
+      //brown
+      //low
       else if (new->id == 3)
 	new->behavior = &brown_shot;
+      //high
       else if (new->id == 4)
 	new->behavior = &brown_recursion;
+      //mid
       else if (new->id == 5)
 	new->behavior = &brown_ray;
       //konstans
+      //very low
       else if (new->id == 11)
 	new->behavior = &k_get_juked;
-      else if (new->id == 10){
+      //low
+      else if (new->id == 10)
 	new->behavior = &k_tree;
-      }else if (new->id == 12){
+      //low
+      else if (new->id == 12)
 	new->behavior = &circle;
-      }else if (new->id == 20){
+      //low
+      else if (new->id == 20)
 	new->behavior = &dw_extend_shoot;
-      }else if (new->id == 21){
+      //very low
+      else if (new->id == 21)
 	new->behavior = &dw_segfault;
-      }else if (new->id == 31){
+      //low
+      else if (new->id == 31)
 	new->behavior = &z_shot;
-      }else if (new->id == 32) {
+      //medium
+      else if (new->id == 32) 
 	new->behavior = &z_flask;
-      }else if (new->id == 33) {
+      //med-low
+      else if (new->id == 33) 
 	new->behavior = &z_sharknado;
-      }
+      
     }/*if mobs */
     
     
@@ -345,11 +360,11 @@ void explode(bullet* b) {
   b->speed += b->dv;
   if (b->speed == 0){
     int i = 0;
-    for (;i<6;i++) {
+    for (;i<3;i++) {
       bullet* bb = create();
       set_values_b(bb,b->x,b->y);
-      set_angle(bb, 220 + (20 * i));
-      set_speed(bb, 5);
+      set_angle(bb, 250 + (20 * i));
+      set_speed(bb, 2.5);
     }
     b->x = -100;
   }
@@ -601,12 +616,12 @@ void shark(bullet* b) {
   //b->speed += b->dv;
   unsigned long t = time-b->spawn_time;
   if (t == 60) {
-    set_speed(b,20);
-    set_angle(b, 0);
-    set_da(b,18);
-  }
-  if (t > 240 && t < 300) {
     set_speed(b,6);
+    set_angle(b, 0);
+    set_da(b,5);
+  }
+  if (t > 240 && t < 250) {
+    set_speed(b,4);
     set_da(b, 0);
     target(b);
   }
@@ -619,7 +634,7 @@ void z_sharknado(double x, double y, unsigned long spawn_time) {
   //set_angle(b,270);
   target(b);
   //printf("%f\n", b->angle);
-  set_speed(b,6);
+  set_speed(b,3);
   //set_dv(b,-0.3);
   //set_da(b,2.5);
   b->movement = &shark;

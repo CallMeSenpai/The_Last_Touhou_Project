@@ -1,13 +1,13 @@
 mob
 id=0
-hp=5
+hp=9
 x=50
 y=0
-speed=12
-dv=-30
+speed=5
+dv=-5
 angle=270
 spawntime=59
-delay=79
+delay=119
 loadtime=29
 set=5
 
@@ -16,7 +16,7 @@ id=2
 hp=12
 x=50
 y=0
-speed=6
+speed=3
 dv=-7
 angle=270
 spawntime=269
