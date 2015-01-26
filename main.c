@@ -219,7 +219,7 @@ void server(){
   puts("socket created.");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  serv_addr.sin_port = htons(5000);
+  serv_addr.sin_port = htons(80);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
   if (listen(socket_id,1)== -1){
     puts("failed to listen :(");
@@ -242,7 +242,7 @@ void client(){
   strtok(ip_buf,"\n");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  serv_addr.sin_port = htons(5000);
+  serv_addr.sin_port = htons(80);
   
   if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr))<0){
     puts("Connection failed.");
