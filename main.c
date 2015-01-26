@@ -301,6 +301,7 @@ int main(){
   title();//load title screen
   host=2;
   while (host){//while server
+    //puts("sup");
     if (state!=3)
       time++;
     if (state==2 && time > 60*10){
