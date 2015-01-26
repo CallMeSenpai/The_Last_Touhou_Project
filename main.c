@@ -249,7 +249,7 @@ void client(){
   puts("eyy done connecting");
   data= calloc(256,sizeof(char));
   start(2);
-  host=3;
+  host=0;
 }
 void levels(){
   menu_options=3;
@@ -401,6 +401,24 @@ int main(){
     SDL_Delay(16);//approx 60 FPS
   }/* while 1 */
   while(host-1){
+    /*in while(host)
+      
+      loop through each object: send client item
+      client: receives and paints
+      ** bullets must check for both chars now?
+
+      client: moves *(c+1)
+      --->make new input functions only for movement/shoot
+      send server all signals...?
+      0,1,2,3 for directional and 4 to shoot?
+
+      server receives. change x,y as needed. shoot as needed.
+      
+
+
+      //el fin img?
+
+    */
     puts("lol working");
     break;
   }
