@@ -218,15 +218,18 @@ void server(){
   socket_id = socket(AF_INET,SOCK_STREAM,0);
   puts("socket created.");
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  serv_addr.sin_port = htons(80);
+  serv_addr.sin_addr.s_addr = INADDR_ANY;
+  serv_addr.sin_port = htons(2056);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
   if (listen(socket_id,1)== -1){
     puts("failed to listen :(");
     state=6;
   }
   puts("going to accept?");
-  accept(socket_id,(struct sockaddr *)0,0);
+  int i = accept(socket_id,(struct sockaddr *)0,0);
+  if (i<0){
+    puts("broken accept");
+  }
   puts("eyyy got a connection to the client");
   data= calloc(256,sizeof(char));
   start(2);
@@ -242,7 +245,7 @@ void client(){
   strtok(ip_buf,"\n");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  serv_addr.sin_port = htons(80);
+  serv_addr.sin_port = htons(2056);
   
   if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr))<0){
     puts("Connection failed.");
