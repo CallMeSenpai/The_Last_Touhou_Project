@@ -127,7 +127,7 @@ void key_up(SDL_Event e){
 	//bugs, double free @ game->title
       }
     }
-  }else if (state==2){
+  }else if (state==2||state==4){
     switch (e.key.keysym.sym){
     case SDLK_LEFT: 
       if(c->left){ c->left=0; }
@@ -148,7 +148,12 @@ void key_up(SDL_Event e){
       }
       break;
     case SDLK_z:
-      if(c->shoot){ c->shoot=0; }
+      if(c->shoot || state ==2){
+	c->shoot=0;
+      }else if (c->shoot || state == 4){
+	//continue with dialogue?
+	sentences++;
+      }
       break;
     case SDLK_x:
       if(c->bomb){ c->bomb=0; }

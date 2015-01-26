@@ -170,10 +170,11 @@ void clear(char bool){
 //i.e if (time > 600?) dialogue();
 void dialogue(){
   state=4;
+  sentences=0;
   if (level==1){
+    puts("dialogue for level 1");
     //reminder: load pics before using them
     //TTF: lib->text->surface?->texture
-    sentences=0;
     //while loop: each z/enter = sentences++;
     //__if (sentences> max_sentences)
     //____state=2
@@ -342,6 +343,9 @@ int main(){
   SDL_Texture* server_tex = IMG_LoadTexture(renderer,"images/server.png");
   SDL_Texture* client_tex = IMG_LoadTexture(renderer,"images/client.png");
   SDL_Texture* multi_tex = IMG_LoadTexture(renderer,"images/multi.png");
+  //add images to here
+  //crop iamges, bullets, sprites by barak
+  //
   level1_tex = IMG_LoadTexture(renderer,"images/level1.png");
   level2_tex = IMG_LoadTexture(renderer,"images/level2.png");
   level3_tex = IMG_LoadTexture(renderer,"images/level3.png");
@@ -349,7 +353,7 @@ int main(){
 
   title();//load title screen
   host=2;
-  while (host){//while server
+  while(host){//while server
     //puts("sup");
     if (state!=3 && state !=4)
       time++;
@@ -359,7 +363,7 @@ int main(){
       
     }
     if (state==2 && time > 1000){
-      next();
+      next();//temp solution, 1000 not determined yet
     }
     SDL_RenderClear(renderer);
     if (SDL_PollEvent(&e)){
@@ -391,7 +395,7 @@ int main(){
       renderTexture(server_tex,renderer,w_width/4-w_width/18,w_height/3,w_width/9,w_height/15);
       renderTexture(client_tex,renderer,w_width/4-w_width/20,w_height/2,w_width/10,w_height/15);
       renderTexture(mainmenu_tex,renderer,w_width/4-w_width/12,w_height/3*2,w_width/6,w_height/15);
-    }else if (state==2 || state==3){
+    }else if (state==2 || state==3 || state ==4){
       /***** character *****/
       renderTexture(temp,renderer,c->x-16,c->y-16,32,32);
       /***** projectiles *****/
@@ -419,14 +423,14 @@ int main(){
       while ( b_buffer ){
 	renderTexture_r(bullet_tex,renderer,b_buffer->x-w_height/80,b_buffer->y-w_height/60,w_height/40,w_height/30,b_buffer->angle);
 	//renderTexture(bullet_tex,renderer,b_buffer->x-w_height/80,b_buffer->y-w_height/60,w_height/40,w_height/30);
-	if ( state == 2 )
+	if ( state == 2 || state == 4)
 	  do_action_b(b_buffer);
 	interact_b(b_buffer);
 	//remove bullets if off screen
 	b_buffer=  b_buffer->next;
       }
       
-      if ( state == 2 ){
+      if ( state == 2 || state == 4){
 	/***** sprites *****/
 	//cycleSprite(c->sprite,time);
 	handle_input(c);
