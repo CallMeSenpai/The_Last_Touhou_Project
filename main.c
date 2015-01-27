@@ -269,6 +269,9 @@ void multi(){
 void server(){
   state=7;
   socket_id = socket(AF_INET,SOCK_DGRAM,0);
+  if (socket_id == -1) {
+    printf("socket_id %s\n",strerror(errno));
+  }
   puts("socket created.");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = INADDR_ANY;
@@ -305,6 +308,9 @@ void server(){
 void client(){
   state=8;
   socket_id = socket(AF_INET,SOCK_STREAM,0);
+  if (socket_id == -1) {
+    printf("socket_id %s\n",strerror(errno));
+  }
   puts("socket created.");
   puts("Please enter the host's IPv4");
   char* ip_buf=calloc(256,1);
