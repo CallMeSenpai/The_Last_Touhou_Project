@@ -1,3 +1,4 @@
+#include <unistd.h>//for macs???
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
