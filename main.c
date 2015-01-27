@@ -283,6 +283,7 @@ void server(){
   //accept
   while (1) {
     int a = accept(socket_id, 0,0);
+    printf("%d\n",a);
     if (a != -1) {
       puts("accepted.");
       start(2);
@@ -305,10 +306,13 @@ void client(){
   //serv_addr.sin_port = htons(80);
   serv_addr.sin_port = htons(5000);
   char recvline[256];
+  //this line is the problem; you break the game here
+  
+  if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
+    puts("yeah this is the problem");
+  }
   while(1){
     puts("I made it to the loop");
-    //this line is the problem; you break the game here
-    connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr));
     puts("I made it past connect");
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
     puts("I made it past sendto");
