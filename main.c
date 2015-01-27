@@ -280,8 +280,11 @@ void server(){
   puts("listened.");
   //accept
   int a = accept(socket_id, 0,0);
+
+  while (a == -1) {
+    
+  }
   puts("accepted.");
-  if (a != -1)
     start(2);
   host=1;
 }
