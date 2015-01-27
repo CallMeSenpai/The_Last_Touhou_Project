@@ -281,9 +281,13 @@ void server(){
   //connect(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
   puts("listened.");
   //accept
-  accept(socket_id,0,0);
-  puts("accepted");
-  start(2);
+  while (1) {
+    int a = accept(socket_id,0,0);
+    if (a != -1) {
+      puts("accepted");
+      start(2);
+    }
+  }
   //while (1) {
     //int a = accept(socket_id, 0,0);
     //printf("%d\n",a);
