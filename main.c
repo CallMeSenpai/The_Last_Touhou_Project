@@ -267,7 +267,7 @@ void multi(){
 }
 void server(){
   state=7;
-  socket_id = socket(AF_INET,SOCK_STREAM,0);
+  socket_id = socket(AF_INET,SOCK_DGRAM,0);
   puts("socket created.");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -481,7 +481,7 @@ int main(){
       //el fin img?
 
     */
-    puts("lol working");
+    
     //break;
   }
 
