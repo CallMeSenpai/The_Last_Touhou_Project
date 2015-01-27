@@ -482,7 +482,7 @@ int main(){
 
     */
     puts("lol working");
-    break;
+    //break;
   }
 
  end:
