@@ -281,11 +281,12 @@ void server(){
   //accept
   while (1) {
   int a = accept(socket_id, 0,0);
-
-  puts("accepted.");
-  start(2);
-  sleep(1);
+  if (a != -1) {
+    puts("accepted.");
+    start(2);
+    break;
   }
+  sleep(1);
   host=1;
 }
 void client(){
@@ -304,6 +305,7 @@ void client(){
   while(1){
     puts("I made it to the loop");
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+    puts("I made it past sendto");
     int n= recvfrom(socket_id,recvline,256,0,0,0);
     recvline[n] = 0;
     puts("End of loop");
