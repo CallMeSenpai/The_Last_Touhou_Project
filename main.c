@@ -276,7 +276,9 @@ void server(){
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
   
   //listen
-  listen(socket_id,1);
+  //listen(socket_id,1);
+  //connect
+  connect(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
   puts("listened.");
   //accept
   while (1) {
@@ -305,6 +307,7 @@ void client(){
   char recvline[256];
   while(1){
     puts("I made it to the loop");
+    //this line is the problem
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
     puts("I made it past sendto");
     int n= recvfrom(socket_id,recvline,256,0,0,0);
