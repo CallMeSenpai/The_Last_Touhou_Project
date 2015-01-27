@@ -274,23 +274,11 @@ void server(){
   serv_addr.sin_addr.s_addr = INADDR_ANY;
   serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
-  while (1){
-    char mesg[256];
-    int x = sizeof(serv_addr);
-    int n = recvfrom(socket_id,mesg,sizeof(mesg),0,(struct sockaddr*)&serv_addr,&x);
-    mesg[n]=0;
-    sendto(socket_id,"hi im client",strlen("hi im client"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
-
-  }
-
-  //listen(socket_id,1);
-  //puts("listening...");
-  //printf("error is %s\n",strerror(errno));
-  //int i = accept(socket_id,NULL,NULL);
-  //printf("connected: %d\n",i);
   
-  //puts("accepted.");
-  //data= calloc(256,sizeof(char));
+  //listen
+  listen(socket_id,1);
+  //accept
+  accept(socket_id, 0,0);
 
   start(2);
   host=1;
@@ -306,16 +294,9 @@ void client(){
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
   serv_addr.sin_port = htons(80);
-  char recvline[256];
-  while(1){
-    sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
-    int n= recvfrom(socket_id,recvline,256,0,0,0);
-    recvline[n] = 0;
-
-  }
-  //connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr));
-  //puts("eyy done connecting");
-  //data= calloc(256,sizeof(char));
+  //connect
+  connect(socket_id,&serv_addr,sizeof(serv_addr));
+  
   start(2);
   host=0;
 }
