@@ -277,11 +277,12 @@ void server(){
     puts("failed to listen :(");
     state=6;
   }
+  puts("listening...");
   int i = accept(socket_id,(struct sockaddr *)0,0);
   if (i<0){
     puts("broken accept");
   }
-  puts("eyyy got a connection to the client");
+  puts("accepted.");
   data= calloc(256,sizeof(char));
   start(2);
   host=1;
