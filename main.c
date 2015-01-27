@@ -325,6 +325,7 @@ void client(){
     //ignore this
     //if (connect(socket_id,serv_addr->sin_addr, serv_addr->sin_addrlen) < 0) {
     puts("yeah this is the problem");
+    puts(errno);
   }
   else {
     puts("this isn't the problem");
