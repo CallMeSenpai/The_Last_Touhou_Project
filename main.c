@@ -274,7 +274,7 @@ void server(){
   serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
 
-  listen(socket_id,1);
+  listen(socket_id,10);
   puts("listening...");
 
   int i = accept(socket_id,NULL,NULL);
