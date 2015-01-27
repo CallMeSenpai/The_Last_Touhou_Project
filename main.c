@@ -293,10 +293,25 @@ void client(){
   strtok(ip_buf,"\n");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
+<<<<<<< HEAD
   serv_addr.sin_port = htons(80);
   //connect
   connect(socket_id,&serv_addr,sizeof(serv_addr));
   
+=======
+  //serv_addr.sin_port = htons(80);
+  serv_addr.sin_port = htons(5000);
+  char recvline[256];
+  while(1){
+    sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+    int n= recvfrom(socket_id,recvline,256,0,0,0);
+    recvline[n] = 0;
+
+  }
+  //connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr));
+  //puts("eyy done connecting");
+  //data= calloc(256,sizeof(char));
+>>>>>>> d60bb4115965586075ce996fce3beaaf211a447a
   start(2);
   host=0;
 }
