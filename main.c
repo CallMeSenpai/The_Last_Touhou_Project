@@ -267,11 +267,11 @@ void multi(){
 }
 void server(){
   state=7;
-  socket_id = socket(AF_INET,SOCK_DGRAM,0);
+  socket_id = socket(AF_INET,SOCK_STREAM,0);
   puts("socket created.");
   serv_addr.sin_family = AF_INET;
-  serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  serv_addr.sin_port = htons(80);
+  serv_addr.sin_addr.s_addr = INADDR_ANY;
+  serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
   if (listen(socket_id,1)== -1){
     puts("failed to listen :(");
