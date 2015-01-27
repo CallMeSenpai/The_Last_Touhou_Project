@@ -274,18 +274,20 @@ void server(){
   serv_addr.sin_addr.s_addr = INADDR_ANY;
   serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
-  
+  puts("bind complete.");
   //listen
   listen(socket_id,1);
   //connect
   //connect(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
   puts("listened.");
   //accept
-  while (1) {
-    int a = accept(socket_id,0,0);
+  int a = accept(socket_id,0,0);
+  while (a == -1) {
+    a = accept(socket_id,0,0);
     if (a != -1) {
       puts("accepted");
       start(2);
+      host = 1;
     }
   }
   //while (1) {
@@ -298,7 +300,7 @@ void server(){
   //}
   //sleep(1);
   //}
-  host=1;
+  //host=1;
 }
 void client(){
   state=8;
@@ -312,11 +314,13 @@ void client(){
   serv_addr.sin_family = AF_INET;
   //serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
   //serv_addr.sin_addr.s_addr = inet_pton(AF_INET,ip_buf,&serv_addr.sin_addr);
-  inet_pton(AF_INET,ip_buf,&serv_addr.sin_addr);
+  inet_aton(ip_buf,&(serv_addr.sin_addr));
   //serv_addr.sin_port = htons(80);
   serv_addr.sin_port = htons(5000);
   char recvline[256];
   //this line is the problem; you break the game here
+  bind(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+  puts("bind complete.");
   if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
     //ignore this
     //if (connect(socket_id,serv_addr->sin_addr, serv_addr->sin_addrlen) < 0) {
