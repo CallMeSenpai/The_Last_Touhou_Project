@@ -53,10 +53,10 @@ void key_up(SDL_Event e){
         state=0;
 	menu_options=3;
 	menu_index=0;
-      }else if ( menu_index == 0 ){
+      }else if ( menu_index == 0 && state==6){
 	puts("server");
 	server();
-      }else if (menu_index == 1){
+      }else if (menu_index == 1 && state==6){
 	puts("client");
 	client();
       }

@@ -20,6 +20,7 @@
 #include "mob.h"
 #include "bullet.h"
 #include "level.h"
+#include <errno.h>
 //#include "fade.h"
 
 #define WHITE (SDL_Color){255,255,255}
@@ -274,12 +275,12 @@ void server(){
   serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
 
-  listen(socket_id,10);
+  listen(socket_id,1);
   puts("listening...");
-
+  printf("error is %s\n",strerror(errno));
   int i = accept(socket_id,NULL,NULL);
   printf("connected: %d\n",i);
-
+  
   puts("accepted.");
   data= calloc(256,sizeof(char));
   start(2);
