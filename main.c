@@ -280,13 +280,14 @@ void server(){
   puts("listened.");
   //accept
   while (1) {
-  int a = accept(socket_id, 0,0);
-  if (a != -1) {
-    puts("accepted.");
-    start(2);
-    break;
+    int a = accept(socket_id, 0,0);
+    if (a != -1) {
+      puts("accepted.");
+      start(2);
+      break;
+    }
+    sleep(1);
   }
-  sleep(1);
   host=1;
 }
 void client(){
