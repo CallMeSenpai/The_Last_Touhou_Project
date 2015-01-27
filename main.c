@@ -273,13 +273,13 @@ void server(){
   serv_addr.sin_addr.s_addr = INADDR_ANY;
   serv_addr.sin_port = htons(5000);
   bind(socket_id, (struct sockaddr*)&serv_addr,sizeof(serv_addr));
-  if (listen(socket_id,1)== -1){
-    puts("failed to listen :(");
-    state=6;
-  }
+
+  listen(socket_id,1);
   puts("listening...");
+
   int i = accept(socket_id,NULL,NULL);
   printf("connected: %d\n",i);
+
   puts("accepted.");
   data= calloc(256,sizeof(char));
   start(2);
