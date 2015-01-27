@@ -279,9 +279,10 @@ void server(){
   listen(socket_id,1);
   puts("listened.");
   //accept
-  accept(socket_id, 0,0);
+  int a = accept(socket_id, 0,0);
   puts("accepted.");
-  start(2);
+  if (a != -1)
+    start(2);
   host=1;
 }
 void client(){
