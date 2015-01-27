@@ -307,14 +307,15 @@ void client(){
   char recvline[256];
   while(1){
     puts("I made it to the loop");
-    //this line is the problem
+    //this line is the problem; you break the game here
+    connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr));
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
     puts("I made it past sendto");
     int n= recvfrom(socket_id,recvline,256,0,0,0);
     recvline[n] = 0;
     puts("End of loop");
   }
-  //connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr));
+  //
   //puts("eyy done connecting");
   //data= calloc(256,sizeof(char));
   start(2);
