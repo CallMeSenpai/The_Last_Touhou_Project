@@ -311,7 +311,7 @@ void client(){
   printf("%s\n", ip_buf);
   serv_addr.sin_family = AF_INET;
   //serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  serv_addr.sin_addr.s_addr = inet_pton(ip_buf);
+  serv_addr.sin_addr.s_addr = inet_pton(AF_INET,ip_buf,&serv_addr.sin_addr);
   //serv_addr.sin_port = htons(80);
   serv_addr.sin_port = htons(5000);
   char recvline[256];
