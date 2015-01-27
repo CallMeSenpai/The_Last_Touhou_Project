@@ -319,13 +319,17 @@ void client(){
   printf("%s\n", ip_buf);
   serv_addr.sin_family = AF_INET;
   //serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  serv_addr.sin_addr.s_addr = inet_pton(AF_INET,ip_buf,&serv_addr.sin_addr);
+  //serv_addr.sin_addr.s_addr = inet_pton(AF_INET,ip_buf,&serv_addr.sin_addr);
+  int i = inet_pton(AF_INET,ip_buf,&serv_addr.sin_addr);
+  if (i == -1) {
+    printf("inet_pton %s\n", strerror(errno));
+  }
   //inet_aton(ip_buf,&(serv_addr.sin_addr));
   //serv_addr.sin_port = htons(80);
   serv_addr.sin_port = htons(5000);
   char recvline[256];
   //this line is the problem; you break the game here
-  //  bind(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+  bind(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
   //puts("bind complete.");
   if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
     //ignore this
