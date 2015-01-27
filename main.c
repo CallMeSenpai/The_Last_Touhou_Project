@@ -308,10 +308,11 @@ void client(){
   char* ip_buf=calloc(256,1);
   fgets(ip_buf,256,stdin);
   strtok(ip_buf,"\n");
+  printf("%s\n", ip_buf);
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  serv_addr.sin_port = htons(80);
-  //serv_addr.sin_port = htons(5000);
+  //serv_addr.sin_port = htons(80);
+  serv_addr.sin_port = htons(5000);
   char recvline[256];
   //this line is the problem; you break the game here
   
@@ -323,7 +324,6 @@ void client(){
   }
   while(1){
     puts("I made it to the loop");
-    puts("I made it past connect");
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
     puts("I made it past sendto");
     int n= recvfrom(socket_id,recvline,256,0,0,0);
