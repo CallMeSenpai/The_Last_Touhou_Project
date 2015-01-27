@@ -277,9 +277,10 @@ void server(){
   
   //listen
   listen(socket_id,1);
+  puts("listened.");
   //accept
   accept(socket_id, 0,0);
-
+  puts("accepted.");
   start(2);
   host=1;
 }
@@ -293,9 +294,8 @@ void client(){
   strtok(ip_buf,"\n");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  //serv_addr.sin_port = htons(80);
+  serv_addr.sin_port = htons(80);
 
-  serv_addr.sin_port = htons(5000);
   char recvline[256];
   while(1){
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
