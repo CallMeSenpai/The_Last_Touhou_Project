@@ -301,12 +301,12 @@ void client(){
   //serv_addr.sin_port = htons(80);
   serv_addr.sin_port = htons(5000);
   char recvline[256];
-  puts("I made it to the loop");
   while(1){
+    puts("I made it to the loop");
     sendto(socket_id,"sup",strlen("sup"),0,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
     int n= recvfrom(socket_id,recvline,256,0,0,0);
     recvline[n] = 0;
-
+    puts("End of loop");
   }
   //connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr));
   //puts("eyy done connecting");
