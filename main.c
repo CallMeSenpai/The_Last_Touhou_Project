@@ -460,8 +460,6 @@ int main(){
     }/* if state==2 or state==3 */
     SDL_RenderPresent(renderer);
     SDL_Delay(16);//approx 60 FPS
-    //print time
-    printf("%lu\n",time);
   }/* while 1 */
   while(host-1){
     /*in while(host)
