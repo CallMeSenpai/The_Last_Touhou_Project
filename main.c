@@ -318,7 +318,7 @@ void client(){
   char recvline[256];
   //this line is the problem; you break the game here
   //if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
-  if (connect(socket_id,serv_addr->ai_addr, serv_addr->ai_addr < 0) {
+  if (connect(socket_id,serv_addr->ai_addr, serv_addr->ai_addr) < 0) {
     puts("yeah this is the problem");
   }
   else {
