@@ -281,16 +281,19 @@ void server(){
   //connect(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
   puts("listened.");
   //accept
-  while (1) {
-    int a = accept(socket_id, 0,0);
-    printf("%d\n",a);
-    if (a != -1) {
-      puts("accepted.");
-      start(2);
-      break;
-    }
-    sleep(1);
-  }
+  accept(socket_id,0,0);
+  puts("accepted");
+  start(2);
+  //while (1) {
+    //int a = accept(socket_id, 0,0);
+    //printf("%d\n",a);
+    //if (a != -1) {
+  //puts("accepted.");
+  //start(2);
+  //break;
+  //}
+  //sleep(1);
+  //}
   host=1;
 }
 void client(){
@@ -303,13 +306,16 @@ void client(){
   strtok(ip_buf,"\n");
   serv_addr.sin_family = AF_INET;
   serv_addr.sin_addr.s_addr = inet_addr(ip_buf);
-  //serv_addr.sin_port = htons(80);
-  serv_addr.sin_port = htons(5000);
+  serv_addr.sin_port = htons(80);
+  //serv_addr.sin_port = htons(5000);
   char recvline[256];
   //this line is the problem; you break the game here
   
   if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
     puts("yeah this is the problem");
+  }
+  else {
+    puts("this isn't the problem");
   }
   while(1){
     puts("I made it to the loop");
