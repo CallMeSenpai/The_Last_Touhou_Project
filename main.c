@@ -278,10 +278,8 @@ void server(){
     state=6;
   }
   puts("listening...");
-  int i = accept(socket_id,(struct sockaddr *)0,0);
-  if (i<0){
-    puts("broken accept");
-  }
+  int i = accept(socket_id,NULL,NULL);
+  printf("connected: %d\n",i);
   puts("accepted.");
   data= calloc(256,sizeof(char));
   start(2);
