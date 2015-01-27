@@ -268,7 +268,7 @@ void multi(){
 }
 void server(){
   state=7;
-  socket_id = socket(AF_INET,SOCK_DGRAM,0);
+  socket_id = socket(AF_INET,SOCK_STREAM,0);
   if (socket_id == -1) {
     printf("socket_id %s\n",strerror(errno));
   }
