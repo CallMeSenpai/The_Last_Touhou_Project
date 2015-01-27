@@ -329,7 +329,7 @@ void client(){
   serv_addr.sin_port = htons(5000);
   char recvline[256];
   //this line is the problem; you break the game here
-  bind(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
+  //bind(socket_id,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
   //puts("bind complete.");
   if (connect(socket_id,(struct sockaddr*)&serv_addr, sizeof(serv_addr)) < 0) {
     //ignore this
